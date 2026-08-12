@@ -1,4 +1,4 @@
-TheMaNi Software Deployment Center
+# TheMaNi Software Deployment Center
 
 TheMaNi ist ein webbasiertes Software Deployment Center zur Verwaltung und Bereitstellung von Windows-Software.
 
@@ -52,3 +52,29 @@ Ein Teil der Entwicklung erfolgt mit Unterstützung generativer KI. Anforderunge
 Hinweis
 
 TheMaNi befindet sich noch in einer frühen Entwicklungsphase. Funktionen können sich ändern und sind möglicherweise noch nicht für den produktiven Einsatz geeignet.
+
+## Screenshots
+
+### Dashboard
+
+![TheMaNi Dashboard](screenshots/Startseite.png)
+
+### Software Verteilung
+
+![TheMaNi Dashboard](screenshots/Install.png)
+
+### Deinstallation
+
+![TheMaNi Dashboard](screenshots/Deinstall.png)
+
+### Softwareabfrage
+
+![TheMaNi Dashboard](screenshots/abfrage.png)
+
+### Softwareverwaltung
+
+![TheMaNi Dashboard](screenshots/paketverwaltung.png)
+
+### Softwarequellen
+
+![TheMaNi Dashboard](screenshots/Settings.png)
