@@ -1,0 +1,143 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#E1001A"><link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"><title>TheMaNi’s Software Deployment Center</title></head><body>
+<header class="topbar"><div class="brand"><div class="themani-logo"><span class="tm-badge">TM</span><div><b>TheMaNi’s</b><small>SOFTWARE DEPLOYMENT CENTER</small></div></div><div class="divider"></div><div><h1>Software Deployment Center</h1><p>Interne Softwareverteilung & Rechnerverwaltung</p></div></div><div class="ready">● Bereit</div></header>
+<nav class="nav"><button class="nav active" data-page="home">⌂ Startseite</button><button class="nav" data-page="install">▣ Installation</button><button class="nav" data-page="uninstall">▱ Deinstallation</button><button class="nav" data-page="query">⌕ Abfrage</button><button class="nav" data-page="packages">⚙ Softwareverwaltung</button><button class="nav" data-page="settings">⚙ Einstellungen</button></nav>
+<main>
+<section id="home" class="page active"><div class="hero"><small>TheMaNi’s · INTERNAL TOOL</small><h2>Software Deployment Center</h2><p>Software zentral auswählen, Rechner prüfen und Pakete kontrolliert verteilen.</p></div><div class="cards">
+<button data-go="install"><i>▣</i><b>Installation</b><span>Softwarepakete auf Zielrechner verteilen.</span></button>
+<button data-go="uninstall"><i>▱</i><b>Deinstallation</b><span>Vorhandene Software auf Zielrechnern entfernen.</span></button>
+<button data-go="query"><i>⌕</i><b>Abfrage</b><span>Installierte Software und Versionen prüfen.</span></button></div>
+<div class="info"><div><b>Backend</b><span>Noch nicht verbunden</span></div><div><b>Pakete</b><span id="homeCount">0</span></div><div><b>Status</b><span>Lokale Webanwendung</span></div></div></section>
+
+<section id="install" class="page"><div class="title"><div><small>DEPLOYMENT</small><h2>Software installieren</h2><p>Software auswählen und auf Zielrechnern verteilen.</p></div><button id="testInstall" class="secondary">Verbindung testen</button></div>
+
+<div class="card source-card">
+  <div class="source-head"><div><h3>Softwarequelle</h3><p>Wähle, woher die Installationspakete bezogen werden.</p></div><span id="sourceModeLabel" class="source-label">Lokales Depot</span></div>
+  <div class="source-switch">
+    <button id="localSourceBtn" class="source-option active" type="button"><span>📁</span><div><b>Lokales Depot</b><small>Interner Fileserver / Software-Share</small></div></button>
+    <button id="onlineSourceBtn" class="source-option" type="button"><span>🌐</span><div><b>Online Depot</b><small>Geprüfte Pakete aus dem Internet</small></div></button>
+  </div>
+</div>
+<div class="card"><h3>Zielcomputer</h3><div class="fields"><label class="grow">Computername / IP<input id="installTarget" placeholder="z. B. PC-023 oder 10.0.0.23"></label><label id="installDomainWrap">Domäne<input id="installDomain" placeholder="z. B. FIRMA"></label><label>Benutzer<input placeholder="z. B. Administrator"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label></div><label class="workgroup-option"><input type="checkbox" id="installWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="installStatus" class="status">Noch nicht geprüft</span></div>
+<div class="split"><div class="card panel"><div id="onlineInfo" class="online-info hidden">🌐 <b>Online Depot</b><span>Diese Pakete werden später über das abgesicherte Backend aus dem Internet bezogen.</span></div><div class="head"><div><h3>Verfügbare Software</h3><small id="availableCount"></small></div><input id="search" placeholder="Software suchen …"></div><div id="available"></div></div>
+<div class="card panel"><div class="head"><div><h3>Ausgewählt</h3><small id="selectedCount"></small></div><button id="clear" class="link">Auswahl leeren</button></div><div id="selected"></div><div id="selectedEmpty" class="empty">Noch keine Software ausgewählt.</div></div></div>
+<div class="action"><div><b id="installSummary">0 Pakete ausgewählt</b><small>PowerShell-Ausführung wird später angebunden.</small></div><button id="startInstall">Installation starten</button></div></section>
+
+<section id="uninstall" class="page"><div class="title"><div><small>REMOVE</small><h2>Software deinstallieren</h2><p>Installierte Software prüfen und gezielt entfernen.</p></div><button id="testUninstall" class="secondary">Verbindung testen</button></div>
+<div class="card"><h3>Zielcomputer</h3><div class="fields"><label class="grow">Computername / IP<input id="uninstallTarget" placeholder="z. B. PC-023"></label><label id="uninstallDomainWrap">Domäne<input id="uninstallDomain" placeholder="z. B. FIRMA"></label><label>Benutzer<input placeholder="z. B. Administrator"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label></div><label class="workgroup-option"><input type="checkbox" id="uninstallWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="uninstallStatus" class="status">Noch nicht geprüft</span></div>
+<div class="card"><div class="head"><div><h3>Installierte Software</h3><small>Noch keine Abfrage durchgeführt</small></div><button id="refresh" class="secondary">↻ Abfrage aktualisieren</button></div><div id="installed" class="installed"></div></div>
+<div class="action"><div><b id="uninstallSummary">0 Programme ausgewählt</b><small>Nur ausgewählte Programme werden entfernt.</small></div><button id="startUninstall" class="danger">Deinstallation starten</button></div></section>
+
+<section id="query" class="page"><div class="title"><div><small>INVENTORY</small><h2>Softwarebestand abfragen</h2><p>Software, Version und Installationsstatus eines Zielrechners anzeigen.</p></div></div>
+<div class="card"><h3>Zielcomputer</h3><div class="fields"><label class="grow">Computername / IP<input id="queryTarget" placeholder="z. B. PC-023"></label><label id="queryDomainWrap">Domäne<input id="queryDomain" placeholder="z. B. FIRMA"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label><button id="runQuery">Abfrage starten</button></div><label class="workgroup-option"><input type="checkbox" id="queryWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="queryStatus" class="status">Noch keine Abfrage durchgeführt</span></div>
+<div class="card"><div class="head"><div><h3>Softwarestatus</h3><small id="queryInfo">Keine Daten</small></div><input id="querySearch" placeholder="Ergebnis filtern …"></div><table><thead><tr><th>Software</th><th>Version</th><th>Status</th></tr></thead><tbody id="results"></tbody></table><div id="queryEmpty" class="empty">Noch keine Abfrage durchgeführt.</div></div></section>
+
+<section id="packages" class="page"><div class="title"><div><small>ADMINISTRATION</small><h2>Softwareverwaltung</h2><p>Pakete und Installationsinformationen verwalten.</p></div><button id="addPackage">＋ Neues Paket hinzufügen</button></div>
+<div class="card"><div class="head"><div><h3>Softwarepakete</h3><small id="packageCount"></small></div><input id="packageSearch" placeholder="Pakete suchen …"></div><div class="package-table">
+<div class="package-row package-header"><span>Software</span><span>Version</span><span>Kategorie</span><span>Installer-Pfad</span><span>Aktionen</span></div>
+<div id="packageList"></div>
+</div></div></section>
+
+<section id="settings" class="page">
+  <div class="title">
+    <div><small>SYSTEMKONFIGURATION</small><h2>Einstellungen</h2><p>Zentrale Konfiguration für Softwarequellen, Backend und Standardwerte.</p></div>
+    <span class="status">Lokale Konfiguration</span>
+  </div>
+  <section class="card settings-card">
+    <div class="settings-section">
+      <h3>📦 Softwarequellen</h3>
+      <p class="settings-help">Verbindungstyp auswählen – die passenden Eingabefelder erscheinen automatisch.</p>
+      <div class="form-grid"><label class="wide">Quelle<select id="cfgSourceType">
+        <option value="smb">SMB / Windows-Freigabe</option><option value="local">Lokaler Ordner</option><option value="webdav">WebDAV / Nextcloud</option><option value="https">HTTP / HTTPS</option><option value="sftp">SFTP</option><option value="ftp">FTP / FTPS</option><option value="onedrive">Microsoft OneDrive</option><option value="sharepoint">Microsoft SharePoint</option><option value="googledrive">Google Drive</option><option value="dropbox">Dropbox</option><option value="s3">Amazon S3 / S3-kompatibel</option><option value="azureblob">Azure Blob Storage</option><option value="azurefiles">Azure Files</option><option value="nfs">NFS</option>
+      </select></label></div>
+      <div id="sourceFields" class="source-fields">
+        <h4>Google Drive</h4>
+        <div class="form-grid">
+          <label class="wide">Zugriffsart<select id="src_accessMethod"><option>Freigabelink – öffentlich</option><option>Google OAuth</option></select></label>
+          <label>Freigabelink<input id="src_shareUrl" type="url" placeholder="https://drive.google.com/drive/folders/xxxxxxxxxxxxxxxx" autocomplete="off"></label>
+        </div>
+        <div class="source-note">Nur den öffentlichen Google-Drive-Freigabelink einfügen. Kein Google-API-Key erforderlich.</div>
+      </div>
+      <div id="sourceScanControls" class="source-scan-controls">
+        <button id="scanSource" type="button">🔎 Quelle einlesen</button>
+        <span id="scanStatus">Noch keine Verbindung hergestellt</span>
+      </div>
+      <div id="sourceInventory" class="source-inventory hidden">
+        <div class="inventory-head"><b>Verfügbare Software</b><span id="inventoryCount">0 Dateien</span></div>
+        <div id="inventoryList"></div>
+      </div>
+      <div class="settings-source-actions"><button id="testSource" class="secondary">Verbindung testen</button><button id="saveSource" class="secondary">Quelle speichern</button></div>
+      <div id="sourceSaved" class="saved-source-list"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>🌐 Online Software-Depot</h3>
+      <p class="settings-help">Optionaler Paketkatalog für einfache Installationen; Downloads erfolgen später über das abgesicherte Backend.</p>
+      <div class="form-grid"><label class="wide">Depot-Katalog / API<input id="cfgOnlineUrl" placeholder="https://dein-depot.example/api"></label>
+      <label class="settings-check"><input id="cfgOnlineEnabled" type="checkbox"> Online Depot aktivieren</label>
+      <label class="settings-check"><input id="cfgVerifiedOnly" type="checkbox" checked> Nur verifizierte Pakete verwenden</label></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>🖥️ Backend / PowerShell</h3>
+      <p class="settings-help">Adresse und Verbindungsart des späteren internen Backends für Remote-PowerShell und Softwareverteilung.</p>
+      <div class="form-grid">
+        <label class="wide">Backend-Adresse<input id="cfgBackend" placeholder="https://server.example.local/api"></label>
+        <label>Verbindungsart<select id="cfgProtocol"><option>WinRM / PowerShell Remoting</option><option>PowerShell Direct / Agent</option><option>Interner Deployment-Agent</option></select></label>
+        <label>Standard-Port<input id="cfgPort" type="number" placeholder="5985"></label>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>👤 Standardwerte für Zielrechner</h3>
+      <p class="settings-help">Diese Werte werden später automatisch in Installation, Deinstallation und Abfrage vorgeschlagen.</p>
+      <div class="form-grid">
+        <label>Standard-Domäne<input id="cfgDomain" placeholder="z. B. FIRMA"></label>
+        <label>Standardbenutzer<input id="cfgUser" placeholder="z. B. Administrator"></label>
+      </div>
+      <label class="settings-check"><input id="cfgWorkgroup" type="checkbox"> Rechner standardmäßig als Arbeitsgruppe behandeln</label>
+    </div>
+    <div class="settings-section security">
+      <h3>🔐 Sicherheit</h3>
+      <p class="settings-help">Passwörter werden nicht in den Einstellungen gespeichert. Zugangsdaten sollen später nur für den jeweiligen Auftrag an das abgesicherte Backend übergeben und anschließend verworfen werden.</p>
+    </div>
+    <div class="settings-actions"><button id="resetSettings" class="secondary">Standardeinstellungen</button><button id="saveSettings">Konfiguration speichern</button></div>
+  </section>
+</section>
+</main>
+<div id="packageModal" class="modal hidden">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><small>PAKETVERWALTUNG</small><h2 id="modalTitle">Neues Softwarepaket</h2></div>
+      <button class="modal-close" data-close-modal>×</button>
+    </div>
+    <form id="packageForm">
+      <input type="hidden" id="editPackageIndex">
+      <div class="form-section">
+        <h3>Allgemeine Angaben</h3>
+        <div class="form-grid">
+          <label>Softwarename<input id="pkgName" required placeholder="z. B. Mozilla Firefox"></label>
+          <label>Version<input id="pkgVersion" required placeholder="z. B. 128.0"></label>
+          <label>Kategorie<select id="pkgCategory"><option>Browser</option><option>Office</option><option>Werkzeuge</option><option>Multimedia</option><option>Kommunikation</option><option>Sonstige</option></select></label>
+          <label class="wide">Installationsdatei<input id="pkgPath" required placeholder="\\SERVER\Software$\Firefox\128.0\FirefoxSetup.exe"></label>
+          <label class="wide">Installationsparameter<input id="pkgInstallArgs" placeholder="/S"></label>
+        </div>
+      </div>
+      <div class="form-section">
+        <h3>Deinstallation</h3>
+        <div class="form-grid">
+          <label>Deinstallationsmethode<select id="pkgUninstallMethod"><option>Automatisch über Windows</option><option>UninstallString verwenden</option><option>Eigener Befehl</option><option>MSI</option></select></label>
+          <label>Deinstallationsparameter<input id="pkgUninstallArgs" placeholder="z. B. /S"></label>
+        </div>
+      </div>
+      <div class="form-section">
+        <h3>Erkennung</h3>
+        <div class="form-grid">
+          <label>Erkennungsname<input id="pkgDetectName" required placeholder="z. B. Mozilla Firefox"></label>
+          <label>Erkennungsmethode<select id="pkgDetectMethod"><option>Installierte Anwendung</option><option>Registry</option><option>Datei vorhanden</option><option>Eigene PowerShell-Prüfung</option></select></label>
+        </div>
+      </div>
+      <div class="modal-actions"><button type="button" class="secondary" data-close-modal>Abbrechen</button><button type="submit" id="savePackage">Paket speichern</button></div>
+    </form>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div><script src="app.js"></script></body></html>
