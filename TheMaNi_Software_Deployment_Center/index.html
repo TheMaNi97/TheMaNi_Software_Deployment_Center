@@ -1,12 +1,15 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#E1001A"><link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"><title>TheMaNi’s Software Deployment Center</title></head><body>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#E1001A"><link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v63"><title>TheMaNi’s Software Deployment Center</title></head><body>
 <header class="topbar"><div class="brand"><div class="themani-logo"><span class="tm-badge">TM</span><div><b>TheMaNi’s</b><small>SOFTWARE DEPLOYMENT CENTER</small></div></div><div class="divider"></div><div><h1>Software Deployment Center</h1><p>Interne Softwareverteilung & Rechnerverwaltung</p></div></div><div class="ready">● Bereit</div></header>
 <nav class="nav"><button class="nav active" data-page="home">⌂ Startseite</button><button class="nav" data-page="install">▣ Installation</button><button class="nav" data-page="uninstall">▱ Deinstallation</button><button class="nav" data-page="query">⌕ Abfrage</button><button class="nav" data-page="packages">⚙ Softwareverwaltung</button><button class="nav" data-page="settings">⚙ Einstellungen</button></nav>
 <main>
-<section id="home" class="page active"><div class="hero"><small>TheMaNi’s · INTERNAL TOOL</small><h2>Software Deployment Center</h2><p>Software zentral auswählen, Rechner prüfen und Pakete kontrolliert verteilen.</p></div><div class="cards">
-<button data-go="install"><i>▣</i><b>Installation</b><span>Softwarepakete auf Zielrechner verteilen.</span></button>
-<button data-go="uninstall"><i>▱</i><b>Deinstallation</b><span>Vorhandene Software auf Zielrechnern entfernen.</span></button>
-<button data-go="query"><i>⌕</i><b>Abfrage</b><span>Installierte Software und Versionen prüfen.</span></button></div>
-<div class="info"><div><b>Backend</b><span>Noch nicht verbunden</span></div><div><b>Pakete</b><span id="homeCount">0</span></div><div><b>Status</b><span>Lokale Webanwendung</span></div></div></section>
+<section id="home" class="page active"><div class="hero"><small>TheMaNi’s · INTERNAL TOOL</small><h2>Software Deployment Center</h2><p>Software zentral auswählen, Rechner prüfen und Pakete kontrolliert verteilen.</p></div><div class="home-status-panel">
+  <div class="info">
+    <div><b>Backend</b><span>Noch nicht verbunden</span></div>
+    <div><b>Pakete</b><span id="homeCount">0</span></div>
+    <div><b>Status</b><span>Lokale Webanwendung</span></div>
+  </div>
+  <p class="home-hint">Nutze die Navigation oben, um Software zu installieren, zu deinstallieren, Zielrechner abzufragen oder die Softwareverwaltung zu konfigurieren.</p>
+</div></section>
 
 <section id="install" class="page"><div class="title"><div><small>DEPLOYMENT</small><h2>Software installieren</h2><p>Software auswählen und auf Zielrechnern verteilen.</p></div><button id="testInstall" class="secondary">Verbindung testen</button></div>
 
@@ -43,9 +46,9 @@
     <span class="status">Lokale Konfiguration</span>
   </div>
   <section class="card settings-card">
-    <div class="settings-section">
-      <h3>📦 Softwarequellen</h3>
-      <p class="settings-help">Verbindungstyp auswählen – die passenden Eingabefelder erscheinen automatisch.</p>
+    <details class="settings-section settings-accordion" id="source-settings">
+      <summary><span class="settings-summary-icon">📦</span><span><b>Softwarequellen</b><small>Verbindungstyp auswählen – die passenden Eingabefelder erscheinen automatisch.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
       <div class="form-grid"><label class="wide">Quelle<select id="cfgSourceType">
         <option value="smb">SMB / Windows-Freigabe</option><option value="local">Lokaler Ordner</option><option value="webdav">WebDAV / Nextcloud</option><option value="https">HTTP / HTTPS</option><option value="sftp">SFTP</option><option value="ftp">FTP / FTPS</option><option value="onedrive">Microsoft OneDrive</option><option value="sharepoint">Microsoft SharePoint</option><option value="googledrive">Google Drive</option><option value="dropbox">Dropbox</option><option value="s3">Amazon S3 / S3-kompatibel</option><option value="azureblob">Azure Blob Storage</option><option value="azurefiles">Azure Files</option><option value="nfs">NFS</option>
       </select></label></div>
@@ -67,42 +70,66 @@
       </div>
       <div class="settings-source-actions"><button id="testSource" class="secondary">Verbindung testen</button><button id="saveSource" class="secondary">Quelle speichern</button></div>
       <div id="sourceSaved" class="saved-source-list"></div>
-    </div>
+      </div>
+    </details>
 
-    <div class="settings-section">
-      <h3>🌐 Online Software-Depot</h3>
-      <p class="settings-help">Optionaler Paketkatalog für einfache Installationen; Downloads erfolgen später über das abgesicherte Backend.</p>
+    <details class="settings-section settings-accordion" id="online-settings">
+      <summary><span class="settings-summary-icon">🌐</span><span><b>Online Software-Depot</b><small>Optionaler Paketkatalog für einfache Installationen und Paketkataloge.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
       <div class="form-grid"><label class="wide">Depot-Katalog / API<input id="cfgOnlineUrl" placeholder="https://dein-depot.example/api"></label>
       <label class="settings-check"><input id="cfgOnlineEnabled" type="checkbox"> Online Depot aktivieren</label>
       <label class="settings-check"><input id="cfgVerifiedOnly" type="checkbox" checked> Nur verifizierte Pakete verwenden</label></div>
-    </div>
+      </div>
+    </details>
 
-    <div class="settings-section">
-      <h3>🖥️ Backend / PowerShell</h3>
-      <p class="settings-help">Adresse und Verbindungsart des späteren internen Backends für Remote-PowerShell und Softwareverteilung.</p>
+    <details class="settings-section settings-accordion" id="backend-settings">
+      <summary><span class="settings-summary-icon">🖥️</span><span><b>Backend / PowerShell</b><small>Adresse und Verbindungsart des späteren internen Backends für Remote-PowerShell und Softwareverteilung.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
       <div class="form-grid">
         <label class="wide">Backend-Adresse<input id="cfgBackend" placeholder="https://server.example.local/api"></label>
         <label>Verbindungsart<select id="cfgProtocol"><option>WinRM / PowerShell Remoting</option><option>PowerShell Direct / Agent</option><option>Interner Deployment-Agent</option></select></label>
         <label>Standard-Port<input id="cfgPort" type="number" placeholder="5985"></label>
       </div>
-    </div>
-    <div class="settings-section">
-      <h3>👤 Standardwerte für Zielrechner</h3>
-      <p class="settings-help">Diese Werte werden später automatisch in Installation, Deinstallation und Abfrage vorgeschlagen.</p>
+      </div>
+    </details>
+    <details class="settings-section settings-accordion" id="target-settings">
+      <summary><span class="settings-summary-icon">👤</span><span><b>Standardwerte für Zielrechner</b><small>Diese Werte werden später automatisch in Installation, Deinstallation und Abfrage vorgeschlagen.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
       <div class="form-grid">
         <label>Standard-Domäne<input id="cfgDomain" placeholder="z. B. FIRMA"></label>
         <label>Standardbenutzer<input id="cfgUser" placeholder="z. B. Administrator"></label>
       </div>
       <label class="settings-check"><input id="cfgWorkgroup" type="checkbox"> Rechner standardmäßig als Arbeitsgruppe behandeln</label>
-    </div>
-    <div class="settings-section security">
-      <h3>🔐 Sicherheit</h3>
-      <p class="settings-help">Passwörter werden nicht in den Einstellungen gespeichert. Zugangsdaten sollen später nur für den jeweiligen Auftrag an das abgesicherte Backend übergeben und anschließend verworfen werden.</p>
-    </div>
+      </div>
+    </details>
+    <details class="settings-section settings-accordion security" id="security-settings">
+      <summary><span class="settings-summary-icon">🔐</span><span><b>Sicherheit</b><small>Hinweise zum Umgang mit Zugangsdaten und Passwörtern.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+        <p class="settings-help">Passwörter werden nicht in den Einstellungen gespeichert. Zugangsdaten sollen später nur für den jeweiligen Auftrag an das abgesicherte Backend übergeben und anschließend verworfen werden.</p>
+      </div>
+    </details>
     <div class="settings-actions"><button id="resetSettings" class="secondary">Standardeinstellungen</button><button id="saveSettings">Konfiguration speichern</button></div>
   </section>
 </section>
 </main>
+<div id="deletePackageModal" class="modal hidden">
+  <div class="modal-backdrop" data-close-delete-modal></div>
+  <div class="modal-card delete-confirm-card">
+    <div class="modal-head">
+      <div><small>SOFTWAREVERWALTUNG</small><h2>Softwarepaket löschen</h2></div>
+      <button class="modal-close" data-close-delete-modal aria-label="Abbrechen">×</button>
+    </div>
+    <div class="delete-confirm-content">
+      <p><b>Sie sind dabei, das Softwarepaket zu löschen.</b></p>
+      <p class="settings-help">Das Paket wird aus der Softwareverwaltung entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. Wenn Sie das Paket später wieder benötigen, muss es vollständig neu erstellt bzw. erneut aus einer Quelle übernommen werden.</p>
+      <div class="delete-package-name" id="deletePackageName"></div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="secondary" data-close-delete-modal>Abbrechen</button>
+      <button type="button" id="confirmDeletePackage" class="delete-confirm-button">Bestätigen</button>
+    </div>
+  </div>
+</div>
 <div id="packageModal" class="modal hidden">
   <div class="modal-backdrop" data-close-modal></div>
   <div class="modal-card">
@@ -140,4 +167,4 @@
     </form>
   </div>
 </div>
-<div id="toast" class="toast hidden"></div><script src="app.js"></script></body></html>
+<div id="toast" class="toast hidden"></div><script src="app.js?v63"></script></body></html>

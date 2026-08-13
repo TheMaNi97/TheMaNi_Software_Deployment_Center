@@ -165,7 +165,14 @@ function renderPackages(){
  let list=packages.map((p,i)=>({...p,_i:i})).filter(p=>`${p.name} ${p.category} ${p.version}`.toLowerCase().includes(q));
  $("packageCount").textContent=packages.length+" Pakete";
  $("packageList").innerHTML=list.map(p=>`<div class="package-row ${p.disabled?"package-inactive":""}">
- <b>${p.name}</b><span>${p.version}</span><span>${p.category}</span><span class="path">${p.path}</span>
+ <b>${p.name}</b><span>${p.version}</span><span>${p.category}</span>
+ <span class="path package-source-cell">${p.path||"Keine Installationsquelle hinterlegt"}</span>
+ <span class="package-info-cell">
+   <span class="info-point" tabindex="0" aria-label="Quellinformationen"
+     data-info-source="${String(p.source||"Lokal / manuell").replace(/"/g,"&quot;")}"
+     data-info-file="${String(p.file||p.path||"Nicht hinterlegt").replace(/"/g,"&quot;")}"
+     data-info-status="${p.disabled?"Deaktiviert":"Verfügbar"}">?</span>
+ </span>
  <span class="package-actions">
  <button data-edit="${p._i}">Bearbeiten</button>
  <button data-toggle="${p._i}" class="disabled">${p.disabled?"Aktivieren":"Deaktivieren"}</button>
@@ -189,6 +196,122 @@ function openPackageModal(index=null){
 }
 function closePackageModal(){$("packageModal").classList.add("hidden")}
 document.querySelectorAll("[data-close-modal]").forEach(e=>e.onclick=closePackageModal);
+let pendingDeletePackageIndex=null;
+let activeInfoPoint=null;
+let activeInfoOverlay=null;
+
+function hideInfoTooltip(){
+  if(activeInfoOverlay){activeInfoOverlay.remove();activeInfoOverlay=null;}
+  activeInfoPoint=null;
+}
+
+function showInfoTooltip(point){
+  if(!point)return;
+  hideInfoTooltip();
+  activeInfoPoint=point;
+
+  const overlay=document.createElement("div");
+  overlay.className="info-tooltip-overlay";
+  overlay.setAttribute("aria-hidden","true");
+
+  const tip=document.createElement("div");
+  tip.className="info-tooltip-portal";
+
+  const title=document.createElement("b");
+  title.textContent="Quellinformationen";
+  tip.appendChild(title);
+
+  const source=document.createElement("span");
+  source.textContent=`Quelle: ${point.dataset.infoSource||"Lokal / manuell"}`;
+  tip.appendChild(source);
+
+  const file=document.createElement("span");
+  file.textContent=`Installer: ${point.dataset.infoFile||"Nicht hinterlegt"}`;
+  tip.appendChild(file);
+
+  const status=document.createElement("span");
+  status.textContent=`Status: ${point.dataset.infoStatus||"Verfügbar"}`;
+  tip.appendChild(status);
+
+  overlay.appendChild(tip);
+  document.body.appendChild(overlay);
+  activeInfoOverlay=overlay;
+
+  const r=point.getBoundingClientRect();
+  const margin=12;
+  const gap=10;
+  const width=Math.min(280,window.innerWidth-margin*2);
+  tip.style.width=`${width}px`;
+  tip.style.visibility="hidden";
+  tip.style.opacity="0";
+
+  requestAnimationFrame(()=>{
+    if(!activeInfoOverlay)return;
+    const tr=tip.getBoundingClientRect();
+    let left=r.right+gap;
+    let top=r.bottom+gap;
+
+    if(left+tr.width>window.innerWidth-margin) left=r.left-tr.width-gap;
+    if(top+tr.height>window.innerHeight-margin) top=r.top-tr.height-gap;
+
+    left=Math.max(margin,Math.min(left,window.innerWidth-tr.width-margin));
+    top=Math.max(margin,Math.min(top,window.innerHeight-tr.height-margin));
+
+    tip.style.left=`${left}px`;
+    tip.style.top=`${top}px`;
+    tip.style.visibility="visible";
+    tip.style.opacity="1";
+  });
+}
+
+document.addEventListener("mouseover",e=>{
+  const point=e.target.closest?.(".info-point");
+  if(point && point!==activeInfoPoint) showInfoTooltip(point);
+});
+document.addEventListener("mouseout",e=>{
+  const point=e.target.closest?.(".info-point");
+  if(point && !point.contains(e.relatedTarget)) hideInfoTooltip();
+});
+document.addEventListener("focusin",e=>{
+  const point=e.target.closest?.(".info-point");
+  if(point) showInfoTooltip(point);
+});
+document.addEventListener("focusout",e=>{
+  if(e.target.closest?.(".info-point")) hideInfoTooltip();
+});
+window.addEventListener("scroll",hideInfoTooltip,true);
+window.addEventListener("resize",()=>{
+  if(activeInfoPoint) showInfoTooltip(activeInfoPoint);
+});
+
+function openDeletePackageModal(index){
+  const p=packages[index];
+  if(!p)return;
+  if(typeof hideInfoTooltip==="function") hideInfoTooltip();
+  pendingDeletePackageIndex=index;
+  $("deletePackageName").textContent=`${p.name} · Version ${p.version||"unbekannt"}`;
+  $("deletePackageModal").classList.remove("hidden");
+}
+function closeDeletePackageModal(){
+  pendingDeletePackageIndex=null;
+  $("deletePackageModal").classList.add("hidden");
+}
+function confirmDeletePackage(){
+  if(pendingDeletePackageIndex===null)return;
+  const i=pendingDeletePackageIndex;
+  const deleted=packages[i];
+  if(!deleted){closeDeletePackageModal();return;}
+  packages.splice(i,1);
+  importedPackages=importedPackages.filter(p=>p.importKey!==deleted.importKey);
+  persistImportedPackages();
+  renderPackages();renderInstall();renderPackageInventory();
+  $("homeCount").textContent=packages.length;
+  closeDeletePackageModal();
+  toast("Paket gelöscht.");
+}
+document.querySelectorAll("[data-close-delete-modal]").forEach(e=>e.onclick=closeDeletePackageModal);
+$("confirmDeletePackage").onclick=confirmDeletePackage;
+
 $("packageList").onclick=e=>{
  const b=e.target.closest("button");if(!b)return;
  if(b.dataset.edit!==undefined)openPackageModal(Number(b.dataset.edit));
@@ -199,16 +322,7 @@ $("packageList").onclick=e=>{
    if(importedIndex>=0){importedPackages[importedIndex]={...importedPackages[importedIndex],disabled:packages[i].disabled};persistImportedPackages();}
    renderPackages();renderInstall();toast(packages[i].disabled?"Paket deaktiviert.":"Paket aktiviert.");
  }
- if(b.dataset.delete!==undefined){
-   const i=Number(b.dataset.delete);
-   if(confirm(`"${packages[i].name}" wirklich löschen?`)){
-     const deleted=packages[i];
-     packages.splice(i,1);
-     importedPackages=importedPackages.filter(p=>p.importKey!==deleted.importKey);
-     persistImportedPackages();
-     renderPackages();renderInstall();renderPackageInventory();toast("Paket gelöscht.")
-   }
- }
+ if(b.dataset.delete!==undefined)openDeletePackageModal(Number(b.dataset.delete));
 };
 $("packageForm").onsubmit=e=>{
  e.preventDefault();
@@ -299,6 +413,8 @@ azureblob:{"Microsoft Entra ID / OAuth":"Für produktive Azure-Blob-Zugriffe ist
 };
 
 
+function openSettingsPanel(id){const p=document.getElementById(id);if(p&&p.tagName==="DETAILS")p.open=true;}
+
 function renderSavedSources(){
   $("sourceSaved").innerHTML=savedSources.length
     ? "<b>Gespeicherte Quellen</b>"+savedSources.map((x,i)=>`
@@ -363,9 +479,10 @@ $("sourceSaved").onclick=e=>{
   });
 
   show("settings");
+  openSettingsPanel("source-settings");
   toast(`${source.name} geladen – Verbindung testen oder Quelle einlesen.`);
 };
-function loadSettings(){const c={...defaultConfig,...JSON.parse(localStorage.getItem("themaniDeploymentConfig")||"{}")};$("cfgOnlineEnabled").checked=!!c.onlineEnabled;$("cfgOnlineUrl").value=c.onlineUrl||"";$("cfgVerifiedOnly").checked=c.verifiedOnly!==false;$("cfgBackend").value=c.backend||"";$("cfgProtocol").value=c.protocol;$("cfgPort").value=c.port;$("cfgDomain").value=c.domain||"";$("cfgUser").value=c.user||"";$("cfgWorkgroup").checked=!!c.workgroup;$("cfgSourceType").value=c.sourceType||"smb";renderSourceFields();renderSavedSources()}
+function loadSettings(){const c={...defaultConfig,...JSON.parse(localStorage.getItem("themaniDeploymentConfig")||"{}")};$("cfgOnlineEnabled").checked=!!c.onlineEnabled;$("cfgOnlineUrl").value=c.onlineUrl||"";$("cfgVerifiedOnly").checked=c.verifiedOnly!==false;$("cfgBackend").value=c.backend||"";$("cfgProtocol").value=c.protocol;$("cfgPort").value=c.port;$("cfgDomain").value=c.domain||"";$("cfgUser").value=c.user||"";$("cfgWorkgroup").checked=!!c.workgroup;$("cfgSourceType").value=c.sourceType||"smb";renderSourceFields();renderSavedSources();const sourcePanel=$("source-settings");if(sourcePanel)sourcePanel.open=false}
 function saveSettings(){const c={sourceType:$("cfgSourceType").value,onlineEnabled:$("cfgOnlineEnabled").checked,onlineUrl:$("cfgOnlineUrl").value.trim(),verifiedOnly:$("cfgVerifiedOnly").checked,backend:$("cfgBackend").value.trim(),protocol:$("cfgProtocol").value,port:$("cfgPort").value,domain:$("cfgDomain").value.trim(),user:$("cfgUser").value.trim(),workgroup:$("cfgWorkgroup").checked};localStorage.setItem("themaniDeploymentConfig",JSON.stringify(c));toast("Konfiguration gespeichert.")}
 function resetSettings(){localStorage.removeItem("themaniDeploymentConfig");localStorage.removeItem("themaniSoftwareSources");loadSettings();toast("Standardeinstellungen wiederhergestellt.")}
 $("saveSettings").onclick=saveSettings;$("resetSettings").onclick=resetSettings;loadSettings();
@@ -728,5 +845,5 @@ if(document.readyState==="loading"){
 }
 
 // TheMaNi V27 diagnostic marker
-window.THEMANI_VERSION = "V45";
-console.info("[TheMaNi] Frontend V45 geladen – Demo-Quellenbestand deaktiviert.");
+window.THEMANI_VERSION = "V63";
+console.info("[TheMaNi] Frontend V63 geladen – Demo-Quellenbestand deaktiviert.");

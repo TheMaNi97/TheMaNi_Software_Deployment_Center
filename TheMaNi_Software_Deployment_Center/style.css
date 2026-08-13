@@ -22,13 +22,13 @@
 .card td{color:#dcecff}
 .package-table{width:100%;overflow:hidden;border:1px solid #194d7e;border-radius:9px}
 .package-header{background:#0d3159!important;color:#fff;font-weight:800}
-.package-row{display:grid;grid-template-columns:2fr 1fr 1.2fr 3fr;gap:0;align-items:center;border-bottom:1px solid #194d7e!important;padding:0!important}
+.package-row{display:grid;grid-template-columns:2fr 1fr 1.2fr minmax(180px,3fr) 42px auto;gap:0;align-items:center;border-bottom:1px solid #194d7e!important;padding:0!important}
 .package-row>span,.package-row>b{padding:12px 14px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .package-row:last-child{border-bottom:0!important}
 .package-row:nth-child(even){background:#0a203a}
 .package-row .path{font-family:Consolas,monospace;font-size:11px;color:#8fc8ff}
 .toast{background:#0b2340;border:1px solid #2777b8}
-@media(max-width:800px){.package-row{grid-template-columns:1.5fr 1fr}.package-row>span:nth-child(3),.package-row>span:nth-child(4){display:none}.themani-logo{min-width:0}.themani-logo b{font-size:20px}.tm-badge{width:36px;height:36px}}
+@media(max-width:800px){.package-row{grid-template-columns:1.5fr 1fr}.package-row>span:nth-child(3),.package-row>span:nth-child(4),.package-row>span:nth-child(5){display:none}.themani-logo{min-width:0}.themani-logo b{font-size:20px}.tm-badge{width:36px;height:36px}}
 .workgroup-option{display:flex!important;align-items:center;gap:7px;margin-top:10px;color:var(--muted);font-size:12px;font-weight:600!important}
 .workgroup-option input{width:17px!important;min-height:17px!important;margin:0}
 .fields label.domain-disabled input{opacity:.45;cursor:not-allowed}
@@ -36,7 +36,7 @@
 .fields input[type="password"]{letter-spacing:.08em}
 .credentials-note{font-size:11px;color:var(--muted);margin-top:8px}
 
-.modal.hidden{display:none!important}.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center}.modal-backdrop{position:absolute;inset:0;background:#0009;backdrop-filter:blur(3px)}.modal-card{position:relative;width:min(760px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#0a1c34;border:1px solid #2677b8;border-radius:14px;box-shadow:0 25px 70px #0008;color:var(--text);padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #194d7e;padding-bottom:13px;margin-bottom:15px}.modal-head small{color:var(--cyan);font-weight:800;letter-spacing:1.4px}.modal-head h2{margin:4px 0 0;font-size:22px}.modal-close{background:transparent;border:0;color:#b9d7f3;font-size:27px;cursor:pointer}.form-section{border:1px solid #194d7e;border-radius:10px;padding:14px;margin-bottom:12px;background:#081a31}.form-section h3{margin:0 0 12px;font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid label{font-size:12px;font-weight:700}.form-grid .wide{grid-column:1/-1}.form-grid input,.form-grid select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.form-grid select{cursor:pointer}.modal-actions{display:flex;justify-content:flex-end;gap:9px}.modal-actions button{min-height:42px;padding:8px 15px;border-radius:7px;border:1px solid #2b6fa5;font-weight:700}.modal-actions button[type=submit]{background:var(--blue);border-color:var(--blue);color:#fff}.package-table{overflow:auto}.package-row{grid-template-columns:2fr .8fr 1.1fr 2.8fr 1.3fr}.package-row>span,.package-row>b{padding:12px 14px}.package-actions{display:flex;gap:5px;padding:8px 10px}.package-actions button{border:1px solid #2a669e;background:#0c2340;color:#cfe9ff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer}.package-actions button:hover{border-color:var(--blue);color:#fff}.package-actions .delete{color:#ff9aa5;border-color:#6e3040}.package-actions .disabled{color:#9ba9b8}.package-inactive{opacity:.48}
+.modal.hidden{display:none!important}.modal{position:fixed;inset:0;z-index:10000;display:grid;place-items:center}.modal-backdrop{position:absolute;inset:0;background:#0009;backdrop-filter:blur(3px)}.modal-card{position:relative;width:min(760px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#0a1c34;border:1px solid #2677b8;border-radius:14px;box-shadow:0 25px 70px #0008;color:var(--text);padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #194d7e;padding-bottom:13px;margin-bottom:15px}.modal-head small{color:var(--cyan);font-weight:800;letter-spacing:1.4px}.modal-head h2{margin:4px 0 0;font-size:22px}.modal-close{background:transparent;border:0;color:#b9d7f3;font-size:27px;cursor:pointer}.form-section{border:1px solid #194d7e;border-radius:10px;padding:14px;margin-bottom:12px;background:#081a31}.form-section h3{margin:0 0 12px;font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid label{font-size:12px;font-weight:700}.form-grid .wide{grid-column:1/-1}.form-grid input,.form-grid select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.form-grid select{cursor:pointer}.modal-actions{display:flex;justify-content:flex-end;gap:9px}.modal-actions button{min-height:42px;padding:8px 15px;border-radius:7px;border:1px solid #2b6fa5;font-weight:700}.modal-actions button[type=submit]{background:var(--blue);border-color:var(--blue);color:#fff}.package-table{overflow:auto}.package-row{grid-template-columns:2fr .8fr 1.1fr 2.8fr 1.3fr}.package-row>span,.package-row>b{padding:12px 14px}.package-actions{display:flex;gap:5px;padding:8px 10px}.package-actions button{border:1px solid #2a669e;background:#0c2340;color:#cfe9ff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer}.package-actions button:hover{border-color:var(--blue);color:#fff}.package-actions .delete{color:#ff9aa5;border-color:#6e3040}.package-actions .disabled{color:#9ba9b8}.package-inactive{opacity:.48}
 @media(max-width:800px){.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.package-row{grid-template-columns:1.4fr .8fr 1fr 2fr 1.2fr}.package-row>span:nth-child(4){display:none}}
 
 .package-row{grid-template-columns:minmax(150px,1.8fr) .65fr .95fr minmax(220px,2.5fr) 245px}
@@ -375,3 +375,342 @@
 .saved-source:hover{transform:translateY(-1px)}
 .saved-source-main{min-width:0;flex:1}
 .saved-source-main small{display:block;opacity:.72;margin-top:3px}
+
+
+/* V47 settings accordion - clean separated cards */
+.settings-accordion{
+  padding:0 !important;
+  overflow:hidden;
+  border:1px solid rgba(52,116,178,.72);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(14,39,70,.96),rgba(8,27,50,.96));
+  box-shadow:0 5px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.025);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .15s ease;
+}
+.settings-accordion + .settings-accordion{margin-top:14px}
+.settings-accordion:hover{
+  border-color:rgba(65,143,213,.9);
+  box-shadow:0 7px 22px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.03);
+}
+.settings-accordion > summary{
+  list-style:none;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+  padding:17px 20px;
+  user-select:none;
+  background:linear-gradient(180deg,rgba(22,58,99,.9),rgba(17,47,82,.88));
+  transition:background .2s ease;
+}
+.settings-accordion > summary::-webkit-details-marker{display:none}
+.settings-accordion > summary::marker{display:none;content:""}
+.settings-accordion > summary:hover{
+  background:linear-gradient(180deg,rgba(27,70,116,.96),rgba(20,55,94,.94));
+}
+.settings-summary-icon{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:rgba(4,20,38,.42);
+  border:1px solid rgba(84,157,219,.34);
+  font-size:18px;
+  line-height:1;
+}
+.settings-accordion > summary b{
+  display:block;
+  font-size:16px;
+  line-height:1.2;
+}
+.settings-accordion > summary small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted,#9db0c8);
+  font-size:12px;
+  line-height:1.35;
+  font-weight:400;
+}
+.settings-chevron{
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(84,157,219,.35);
+  background:rgba(4,20,38,.34);
+  font-size:17px;
+  line-height:1;
+  opacity:.85;
+  transform:rotate(0deg);
+  transition:transform .2s ease,background .2s ease;
+}
+.settings-accordion[open]{
+  border-color:rgba(57,166,239,.95);
+  box-shadow:0 8px 26px rgba(0,0,0,.3),0 0 0 1px rgba(57,166,239,.08);
+}
+.settings-accordion[open] > summary{
+  border-bottom:1px solid rgba(64,133,192,.58);
+  background:linear-gradient(180deg,rgba(24,66,111,.98),rgba(19,54,92,.96));
+}
+.settings-accordion[open] .settings-chevron{
+  transform:rotate(180deg);
+  background:rgba(25,94,145,.38);
+}
+.settings-panel-content{
+  padding:20px;
+  background:linear-gradient(180deg,rgba(7,26,48,.72),rgba(5,22,41,.88));
+}
+
+/* Give controls inside the open cards clearer visual grouping. */
+.settings-panel-content .form-grid{
+  gap:14px;
+}
+.settings-panel-content label{
+  padding:11px 12px 12px;
+  border:1px solid rgba(58,111,161,.48);
+  border-radius:9px;
+  background:rgba(9,30,54,.66);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.018);
+}
+.settings-panel-content label.wide{
+  padding-bottom:12px;
+}
+.settings-panel-content label:focus-within{
+  border-color:rgba(57,166,239,.82);
+  box-shadow:0 0 0 2px rgba(57,166,239,.09),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.settings-panel-content input,
+.settings-panel-content select{
+  margin-top:7px;
+}
+.settings-panel-content .settings-check{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 12px;
+}
+.settings-panel-content .settings-check input{
+  margin:0;
+}
+
+/* V48 UX improvements */
+.home-status-panel{margin-top:18px}
+.home-hint{margin:14px 2px 0;color:var(--muted,#9db0c8);font-size:13px;line-height:1.5}
+.info-point{
+  position:relative;
+  display:inline-grid;
+  place-items:center;
+  width:18px;
+  height:18px;
+  margin-left:7px;
+  border-radius:50%;
+  border:1px solid rgba(130,157,183,.75);
+  background:rgba(92,106,122,.5);
+  color:#eef5fb;
+  font-size:11px;
+  font-weight:700;
+  cursor:help;
+  vertical-align:middle;
+}
+  .delete-confirm-card{max-width:520px}
+.delete-confirm-content{padding:4px 0 6px}
+.delete-confirm-content p{margin:0 0 10px;line-height:1.5}
+.delete-package-name{
+  margin-top:14px;
+  padding:11px 13px;
+  border:1px solid rgba(180,95,95,.4);
+  border-radius:8px;
+  background:rgba(95,34,34,.22);
+  font-weight:600;
+}
+.delete-confirm-button{
+  border:1px solid rgba(205,75,75,.7);
+  background:rgba(150,38,38,.86);
+  color:#fff;
+}
+.delete-confirm-button:hover{background:rgba(180,45,45,.96)}
+
+
+.package-source-cell{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.package-info-cell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 6px;
+  overflow:visible !important;
+  white-space:normal !important;
+}
+.package-info-cell .info-point{margin-left:0}
+.package-row{overflow:visible}
+.package-row>span,.package-row>b{overflow:hidden}
+.package-info-cell{overflow:visible !important}
+
+.package-info-cell,
+.package-row,
+.package-list,
+.package-panel{
+  overflow:visible !important;
+}
+
+/* V53: make the hovered package row sit above neighboring rows */
+.package-row{position:relative;z-index:1;overflow:visible!important}
+.package-row:hover,.package-row:focus-within{z-index:1000}
+.package-info-cell{position:relative;z-index:1001;overflow:visible!important}
+.info-point{position:relative;z-index:1002}
+
+/* V54: tooltip portal lives directly under <body>, so table stacking contexts
+   and overflow clipping cannot hide it. */
+.info-tooltip-portal{
+  position:fixed!important;
+  display:block;
+  z-index:2147483647!important;
+  left:0;
+  top:0;
+  visibility:hidden;
+  opacity:0;
+  width:280px;
+  max-width:calc(100vw - 24px);
+  padding:11px 13px;
+  box-sizing:border-box;
+  border:1px solid rgba(130,150,170,.85);
+  border-radius:8px;
+  background:rgba(46,51,57,.99);
+  box-shadow:0 18px 45px rgba(0,0,0,.72);
+  color:#f1f4f7;
+  text-align:left;
+  font-size:12px;
+  line-height:1.4;
+  pointer-events:none;
+  overflow:visible!important;
+}
+.info-tooltip-portal b{display:block;margin-bottom:6px}
+.info-tooltip-portal span{display:block;margin-top:3px;overflow-wrap:anywhere}
+
+
+/* V55: absolute top-level portal layer for info tooltips */
+.info-tooltip-overlay{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  z-index:2147483647!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+  transform:none!important;
+  filter:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  isolation:isolate!important;
+}
+.info-tooltip-overlay .info-tooltip-portal{
+  position:fixed!important;
+  display:block!important;
+  z-index:2147483647!important;
+  box-sizing:border-box;
+  padding:11px 13px!important;
+  border:1px solid rgba(145,165,185,.9)!important;
+  border-radius:8px!important;
+  background:#2e3339!important;
+  color:#f1f4f7!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.85)!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  text-align:left!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  visibility:hidden;
+  opacity:0;
+  transform:none!important;
+}
+.info-tooltip-overlay .info-tooltip-portal b{display:block!important;margin-bottom:6px!important}
+.info-tooltip-overlay .info-tooltip-portal span{display:block!important;margin-top:3px!important;overflow-wrap:anywhere!important}
+.info-tooltip-overlay 
+
+/* V56: source tooltip stays invisible; only the body-level portal is rendered. */
+.info-point > .info-tooltip{display:none!important;visibility:hidden!important;opacity:0!important}
+.info-tooltip-portal{display:block!important}
+
+/* V57: only one tooltip exists, created dynamically at body level. */
+.info-tooltip-overlay{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  z-index:2147483647!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+  transform:none!important;
+  filter:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  isolation:isolate!important;
+}
+.info-tooltip-portal{
+  position:fixed!important;
+  display:block!important;
+  z-index:2147483647!important;
+  box-sizing:border-box!important;
+  padding:11px 13px!important;
+  width:280px;
+  max-width:calc(100vw - 24px);
+  border:1px solid rgba(145,165,185,.9)!important;
+  border-radius:8px!important;
+  background:#2e3339!important;
+  color:#f1f4f7!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.85)!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  text-align:left!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  visibility:hidden;
+  opacity:0;
+  transform:none!important;
+}
+.info-tooltip-portal b{display:block!important;margin-bottom:6px!important}
+.info-tooltip-portal span{display:block!important;margin-top:3px!important;overflow-wrap:anywhere!important}
+.info-tooltip-portal {
+  border-radius: 8px !important;
+}
+
+/* V60: Info-Popup is deliberately a plain box. No pseudo-elements or pointer. */
+.info-tooltip-portal,
+.info-tooltip-overlay .info-tooltip-portal {
+  border:1px solid rgba(145,165,185,.9)!important;
+  border-radius:8px!important;
+  background:#2e3339!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.85)!important;
+}
+
+/* V61: modal dialogs must always cover package rows and their hover layers. */
+.modal{
+  z-index:10000!important;
+  isolation:isolate;
+}
+.modal-backdrop{
+  z-index:0!important;
+}
+.modal-card{
+  z-index:1!important;
+}
+
+/* V62: separate settings actions visually from the Sicherheit accordion. */
+.settings-actions{
+  margin-top:28px!important;
+  padding-top:18px!important;
+  border-top:1px solid rgba(25,77,126,.55);
+}
+
+/* V63: Softwarequellen stays collapsed until explicitly opened. */
+#source-settings:not([open]) .settings-panel-content{
+  display:none!important;
+}
