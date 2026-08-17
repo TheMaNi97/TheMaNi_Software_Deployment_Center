@@ -1,78 +1,148 @@
+/* ===== TheMaNi: Globale Variablen und Grundlayout ===== */
+/* ===== TheMaNi: Karten, Bereiche und Inhaltscontainer ===== */
+/* ===== TheMaNi: Buttons und Interaktionen ===== */
+/* ===== TheMaNi: Responsive Darstellung ===== */
+/* CSS-Regel: :root – gestaltet das zugehörige Element oder Layout. */
 :root{--blue:#168cff;--blue-dark:#0757b8;--cyan:#19bfff;--text:#eaf3ff;--muted:#9eb1c7;--bg:#061225;--card:#0b1d36;--border:#1b4f82;--red:#ff3b4d}*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#040d1b,#071a31 55%,#061225);color:var(--text);font-family:"Segoe UI",Arial,sans-serif}button,input{font:inherit}.topbar{height:78px;background:#071a31;border-top:4px solid var(--blue);border-bottom:1px solid var(--border);padding:0 max(18px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:16px}.logo{display:flex;align-items:flex-end;gap:3px;color:var(--red)}.logo b{font-size:32px;letter-spacing:-2px}.logo small{color:#222;font-size:10px}.divider{height:35px;border-left:1px solid var(--border)}h1{font-size:18px;margin:0}p{margin:3px 0;color:var(--muted);font-size:12px}.ready{color:#19733a;font-size:12px;font-weight:bold}.nav{height:50px;background:#fff;border:0;border-bottom:1px solid var(--border);display:flex;padding:0 max(18px,calc((100% - 1180px)/2));gap:3px}.nav button{padding:0 18px;border-bottom:3px solid transparent;color:#56616a;font-weight:650;cursor:pointer;background:transparent}.nav button.active{color:var(--red);border-bottom-color:var(--red)}main{width:min(1180px,calc(100% - 24px));margin:22px auto 50px}.page{display:none}.page.active{display:block}.hero{background:#fff5f6;border:1px solid #f0c5ca;border-radius:14px;padding:32px;margin-bottom:18px}.hero small,.title small{color:var(--red);font-weight:800;letter-spacing:1.5px;font-size:11px}.hero h2,.title h2{font-size:28px;margin:5px 0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.cards button{background:#fff;border:1px solid var(--border);border-radius:12px;text-align:left;padding:24px;display:flex;flex-direction:column;gap:7px;cursor:pointer}.cards button:hover{border-color:#e2a0a8}.cards i{font-style:normal;color:var(--red);font-size:28px}.cards span{color:var(--muted);font-size:13px}.info{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--border);border-radius:10px;margin-top:15px;padding:14px}.info div{padding:0 15px;border-right:1px solid var(--border)}.info div:last-child{border:0}.info span,.info b{display:block}.info span{color:var(--muted);font-size:13px;margin-top:2px}.title{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}.title h2{margin:3px 0}.card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:17px;margin-bottom:14px}.card h3{margin:0;font-size:16px}.fields{display:flex;gap:12px;align-items:end;margin-top:12px}.fields label{font-size:12px;font-weight:700;min-width:190px}.fields .grow{flex:1}.fields input{display:block;margin-top:5px;width:100%;min-height:43px;padding:8px 11px;border:1px solid #bfc7cd;border-radius:7px}.status{display:block;margin-top:10px;color:var(--muted);font-size:12px}.status.ok{color:#19733a;font-weight:bold}.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{min-height:390px}.head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.head small{color:var(--muted);font-size:12px}.head input{max-width:240px}.software{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;cursor:pointer}.software:hover,.software.selected{border-color:#e2a0a8;background:#fff5f6}.software small{display:block;color:var(--muted);margin-top:2px}.symbol{color:var(--red);font-size:20px}.empty{text-align:center;color:#7a858c;padding:30px;font-size:13px}.link{border:0;background:transparent;color:#a22d2d;padding:5px}.action{background:var(--dark);color:#fff;border-radius:11px;padding:14px 17px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.action b,.action small{display:block}.action small{color:#b9c0c5;margin-top:2px}.action button,#runQuery,#addPackage{background:var(--red);color:#fff;border:1px solid var(--red);min-height:44px;padding:9px 15px;border-radius:7px;font-weight:bold}.secondary{background:#fff;color:#333;border:1px solid var(--border);min-height:42px;padding:8px 13px;border-radius:7px;font-weight:bold}.danger{background:#a82a38!important;border-color:#a82a38!important}.installed{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.installed label{border:1px solid var(--border);border-radius:8px;padding:11px;display:flex;gap:10px}.installed input{width:18px}.installed small{display:block;color:var(--muted);margin-top:2px}.card table{width:100%;border-collapse:collapse}.card th,.card td{text-align:left;padding:10px 8px;border-bottom:1px solid #e4e7e9;font-size:13px}.card th{background:#f2f4f5;font-size:12px}.pill{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:bold}.yes{background:#e7f5ec;color:#19733a}.no{background:#fce9eb;color:#a11f2e}.package{display:grid;grid-template-columns:minmax(0, 2.35fr) minmax(92px, .75fr) minmax(125px, 1fr) minmax(240px, 2.45fr) minmax(190px, 1.65fr);gap:0;padding:0;border-bottom:1px solid #194d7e}.package.path{font-family:Consolas,monospace;font-size:11px;color:#5f6870}.toast{position:fixed;right:18px;bottom:18px;background:#22282d;color:#fff;padding:12px 15px;border-radius:8px;box-shadow:0 5px 20px #0003}.hidden{display:none}@media(max-width:800px){.topbar{height:auto;padding:12px}.divider,.ready{display:none}.nav{overflow:auto;padding:0 7px}.nav button{white-space:nowrap;padding:0 12px}.cards,.split{grid-template-columns:1fr}.info{grid-template-columns:1fr}.info div{border:0;border-bottom:1px solid var(--border);padding:6px 0}.title{align-items:start;flex-direction:column;gap:10px}.fields{flex-direction:column;align-items:stretch}.fields label{min-width:0}.head input{max-width:none}.installed{grid-template-columns:1fr}.action{flex-direction:column;align-items:stretch;gap:12px}.action button{width:100%}.package{grid-template-columns:1fr 1fr}}
+/* CSS-Regel: .themani-logo – gestaltet das zugehörige Element oder Layout. */
 .themani-logo{display:flex;align-items:center;gap:10px;min-width:260px}
+/* CSS-Regel: .tm-badge – gestaltet das zugehörige Element oder Layout. */
 .tm-badge{width:42px;height:42px;border:2px solid var(--blue);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;background:linear-gradient(135deg,#0a3d7b,#159fff);box-shadow:0 0 18px #168cff55}
+/* CSS-Regel: .themani-logo b – gestaltet das zugehörige Element oder Layout. */
 .themani-logo b{display:block;font-size:24px;line-height:1;background:linear-gradient(90deg,#fff,#6dc9ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;letter-spacing:.4px}
+/* CSS-Regel: .themani-logo small – gestaltet das zugehörige Element oder Layout. */
 .themani-logo small{display:block;color:#8ebbe7;font-size:8px;letter-spacing:1.5px;margin-top:4px}
+/* CSS-Regel: .nav – gestaltet das zugehörige Element oder Layout. */
 .nav{background:#071a31}
+/* CSS-Regel: .nav button.active – gestaltet das zugehörige Element oder Layout. */
 .nav button.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+/* CSS-Regel: .nav button:hover – gestaltet das zugehörige Element oder Layout. */
 .nav button:hover{color:#fff}
+/* CSS-Regel: .hero – gestaltet das zugehörige Element oder Layout. */
 .hero{background:linear-gradient(120deg,#0b2342,#071a31);border-color:#145c9b;box-shadow:0 8px 35px #0004}
+/* CSS-Regel: .cards button,.card,.info – gestaltet das zugehörige Element oder Layout. */
 .cards button,.card,.info{background:#0b1d36;border-color:#174b7c;color:var(--text)}
+/* CSS-Regel: .cards button:hover – gestaltet das zugehörige Element oder Layout. */
 .cards button:hover{border-color:var(--blue);box-shadow:0 0 20px #168cff22}
+/* CSS-Regel: .cards span,.hero p,p,.info span,.head small,.status – gestaltet das zugehörige Element oder Layout. */
 .cards span,.hero p,p,.info span,.head small,.status{color:var(--muted)}
+/* CSS-Regel: .hero small,.title small – gestaltet das zugehörige Element oder Layout. */
 .hero small,.title small{color:var(--cyan)}
+/* CSS-Regel: .fields input,.head input – gestaltet das zugehörige Element oder Layout. */
 .fields input,.head input{background:#07182d;color:#fff;border-color:#245e93}
+/* CSS-Regel: .fields input::placeholder,.head input::placeholder – gestaltet das zugehörige Element oder Layout. */
 .fields input::placeholder,.head input::placeholder{color:#7890aa}
+/* CSS-Regel: .secondary – gestaltet das zugehörige Element oder Layout. */
 .secondary{background:#0c2340;color:#dcecff;border-color:#2a669e}
+/* CSS-Regel: .action – gestaltet das zugehörige Element oder Layout. */
 .action{background:#06152a;border:1px solid #174b7c}
+/* CSS-Regel: .software – gestaltet das zugehörige Element oder Layout. */
 .software{background:#081a31;border-color:#194d7e}
+/* CSS-Regel: .software:hover,.software.selected – gestaltet das zugehörige Element oder Layout. */
 .software:hover,.software.selected{background:#0b2b4d;border-color:var(--blue)}
+/* CSS-Regel: .table-wrap table,.card table – gestaltet das zugehörige Element oder Layout. */
 .table-wrap table,.card table{background:#081a31}
+/* CSS-Regel: .card th – gestaltet das zugehörige Element oder Layout. */
 .card th{background:#0d3159;color:#fff}
+/* CSS-Regel: .card td – gestaltet das zugehörige Element oder Layout. */
 .card td{color:#dcecff}
+/* CSS-Regel: .package-table – gestaltet das zugehörige Element oder Layout. */
 .package-table{width:100%;overflow:hidden;border:1px solid #194d7e;border-radius:9px}
+/* CSS-Regel: .package-header – gestaltet das zugehörige Element oder Layout. */
 .package-header{background:#0d3159!important;color:#fff;font-weight:800}
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row{display:grid;grid-template-columns:2fr 1fr 1.2fr minmax(180px,3fr) 42px auto;gap:0;align-items:center;border-bottom:1px solid #194d7e!important;padding:0!important}
+/* CSS-Regel: .package-row>span,.package-row>b – gestaltet das zugehörige Element oder Layout. */
 .package-row>span,.package-row>b{padding:12px 14px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* CSS-Regel: .package-row:last-child – gestaltet das zugehörige Element oder Layout. */
 .package-row:last-child{border-bottom:0!important}
+/* CSS-Regel: .package-row:nth-child(even) – gestaltet das zugehörige Element oder Layout. */
 .package-row:nth-child(even){background:#0a203a}
+/* CSS-Regel: .package-row .path – gestaltet das zugehörige Element oder Layout. */
 .package-row .path{font-family:Consolas,monospace;font-size:11px;color:#8fc8ff}
+/* CSS-Regel: .toast – gestaltet das zugehörige Element oder Layout. */
 .toast{background:#0b2340;border:1px solid #2777b8}
+/* CSS-Regel: @media(max-width:800px) – gestaltet das zugehörige Element oder Layout. */
 @media(max-width:800px){.package-row{grid-template-columns:1.5fr 1fr}.package-row>span:nth-child(3),.package-row>span:nth-child(4),.package-row>span:nth-child(5){display:none}.themani-logo{min-width:0}.themani-logo b{font-size:20px}.tm-badge{width:36px;height:36px}}
+/* CSS-Regel: .workgroup-option – gestaltet das zugehörige Element oder Layout. */
 .workgroup-option{display:flex!important;align-items:center;gap:7px;margin-top:10px;color:var(--muted);font-size:12px;font-weight:600!important}
+/* CSS-Regel: .workgroup-option input – gestaltet das zugehörige Element oder Layout. */
 .workgroup-option input{width:17px!important;min-height:17px!important;margin:0}
+/* CSS-Regel: .fields label.domain-disabled input – gestaltet das zugehörige Element oder Layout. */
 .fields label.domain-disabled input{opacity:.45;cursor:not-allowed}
 
+/* CSS-Regel: .fields input[type="password"] – gestaltet das zugehörige Element oder Layout. */
 .fields input[type="password"]{letter-spacing:.08em}
+/* CSS-Regel: .credentials-note – gestaltet das zugehörige Element oder Layout. */
 .credentials-note{font-size:11px;color:var(--muted);margin-top:8px}
 
+/* CSS-Regel: .modal.hidden – gestaltet das zugehörige Element oder Layout. */
 .modal.hidden{display:none!important}.modal{position:fixed;inset:0;z-index:10000;display:grid;place-items:center}.modal-backdrop{position:absolute;inset:0;background:#0009;backdrop-filter:blur(3px)}.modal-card{position:relative;width:min(760px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#0a1c34;border:1px solid #2677b8;border-radius:14px;box-shadow:0 25px 70px #0008;color:var(--text);padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #194d7e;padding-bottom:13px;margin-bottom:15px}.modal-head small{color:var(--cyan);font-weight:800;letter-spacing:1.4px}.modal-head h2{margin:4px 0 0;font-size:22px}.modal-close{background:transparent;border:0;color:#b9d7f3;font-size:27px;cursor:pointer}.form-section{border:1px solid #194d7e;border-radius:10px;padding:14px;margin-bottom:12px;background:#081a31}.form-section h3{margin:0 0 12px;font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid label{font-size:12px;font-weight:700}.form-grid .wide{grid-column:1/-1}.form-grid input,.form-grid select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.form-grid select{cursor:pointer}.modal-actions{display:flex;justify-content:flex-end;gap:9px}.modal-actions button{min-height:42px;padding:8px 15px;border-radius:7px;border:1px solid #2b6fa5;font-weight:700}.modal-actions button[type=submit]{background:var(--blue);border-color:var(--blue);color:#fff}.package-table{overflow:auto}.package-row{grid-template-columns:2fr .8fr 1.1fr 2.8fr 1.3fr}.package-row>span,.package-row>b{padding:12px 14px}.package-actions{display:flex;gap:5px;padding:8px 10px}.package-actions button{border:1px solid #2a669e;background:#0c2340;color:#cfe9ff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer}.package-actions button:hover{border-color:var(--blue);color:#fff}.package-actions .delete{color:#ff9aa5;border-color:#6e3040}.package-actions .disabled{color:#9ba9b8}.package-inactive{opacity:.48}
+/* CSS-Regel: @media(max-width:800px) – gestaltet das zugehörige Element oder Layout. */
 @media(max-width:800px){.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.package-row{grid-template-columns:1.4fr .8fr 1fr 2fr 1.2fr}.package-row>span:nth-child(4){display:none}}
 
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row{grid-template-columns:minmax(150px,1.8fr) .65fr .95fr minmax(220px,2.5fr) 245px}
+/* CSS-Regel: .package-actions – gestaltet das zugehörige Element oder Layout. */
 .package-actions{display:flex;align-items:center;gap:4px;padding:7px 8px;white-space:nowrap}
+/* CSS-Regel: .package-actions button – gestaltet das zugehörige Element oder Layout. */
 .package-actions button{padding:5px 7px;font-size:10px;white-space:nowrap}
+/* CSS-Regel: @media(max-width:1050px) – gestaltet das zugehörige Element oder Layout. */
 @media(max-width:1050px){.package-row{grid-template-columns:1.5fr .7fr .9fr 1.8fr 225px}.package-actions button{padding:5px 6px;font-size:9px}}
+/* CSS-Regel: @media(max-width:800px) – gestaltet das zugehörige Element oder Layout. */
 @media(max-width:800px){.package-row{grid-template-columns:1.3fr .7fr 1fr 210px}.package-row>span:nth-child(3){display:none}.package-row>span:nth-child(4){display:none}.package-actions{justify-content:flex-start}}
 
+/* CSS-Regel: .settings-card – gestaltet das zugehörige Element oder Layout. */
 .settings-card{max-width:900px}.settings-section{padding:4px 0 18px;margin-bottom:18px;border-bottom:1px solid #194d7e}.settings-section:last-of-type{border-bottom:0;margin-bottom:0}.settings-section h3{margin-bottom:6px}.settings-help{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 13px}.settings-section .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.settings-section .wide{grid-column:1/-1}.settings-section label{font-size:12px;font-weight:700}.settings-section input,.settings-section select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.settings-check{display:flex!important;align-items:center;gap:8px;margin-top:13px;color:#cfe9ff}.settings-check input{width:17px!important;min-height:17px!important;margin:0!important}.security{background:#07182d;border:1px solid #194d7e;border-radius:8px;padding:12px}.settings-actions{display:flex;justify-content:flex-end;gap:9px}.settings-actions button{min-height:42px;padding:8px 15px;border-radius:7px;border:1px solid #2b6fa5;font-weight:700}.settings-actions button:last-child{background:var(--blue);border-color:var(--blue);color:#fff}@media(max-width:800px){.settings-section .form-grid{grid-template-columns:1fr}.settings-section .wide{grid-column:auto}.settings-actions{flex-direction:column}.settings-actions button{width:100%}}
 
+/* CSS-Regel: .source-card – gestaltet das zugehörige Element oder Layout. */
 .source-card{padding:15px 17px}.source-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.source-head h3{margin:0}.source-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.source-label{font-size:11px;font-weight:800;color:#8fd7ff;background:#092b4c;border:1px solid #21679c;padding:6px 9px;border-radius:20px}.source-switch{display:grid;grid-template-columns:1fr 1fr;gap:10px}.source-option{display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:#081a31;border:1px solid #194d7e;border-radius:9px;color:#dcecff;cursor:pointer}.source-option>span{font-size:24px}.source-option b,.source-option small{display:block}.source-option small{color:var(--muted);margin-top:2px}.source-option.active{border-color:var(--blue);background:#0b2b4d;box-shadow:inset 0 0 0 1px #168cff44}.online-info{margin-bottom:10px;padding:9px 11px;border:1px solid #17699d;background:#082742;border-radius:8px;color:#bfe9ff;font-size:12px}.online-info span{margin-left:6px;color:#91b8d5}@media(max-width:700px){.source-switch{grid-template-columns:1fr}.source-head{align-items:flex-start;flex-direction:column}}
 
+/* CSS-Regel: .settings-card – gestaltet das zugehörige Element oder Layout. */
 .settings-card{max-width:900px}.settings-section{padding:4px 0 18px;margin-bottom:18px;border-bottom:1px solid #194d7e}.settings-section:last-of-type{border-bottom:0;margin-bottom:0}.settings-section h3{color:#eef8ff;margin-bottom:6px}.settings-help{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 13px}.settings-section .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.settings-section .wide{grid-column:1/-1}.settings-section label{font-size:12px;font-weight:700}.settings-section input,.settings-section select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.settings-check{display:flex!important;align-items:center;gap:8px;margin-top:13px;color:#cfe9ff}.settings-check input{width:17px!important;min-height:17px!important;margin:0!important}.security{background:#07182d;border:1px solid #194d7e;border-radius:8px;padding:12px}.settings-actions{display:flex;justify-content:flex-end;gap:9px}.settings-actions button{min-height:42px;padding:8px 15px;border-radius:7px;border:1px solid #2b6fa5;font-weight:700}.settings-actions button:last-child{background:var(--blue);border-color:var(--blue);color:#fff}.online-settings-grid{margin-top:12px}.online-settings-grid .settings-check{min-height:42px;padding:8px 10px;border:1px solid #194d7e;border-radius:7px;background:#07182d}@media(max-width:800px){.settings-section .form-grid{grid-template-columns:1fr}.settings-section .wide{grid-column:auto}.settings-actions{flex-direction:column}.settings-actions button{width:100%}}
 
+/* CSS-Regel: .source-fields – gestaltet das zugehörige Element oder Layout. */
 .source-fields{margin-top:12px}.source-fields .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.source-fields label{font-size:12px;font-weight:700}.source-fields input{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.settings-source-actions{display:flex;gap:8px;margin-top:12px}.saved-source-list{margin-top:12px}.saved-source{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;background:#07182d;border:1px solid #194d7e;border-radius:8px;margin-top:7px}.saved-source small{display:block;color:var(--muted);margin-top:2px}.saved-source button{background:#0c2340;border:1px solid #2a669e;color:#cfe9ff;border-radius:6px;padding:5px 8px}.source-note{color:var(--muted);font-size:11px;margin-top:7px}@media(max-width:800px){.source-fields .form-grid{grid-template-columns:1fr}.settings-source-actions{flex-direction:column}}
 
+/* CSS-Regel: .source-scan-controls – gestaltet das zugehörige Element oder Layout. */
 .source-scan-controls{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border:1px solid #194d7e;background:#07182d;border-radius:8px}.source-scan-controls button{background:#168cff;color:#fff;border:0;border-radius:7px;padding:8px 12px;font-weight:700}.source-scan-controls span{font-size:11px;color:var(--muted)}.source-inventory{margin-top:12px;border:1px solid #194d7e;border-radius:8px;background:#07182d;overflow:hidden}.inventory-head{display:flex;justify-content:space-between;padding:10px 12px;background:#0a2340}.inventory-head span{font-size:11px;color:var(--muted)}.inventory-item{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-top:1px solid #123653}.inventory-item small{color:var(--muted);display:block;margin-top:2px}.inventory-item button{background:#0c2340;border:1px solid #2a669e;color:#cfe9ff;border-radius:6px;padding:5px 8px}.source-fields select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}
 
+/* CSS-Regel: .source-scan-controls – gestaltet das zugehörige Element oder Layout. */
 .source-scan-controls{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border:1px solid #194d7e;background:#07182d;border-radius:8px}
+/* CSS-Regel: .source-scan-controls button – gestaltet das zugehörige Element oder Layout. */
 .source-scan-controls button{background:var(--blue);color:#fff;border:0;border-radius:7px;padding:8px 12px;font-weight:700}
+/* CSS-Regel: .source-scan-controls span – gestaltet das zugehörige Element oder Layout. */
 .source-scan-controls span{font-size:11px;color:var(--muted)}
+/* CSS-Regel: .source-inventory – gestaltet das zugehörige Element oder Layout. */
 .source-inventory{margin-top:12px;border:1px solid #194d7e;border-radius:8px;background:#07182d;overflow:hidden}
+/* CSS-Regel: .inventory-head – gestaltet das zugehörige Element oder Layout. */
 .inventory-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;background:#0a2340}
+/* CSS-Regel: .inventory-head small – gestaltet das zugehörige Element oder Layout. */
 .inventory-head small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+/* CSS-Regel: .inventory-head span – gestaltet das zugehörige Element oder Layout. */
 .inventory-head span{font-size:11px;color:var(--muted)}
+/* CSS-Regel: .inventory-item – gestaltet das zugehörige Element oder Layout. */
 .inventory-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;border-top:1px solid #123653}
+/* CSS-Regel: .inventory-item small – gestaltet das zugehörige Element oder Layout. */
 .inventory-item small{color:var(--muted);display:block;margin-top:2px}
+/* CSS-Regel: .inventory-item button – gestaltet das zugehörige Element oder Layout. */
 .inventory-item button{background:#0c2340;border:1px solid #2a669e;color:#cfe9ff;border-radius:6px;padding:5px 8px}
+/* CSS-Regel: .source-package-card – gestaltet das zugehörige Element oder Layout. */
 .source-package-card{margin-top:14px}
+/* CSS-Regel: .source-package-card .inventory-grid – gestaltet das zugehörige Element oder Layout. */
 .source-package-card .inventory-grid{display:grid;gap:7px;padding:10px}
+/* CSS-Regel: .source-empty – gestaltet das zugehörige Element oder Layout. */
 .source-empty{padding:14px;color:var(--muted);text-align:center;border:1px dashed #245e93;border-radius:7px}
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:10px 12px;background:#07182d;border:1px solid #194d7e;border-radius:7px}
+/* CSS-Regel: .package-row small – gestaltet das zugehörige Element oder Layout. */
 .package-row small{display:block;color:var(--muted);margin-top:2px}
+/* CSS-Regel: .package-row .new-badge – gestaltet das zugehörige Element oder Layout. */
 .package-row .new-badge{font-size:10px;padding:4px 7px;border-radius:10px;background:#174e3c;color:#a8f0cb}
+/* CSS-Regel: @media(max-width:800px) – gestaltet das zugehörige Element oder Layout. */
 @media(max-width:800px){.source-scan-controls{flex-direction:column;align-items:stretch}.package-row{grid-template-columns:1fr}}
 
+/* CSS-Regel: .source-fields select – gestaltet das zugehörige Element oder Layout. */
 .source-fields select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}
 
 /* v18 – clean, aligned software distribution layout */
@@ -80,22 +150,26 @@
 #software .card,
 #software-management .card,
 .deployment-card,
+/* CSS-Regel: .software-table-card – gestaltet das zugehörige Element oder Layout. */
 .software-table-card {
   min-width: 0;
 }
 
 #software .card,
+/* CSS-Regel: #software-management .card – gestaltet das zugehörige Element oder Layout. */
 #software-management .card {
   overflow: hidden;
 }
 
 #software .head,
+/* CSS-Regel: #software-management .head – gestaltet das zugehörige Element oder Layout. */
 #software-management .head {
   gap: 14px;
   align-items: center;
 }
 
 #software .head > div:first-child,
+/* CSS-Regel: #software-management .head > div:first-child – gestaltet das zugehörige Element oder Layout. */
 #software-management .head > div:first-child {
   min-width: 0;
 }
@@ -103,6 +177,7 @@
 #software input[type="search"],
 #software .search,
 #software-management input[type="search"],
+/* CSS-Regel: #software-management .search – gestaltet das zugehörige Element oder Layout. */
 #software-management .search {
   min-width: 180px;
   max-width: 300px;
@@ -112,6 +187,7 @@
 #software .software-list,
 #software-management .software-list,
 #available,
+/* CSS-Regel: #selected – gestaltet das zugehörige Element oder Layout. */
 #selected {
   min-width: 0;
   width: 100%;
@@ -120,6 +196,7 @@
 
 #available .software,
 #selected .software,
+/* CSS-Regel: .software-list .software – gestaltet das zugehörige Element oder Layout. */
 .software-list .software {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -131,6 +208,7 @@
 
 #available .software > div:first-child,
 #selected .software > div:first-child,
+/* CSS-Regel: .software-list .software > div:first-child – gestaltet das zugehörige Element oder Layout. */
 .software-list .software > div:first-child {
   min-width: 0;
   overflow: hidden;
@@ -138,6 +216,7 @@
 
 #available .software b,
 #selected .software b,
+/* CSS-Regel: .software-list .software b – gestaltet das zugehörige Element oder Layout. */
 .software-list .software b {
   display: block;
   overflow: hidden;
@@ -147,6 +226,7 @@
 
 #available .software small,
 #selected .software small,
+/* CSS-Regel: .software-list .software small – gestaltet das zugehörige Element oder Layout. */
 .software-list .software small {
   display: block;
   margin-top: 3px;
@@ -156,43 +236,52 @@
 }
 
 #available .symbol,
+/* CSS-Regel: #selected .software > span – gestaltet das zugehörige Element oder Layout. */
 #selected .software > span {
   width: 28px;
   min-width: 28px;
   text-align: center;
 }
 
+/* CSS-Regel: .source-package-card .inventory-head – gestaltet das zugehörige Element oder Layout. */
 .source-package-card .inventory-head {
   min-width: 0;
 }
 
+/* CSS-Regel: .source-package-card .inventory-head > div – gestaltet das zugehörige Element oder Layout. */
 .source-package-card .inventory-head > div {
   min-width: 0;
 }
 
+/* CSS-Regel: .source-package-card .inventory-head button – gestaltet das zugehörige Element oder Layout. */
 .source-package-card .inventory-head button {
   flex: 0 0 auto;
   white-space: nowrap;
 }
 
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row {
   grid-template-columns: minmax(0, 1fr) auto auto;
   min-width: 0;
 }
 
+/* CSS-Regel: .package-row > div:first-child – gestaltet das zugehörige Element oder Layout. */
 .package-row > div:first-child {
   min-width: 0;
 }
 
 .package-row b,
+/* CSS-Regel: .package-row small – gestaltet das zugehörige Element oder Layout. */
 .package-row small {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* CSS-Regel: @media (max-width: 900px) – gestaltet das zugehörige Element oder Layout. */
 @media (max-width: 900px) {
   #software .head,
+/* CSS-Regel: #software-management .head – gestaltet das zugehörige Element oder Layout. */
   #software-management .head {
     align-items: stretch;
     flex-direction: column;
@@ -201,6 +290,7 @@
   #software input[type="search"],
   #software .search,
   #software-management input[type="search"],
+/* CSS-Regel: #software-management .search – gestaltet das zugehörige Element oder Layout. */
   #software-management .search {
     max-width: none;
     width: 100%;
@@ -208,6 +298,7 @@
 }
 
 /* v19 – package table: exactly 5 aligned columns */
+/* CSS-Regel: .package-table .package-row > * – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row > * {
   box-sizing: border-box;
   min-width: 0;
@@ -215,12 +306,15 @@
   display: flex;
   align-items: center;
 }
+/* CSS-Regel: .package-table .package-header > * – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-header > * {
   min-height: 48px;
 }
+/* CSS-Regel: .package-table .package-row:not(.package-header) > * – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row:not(.package-header) > * {
   min-height: 78px;
 }
+/* CSS-Regel: .package-table .package-row .package-actions – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row .package-actions {
   display: flex;
   flex-wrap: wrap;
@@ -229,39 +323,49 @@
   gap: 6px;
   padding: 10px 12px;
 }
+/* CSS-Regel: .package-table .package-row .package-actions button – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row .package-actions button {
   margin: 0;
   white-space: nowrap;
 }
+/* CSS-Regel: .package-table .package-row > b – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row > b {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* CSS-Regel: .package-table .package-row > span – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* CSS-Regel: @media (max-width: 1100px) – gestaltet das zugehörige Element oder Layout. */
 @media (max-width: 1100px) {
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
   .package-row {
     grid-template-columns: minmax(0, 2fr) minmax(80px, .8fr) minmax(105px, 1fr) minmax(180px, 2fr) minmax(170px, 1.6fr);
   }
 }
+/* CSS-Regel: @media (max-width: 800px) – gestaltet das zugehörige Element oder Layout. */
 @media (max-width: 800px) {
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
   .package-row {
     grid-template-columns: minmax(0, 1.7fr) minmax(85px, .8fr) minmax(160px, 1.4fr);
   }
   .package-row > span:nth-child(3),
+/* CSS-Regel: .package-row > span:nth-child(4) – gestaltet das zugehörige Element oder Layout. */
   .package-row > span:nth-child(4) {
     display: none;
   }
+/* CSS-Regel: .package-row .package-actions – gestaltet das zugehörige Element oder Layout. */
   .package-row .package-actions {
     display: flex;
   }
 }
 
 /* v20 – definitive 5-column package table alignment */
+/* CSS-Regel: .package-table – gestaltet das zugehörige Element oder Layout. */
 .package-table {
   width: 100%;
   overflow-x: auto;
@@ -270,6 +374,7 @@
   box-sizing: border-box;
 }
 
+/* CSS-Regel: .package-table .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row {
   display: grid !important;
   grid-template-columns:
@@ -285,6 +390,7 @@
   padding: 0 !important;
 }
 
+/* CSS-Regel: .package-table .package-row > * – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row > * {
   box-sizing: border-box;
   min-width: 0 !important;
@@ -292,6 +398,7 @@
 }
 
 .package-table .package-row > span,
+/* CSS-Regel: .package-table .package-row > b – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row > b {
   padding: 12px 14px !important;
   white-space: nowrap;
@@ -301,6 +408,7 @@
   align-items: center;
 }
 
+/* CSS-Regel: .package-table .package-header > span – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-header > span {
   min-height: 54px;
   font-weight: 800;
@@ -308,10 +416,12 @@
 }
 
 .package-table .package-row:not(.package-header) > b,
+/* CSS-Regel: .package-table .package-row:not(.package-header) > span – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row:not(.package-header) > span {
   min-height: 78px;
 }
 
+/* CSS-Regel: .package-table .package-row .package-actions – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row .package-actions {
   display: flex !important;
   align-items: center !important;
@@ -322,29 +432,36 @@
   min-width: 0 !important;
 }
 
+/* CSS-Regel: .package-table .package-actions button – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-actions button {
   flex: 0 0 auto;
   margin: 0 !important;
   white-space: nowrap;
 }
 
+/* CSS-Regel: .package-table .package-row:nth-child(even) – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-row:nth-child(even) {
   background: #0a203a;
 }
 
+/* CSS-Regel: .package-table .package-header – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-header {
   background: #0d3159 !important;
 }
 
+/* CSS-Regel: .package-table .package-header span:nth-child(4) – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-header span:nth-child(4) {
   grid-column: 4;
 }
 
+/* CSS-Regel: .package-table .package-header span:nth-child(5) – gestaltet das zugehörige Element oder Layout. */
 .package-table .package-header span:nth-child(5) {
   grid-column: 5;
 }
 
+/* CSS-Regel: @media (max-width: 1000px) – gestaltet das zugehörige Element oder Layout. */
 @media (max-width: 1000px) {
+/* CSS-Regel: .package-table .package-row – gestaltet das zugehörige Element oder Layout. */
   .package-table .package-row {
     grid-template-columns:
       minmax(190px, 2fr)
@@ -355,29 +472,40 @@
   }
 }
 
+/* CSS-Regel: @media (max-width: 760px) – gestaltet das zugehörige Element oder Layout. */
 @media (max-width: 760px) {
+/* CSS-Regel: .package-table – gestaltet das zugehörige Element oder Layout. */
   .package-table {
     overflow-x: auto;
   }
+/* CSS-Regel: .package-table .package-row – gestaltet das zugehörige Element oder Layout. */
   .package-table .package-row {
     min-width: 900px;
   }
 }
 
+/* CSS-Regel: .source-fields select – gestaltet das zugehörige Element oder Layout. */
 .source-fields select{display:block;width:100%;margin-top:5px;min-height:42px;background:#07182d;color:#fff;border:1px solid #245e93;border-radius:7px;padding:8px 10px}.source-fields .source-note{line-height:1.45}
 
 
+/* CSS-Regel: .package-row small – gestaltet das zugehörige Element oder Layout. */
 .package-row small{display:block;opacity:.72;margin-top:3px}
+/* CSS-Regel: .package-row button:disabled – gestaltet das zugehörige Element oder Layout. */
 .package-row button:disabled{opacity:.65;cursor:default}
 
 
+/* CSS-Regel: .saved-source – gestaltet das zugehörige Element oder Layout. */
 .saved-source{cursor:pointer}
+/* CSS-Regel: .saved-source:hover – gestaltet das zugehörige Element oder Layout. */
 .saved-source:hover{transform:translateY(-1px)}
+/* CSS-Regel: .saved-source-main – gestaltet das zugehörige Element oder Layout. */
 .saved-source-main{min-width:0;flex:1}
+/* CSS-Regel: .saved-source-main small – gestaltet das zugehörige Element oder Layout. */
 .saved-source-main small{display:block;opacity:.72;margin-top:3px}
 
 
 /* V47 settings accordion - clean separated cards */
+/* CSS-Regel: .settings-accordion – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion{
   padding:0 !important;
   overflow:hidden;
@@ -387,11 +515,14 @@
   box-shadow:0 5px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.025);
   transition:border-color .2s ease,box-shadow .2s ease,transform .15s ease;
 }
+/* CSS-Regel: .settings-accordion + .settings-accordion – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion + .settings-accordion{margin-top:14px}
+/* CSS-Regel: .settings-accordion:hover – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion:hover{
   border-color:rgba(65,143,213,.9);
   box-shadow:0 7px 22px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.03);
 }
+/* CSS-Regel: .settings-accordion > summary – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary{
   list-style:none;
   display:grid;
@@ -404,11 +535,15 @@
   background:linear-gradient(180deg,rgba(22,58,99,.9),rgba(17,47,82,.88));
   transition:background .2s ease;
 }
+/* CSS-Regel: .settings-accordion > summary::-webkit-details-marker – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary::-webkit-details-marker{display:none}
+/* CSS-Regel: .settings-accordion > summary::marker – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary::marker{display:none;content:""}
+/* CSS-Regel: .settings-accordion > summary:hover – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary:hover{
   background:linear-gradient(180deg,rgba(27,70,116,.96),rgba(20,55,94,.94));
 }
+/* CSS-Regel: .settings-summary-icon – gestaltet das zugehörige Element oder Layout. */
 .settings-summary-icon{
   width:34px;
   height:34px;
@@ -420,11 +555,13 @@
   font-size:18px;
   line-height:1;
 }
+/* CSS-Regel: .settings-accordion > summary b – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary b{
   display:block;
   font-size:16px;
   line-height:1.2;
 }
+/* CSS-Regel: .settings-accordion > summary small – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion > summary small{
   display:block;
   margin-top:4px;
@@ -433,6 +570,7 @@
   line-height:1.35;
   font-weight:400;
 }
+/* CSS-Regel: .settings-chevron – gestaltet das zugehörige Element oder Layout. */
 .settings-chevron{
   width:30px;
   height:30px;
@@ -447,27 +585,33 @@
   transform:rotate(0deg);
   transition:transform .2s ease,background .2s ease;
 }
+/* CSS-Regel: .settings-accordion[open] – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion[open]{
   border-color:rgba(57,166,239,.95);
   box-shadow:0 8px 26px rgba(0,0,0,.3),0 0 0 1px rgba(57,166,239,.08);
 }
+/* CSS-Regel: .settings-accordion[open] > summary – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion[open] > summary{
   border-bottom:1px solid rgba(64,133,192,.58);
   background:linear-gradient(180deg,rgba(24,66,111,.98),rgba(19,54,92,.96));
 }
+/* CSS-Regel: .settings-accordion[open] .settings-chevron – gestaltet das zugehörige Element oder Layout. */
 .settings-accordion[open] .settings-chevron{
   transform:rotate(180deg);
   background:rgba(25,94,145,.38);
 }
+/* CSS-Regel: .settings-panel-content – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content{
   padding:20px;
   background:linear-gradient(180deg,rgba(7,26,48,.72),rgba(5,22,41,.88));
 }
 
 /* Give controls inside the open cards clearer visual grouping. */
+/* CSS-Regel: .settings-panel-content .form-grid – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content .form-grid{
   gap:14px;
 }
+/* CSS-Regel: .settings-panel-content label – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content label{
   padding:11px 12px 12px;
   border:1px solid rgba(58,111,161,.48);
@@ -475,30 +619,38 @@
   background:rgba(9,30,54,.66);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.018);
 }
+/* CSS-Regel: .settings-panel-content label.wide – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content label.wide{
   padding-bottom:12px;
 }
+/* CSS-Regel: .settings-panel-content label:focus-within – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content label:focus-within{
   border-color:rgba(57,166,239,.82);
   box-shadow:0 0 0 2px rgba(57,166,239,.09),inset 0 1px 0 rgba(255,255,255,.025);
 }
 .settings-panel-content input,
+/* CSS-Regel: .settings-panel-content select – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content select{
   margin-top:7px;
 }
+/* CSS-Regel: .settings-panel-content .settings-check – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content .settings-check{
   display:flex;
   align-items:center;
   gap:9px;
   padding:10px 12px;
 }
+/* CSS-Regel: .settings-panel-content .settings-check input – gestaltet das zugehörige Element oder Layout. */
 .settings-panel-content .settings-check input{
   margin:0;
 }
 
 /* V48 UX improvements */
+/* CSS-Regel: .home-status-panel – gestaltet das zugehörige Element oder Layout. */
 .home-status-panel{margin-top:18px}
+/* CSS-Regel: .home-hint – gestaltet das zugehörige Element oder Layout. */
 .home-hint{margin:14px 2px 0;color:var(--muted,#9db0c8);font-size:13px;line-height:1.5}
+/* CSS-Regel: .info-point – gestaltet das zugehörige Element oder Layout. */
 .info-point{
   position:relative;
   display:inline-grid;
@@ -515,9 +667,13 @@
   cursor:help;
   vertical-align:middle;
 }
+/* CSS-Regel: .delete-confirm-card – gestaltet das zugehörige Element oder Layout. */
   .delete-confirm-card{max-width:520px}
+/* CSS-Regel: .delete-confirm-content – gestaltet das zugehörige Element oder Layout. */
 .delete-confirm-content{padding:4px 0 6px}
+/* CSS-Regel: .delete-confirm-content p – gestaltet das zugehörige Element oder Layout. */
 .delete-confirm-content p{margin:0 0 10px;line-height:1.5}
+/* CSS-Regel: .delete-package-name – gestaltet das zugehörige Element oder Layout. */
 .delete-package-name{
   margin-top:14px;
   padding:11px 13px;
@@ -526,15 +682,19 @@
   background:rgba(95,34,34,.22);
   font-weight:600;
 }
+/* CSS-Regel: .delete-confirm-button – gestaltet das zugehörige Element oder Layout. */
 .delete-confirm-button{
   border:1px solid rgba(205,75,75,.7);
   background:rgba(150,38,38,.86);
   color:#fff;
 }
+/* CSS-Regel: .delete-confirm-button:hover – gestaltet das zugehörige Element oder Layout. */
 .delete-confirm-button:hover{background:rgba(180,45,45,.96)}
 
 
+/* CSS-Regel: .package-source-cell – gestaltet das zugehörige Element oder Layout. */
 .package-source-cell{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* CSS-Regel: .package-info-cell – gestaltet das zugehörige Element oder Layout. */
 .package-info-cell{
   display:flex;
   align-items:center;
@@ -543,26 +703,36 @@
   overflow:visible !important;
   white-space:normal !important;
 }
+/* CSS-Regel: .package-info-cell .info-point – gestaltet das zugehörige Element oder Layout. */
 .package-info-cell .info-point{margin-left:0}
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row{overflow:visible}
+/* CSS-Regel: .package-row>span,.package-row>b – gestaltet das zugehörige Element oder Layout. */
 .package-row>span,.package-row>b{overflow:hidden}
+/* CSS-Regel: .package-info-cell – gestaltet das zugehörige Element oder Layout. */
 .package-info-cell{overflow:visible !important}
 
 .package-info-cell,
 .package-row,
 .package-list,
+/* CSS-Regel: .package-panel – gestaltet das zugehörige Element oder Layout. */
 .package-panel{
   overflow:visible !important;
 }
 
 /* V53: make the hovered package row sit above neighboring rows */
+/* CSS-Regel: .package-row – gestaltet das zugehörige Element oder Layout. */
 .package-row{position:relative;z-index:1;overflow:visible!important}
+/* CSS-Regel: .package-row:hover,.package-row:focus-within – gestaltet das zugehörige Element oder Layout. */
 .package-row:hover,.package-row:focus-within{z-index:1000}
+/* CSS-Regel: .package-info-cell – gestaltet das zugehörige Element oder Layout. */
 .package-info-cell{position:relative;z-index:1001;overflow:visible!important}
+/* CSS-Regel: .info-point – gestaltet das zugehörige Element oder Layout. */
 .info-point{position:relative;z-index:1002}
 
 /* V54: tooltip portal lives directly under <body>, so table stacking contexts
    and overflow clipping cannot hide it. */
+/* CSS-Regel: .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal{
   position:fixed!important;
   display:block;
@@ -586,11 +756,14 @@
   pointer-events:none;
   overflow:visible!important;
 }
+/* CSS-Regel: .info-tooltip-portal b – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal b{display:block;margin-bottom:6px}
+/* CSS-Regel: .info-tooltip-portal span – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal span{display:block;margin-top:3px;overflow-wrap:anywhere}
 
 
 /* V55: absolute top-level portal layer for info tooltips */
+/* CSS-Regel: .info-tooltip-overlay – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay{
   position:fixed!important;
   inset:0!important;
@@ -608,6 +781,7 @@
   visibility:visible!important;
   isolation:isolate!important;
 }
+/* CSS-Regel: .info-tooltip-overlay .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay .info-tooltip-portal{
   position:fixed!important;
   display:block!important;
@@ -628,15 +802,20 @@
   opacity:0;
   transform:none!important;
 }
+/* CSS-Regel: .info-tooltip-overlay .info-tooltip-portal b – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay .info-tooltip-portal b{display:block!important;margin-bottom:6px!important}
+/* CSS-Regel: .info-tooltip-overlay .info-tooltip-portal span – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay .info-tooltip-portal span{display:block!important;margin-top:3px!important;overflow-wrap:anywhere!important}
 .info-tooltip-overlay 
 
 /* V56: source tooltip stays invisible; only the body-level portal is rendered. */
+/* CSS-Regel: .info-point > .info-tooltip – gestaltet das zugehörige Element oder Layout. */
 .info-point > .info-tooltip{display:none!important;visibility:hidden!important;opacity:0!important}
+/* CSS-Regel: .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal{display:block!important}
 
 /* V57: only one tooltip exists, created dynamically at body level. */
+/* CSS-Regel: .info-tooltip-overlay – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay{
   position:fixed!important;
   inset:0!important;
@@ -654,6 +833,7 @@
   visibility:visible!important;
   isolation:isolate!important;
 }
+/* CSS-Regel: .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal{
   position:fixed!important;
   display:block!important;
@@ -676,14 +856,18 @@
   opacity:0;
   transform:none!important;
 }
+/* CSS-Regel: .info-tooltip-portal b – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal b{display:block!important;margin-bottom:6px!important}
+/* CSS-Regel: .info-tooltip-portal span – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal span{display:block!important;margin-top:3px!important;overflow-wrap:anywhere!important}
+/* CSS-Regel: .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-portal {
   border-radius: 8px !important;
 }
 
 /* V60: Info-Popup is deliberately a plain box. No pseudo-elements or pointer. */
 .info-tooltip-portal,
+/* CSS-Regel: .info-tooltip-overlay .info-tooltip-portal – gestaltet das zugehörige Element oder Layout. */
 .info-tooltip-overlay .info-tooltip-portal {
   border:1px solid rgba(145,165,185,.9)!important;
   border-radius:8px!important;
@@ -692,18 +876,22 @@
 }
 
 /* V61: modal dialogs must always cover package rows and their hover layers. */
+/* CSS-Regel: .modal – gestaltet das zugehörige Element oder Layout. */
 .modal{
   z-index:10000!important;
   isolation:isolate;
 }
+/* CSS-Regel: .modal-backdrop – gestaltet das zugehörige Element oder Layout. */
 .modal-backdrop{
   z-index:0!important;
 }
+/* CSS-Regel: .modal-card – gestaltet das zugehörige Element oder Layout. */
 .modal-card{
   z-index:1!important;
 }
 
 /* V62: separate settings actions visually from the Sicherheit accordion. */
+/* CSS-Regel: .settings-actions – gestaltet das zugehörige Element oder Layout. */
 .settings-actions{
   margin-top:28px!important;
   padding-top:18px!important;
@@ -711,6 +899,1055 @@
 }
 
 /* V63: Softwarequellen stays collapsed until explicitly opened. */
+/* CSS-Regel: #source-settings:not([open]) .settings-panel-content – gestaltet das zugehörige Element oder Layout. */
 #source-settings:not([open]) .settings-panel-content{
   display:none!important;
+}
+
+
+/* V66: deployment parameter tabs */
+/* CSS-Regel: .deployment-options-card – gestaltet das zugehörige Element oder Layout. */
+.deployment-options-card{overflow:visible}
+/* CSS-Regel: .deployment-tabs – gestaltet das zugehörige Element oder Layout. */
+.deployment-tabs{
+  display:flex;
+  gap:6px;
+  margin:12px 0 0;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  flex-wrap:wrap;
+}
+/* CSS-Regel: .deployment-tab – gestaltet das zugehörige Element oder Layout. */
+.deployment-tab{
+  border:1px solid rgba(255,255,255,.10);
+  border-bottom:0;
+  border-radius:8px 8px 0 0;
+  background:rgba(255,255,255,.035);
+  color:var(--muted);
+  padding:9px 14px;
+  cursor:pointer;
+  font-weight:700;
+}
+/* CSS-Regel: .deployment-tab.active – gestaltet das zugehörige Element oder Layout. */
+.deployment-tab.active{
+  color:#fff;
+  background:#12243b;
+  border-color:#31557a;
+}
+/* CSS-Regel: .deployment-tab-panel – gestaltet das zugehörige Element oder Layout. */
+.deployment-tab-panel{display:none;padding-top:14px}
+/* CSS-Regel: .deployment-tab-panel.active – gestaltet das zugehörige Element oder Layout. */
+.deployment-tab-panel.active{display:block}
+/* CSS-Regel: .parameter-grid – gestaltet das zugehörige Element oder Layout. */
+.parameter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+/* CSS-Regel: .parameter-option – gestaltet das zugehörige Element oder Layout. */
+.parameter-option{
+  display:flex!important;
+  align-items:flex-start;
+  gap:9px;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:8px;
+  background:rgba(255,255,255,.025);
+  cursor:pointer;
+}
+/* CSS-Regel: .parameter-option:hover – gestaltet das zugehörige Element oder Layout. */
+.parameter-option:hover{background:rgba(255,255,255,.05)}
+/* CSS-Regel: .parameter-option input – gestaltet das zugehörige Element oder Layout. */
+.parameter-option input{
+  width:17px!important;
+  min-height:17px!important;
+  margin:2px 0 0!important;
+  flex:0 0 auto;
+}
+/* CSS-Regel: .parameter-option span – gestaltet das zugehörige Element oder Layout. */
+.parameter-option span{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+/* CSS-Regel: .parameter-option small – gestaltet das zugehörige Element oder Layout. */
+.parameter-option small{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.35;
+  font-weight:400;
+}
+/* CSS-Regel: .reboot-grid – gestaltet das zugehörige Element oder Layout. */
+.reboot-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+/* CSS-Regel: .reboot-grid label – gestaltet das zugehörige Element oder Layout. */
+.reboot-grid label{min-width:0}
+/* CSS-Regel: .input-with-suffix – gestaltet das zugehörige Element oder Layout. */
+.input-with-suffix{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:5px;
+}
+/* CSS-Regel: .input-with-suffix input – gestaltet das zugehörige Element oder Layout. */
+.input-with-suffix input{margin-top:0!important;width:110px!important}
+/* CSS-Regel: .input-with-suffix>span – gestaltet das zugehörige Element oder Layout. */
+.input-with-suffix>span{color:var(--muted);font-size:12px;font-weight:600}
+/* CSS-Regel: .deployment-setting-note – gestaltet das zugehörige Element oder Layout. */
+.deployment-setting-note{
+  margin-top:10px;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:8px;
+  background:rgba(255,255,255,.025);
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+/* CSS-Regel: .deployment-disabled – gestaltet das zugehörige Element oder Layout. */
+.deployment-disabled{opacity:.48}
+/* CSS-Regel: @media(max-width:800px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:800px){
+/* CSS-Regel: .parameter-grid,.reboot-grid – gestaltet das zugehörige Element oder Layout. */
+  .parameter-grid,.reboot-grid{grid-template-columns:1fr}
+}
+
+/* V67: styled reboot dropdown to match the application's dark web UI */
+/* CSS-Regel: #deployRebootMode – gestaltet das zugehörige Element oder Layout. */
+#deployRebootMode{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  width:100%;
+  min-height:40px;
+  margin-top:5px;
+  padding:9px 38px 9px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;
+  background-color:#0b1a2d;
+  background-image:
+    linear-gradient(45deg,transparent 50%,#9fb0c4 50%),
+    linear-gradient(135deg,#9fb0c4 50%,transparent 50%);
+  background-position:
+    calc(100% - 17px) 17px,
+    calc(100% - 11px) 17px;
+  background-size:6px 6px,6px 6px;
+  background-repeat:no-repeat;
+  color:#e8f0f8;
+  font:inherit;
+  font-size:13px;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease;
+}
+/* CSS-Regel: #deployRebootMode:hover – gestaltet das zugehörige Element oder Layout. */
+#deployRebootMode:hover{
+  border-color:rgba(255,255,255,.22);
+  background-color:#102238;
+}
+/* CSS-Regel: #deployRebootMode:focus – gestaltet das zugehörige Element oder Layout. */
+#deployRebootMode:focus{
+  border-color:#3d78ad;
+  box-shadow:0 0 0 2px rgba(61,120,173,.18);
+}
+/* CSS-Regel: #deployRebootMode option – gestaltet das zugehörige Element oder Layout. */
+#deployRebootMode option{
+  background:#0b1a2d;
+  color:#e8f0f8;
+}
+
+/* V72: package-level uninstall settings */
+/* CSS-Regel: .uninstall-package-tabs – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tabs{display:flex;gap:6px;margin:12px 0 0;border-bottom:1px solid rgba(255,255,255,.10);flex-wrap:wrap}
+/* CSS-Regel: .uninstall-package-tab – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tab{border:1px solid rgba(255,255,255,.10);border-bottom:0;border-radius:8px 8px 0 0;background:rgba(255,255,255,.035);color:var(--muted);padding:9px 14px;cursor:pointer;font-weight:700}
+/* CSS-Regel: .uninstall-package-tab.active – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tab.active{color:#fff;background:#12243b;border-color:#31557a}
+/* CSS-Regel: .uninstall-package-panel – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-panel{display:none;padding-top:14px}
+/* CSS-Regel: .uninstall-package-panel.active – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-panel.active{display:block}
+/* CSS-Regel: .uninstall-source-card,.uninstall-options-card – gestaltet das zugehörige Element oder Layout. */
+.uninstall-source-card,.uninstall-options-card{margin-top:12px}
+/* CSS-Regel: #uninstallRebootMode – gestaltet das zugehörige Element oder Layout. */
+#uninstallRebootMode{appearance:none;-webkit-appearance:none;-moz-appearance:none;width:100%;min-height:40px;margin-top:5px;padding:9px 38px 9px 12px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background-color:#0b1a2d;background-image:linear-gradient(45deg,transparent 50%,#9fb0c4 50%),linear-gradient(135deg,#9fb0c4 50%,transparent 50%);background-position:calc(100% - 17px) 17px,calc(100% - 11px) 17px;background-size:6px 6px,6px 6px;background-repeat:no-repeat;color:#e8f0f8;font:inherit;font-size:13px;cursor:pointer;outline:none}
+/* CSS-Regel: #uninstallRebootMode:hover – gestaltet das zugehörige Element oder Layout. */
+#uninstallRebootMode:hover{border-color:rgba(255,255,255,.22);background-color:#102238}
+/* CSS-Regel: #uninstallRebootMode:focus – gestaltet das zugehörige Element oder Layout. */
+#uninstallRebootMode:focus{border-color:#3d78ad;box-shadow:0 0 0 2px rgba(61,120,173,.18)}
+/* CSS-Regel: #uninstallRebootMode:disabled – gestaltet das zugehörige Element oder Layout. */
+#uninstallRebootMode:disabled{opacity:.48;cursor:not-allowed}
+/* CSS-Regel: #uninstallRebootMode option – gestaltet das zugehörige Element oder Layout. */
+#uninstallRebootMode option{background:#0b1a2d;color:#e8f0f8}
+
+/* V73: Client Verwaltung */
+/* ===== TheMaNi: Clientverwaltung ===== */
+/* CSS-Regel: .client-layout – gestaltet das zugehörige Element oder Layout. */
+.client-layout{display:grid;grid-template-columns:minmax(240px,.72fr) minmax(420px,1.8fr);gap:14px;align-items:start}
+/* CSS-Regel: .client-groups-list,.clients-list – gestaltet das zugehörige Element oder Layout. */
+.client-groups-list,.clients-list{display:flex;flex-direction:column;gap:8px}
+/* CSS-Regel: .client-group-row,.client-row – gestaltet das zugehörige Element oder Layout. */
+.client-group-row,.client-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.025)}
+/* CSS-Regel: .client-group-main,.client-main – gestaltet das zugehörige Element oder Layout. */
+.client-group-main,.client-main{min-width:0;flex:1}
+/* CSS-Regel: .client-group-main – gestaltet das zugehörige Element oder Layout. */
+.client-group-main{display:flex;align-items:center;gap:10px}
+/* CSS-Regel: .client-group-main small,.client-main small – gestaltet das zugehörige Element oder Layout. */
+.client-group-main small,.client-main small{display:block;color:var(--muted);margin-top:3px}
+/* CSS-Regel: .group-dot,.client-status-dot – gestaltet das zugehörige Element oder Layout. */
+.group-dot,.client-status-dot{width:10px;height:10px;border-radius:50%;display:block;flex:none;background:#d6a940}
+/* CSS-Regel: .client-status-dot.online – gestaltet das zugehörige Element oder Layout. */
+.client-status-dot.online{background:#36c76f;box-shadow:0 0 8px rgba(54,199,111,.35)}
+/* CSS-Regel: .client-status-dot.offline – gestaltet das zugehörige Element oder Layout. */
+.client-status-dot.offline{background:#e24d5b;box-shadow:0 0 8px rgba(226,77,91,.28)}
+/* CSS-Regel: .client-status-dot.unknown – gestaltet das zugehörige Element oder Layout. */
+.client-status-dot.unknown{background:#d6a940}
+/* CSS-Regel: .client-group-actions,.client-actions – gestaltet das zugehörige Element oder Layout. */
+.client-group-actions,.client-actions{display:flex;gap:5px;flex:none}
+/* CSS-Regel: .client-toolbar – gestaltet das zugehörige Element oder Layout. */
+.client-toolbar{display:flex;align-items:end;gap:10px;margin:12px 0}
+/* CSS-Regel: .client-toolbar label – gestaltet das zugehörige Element oder Layout. */
+.client-toolbar label{flex:1}
+/* CSS-Regel: .client-name-line – gestaltet das zugehörige Element oder Layout. */
+.client-name-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* CSS-Regel: .client-status-label – gestaltet das zugehörige Element oder Layout. */
+.client-status-label{font-size:11px;padding:3px 7px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted)}
+/* CSS-Regel: .client-status-label.online – gestaltet das zugehörige Element oder Layout. */
+.client-status-label.online{color:#75e49c}.client-status-label.offline{color:#ff8b94}.client-status-label.unknown{color:#e9ca6e}
+/* CSS-Regel: .client-meta – gestaltet das zugehörige Element oder Layout. */
+.client-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;color:var(--muted);font-size:12px}
+/* CSS-Regel: .icon-btn – gestaltet das zugehörige Element oder Layout. */
+.icon-btn{width:31px;height:31px;border:1px solid rgba(255,255,255,.10);border-radius:7px;background:rgba(255,255,255,.035);color:#dce6f0;cursor:pointer}
+/* CSS-Regel: .icon-btn:hover – gestaltet das zugehörige Element oder Layout. */
+.icon-btn:hover{background:rgba(255,255,255,.08)}.icon-btn.danger{color:#ff8b94}
+/* CSS-Regel: .client-actions-card – gestaltet das zugehörige Element oder Layout. */
+.client-actions-card{margin-top:14px}.local-config-actions{display:flex;gap:8px;flex-wrap:wrap}
+/* CSS-Regel: .client-modal-overlay – gestaltet das zugehörige Element oder Layout. */
+.client-modal-overlay{z-index:10000}.client-modal{width:min(680px,calc(100vw - 32px))}
+/* CSS-Regel: @media (max-width:900px) – gestaltet das zugehörige Element oder Layout. */
+@media (max-width:900px){.client-layout{grid-template-columns:1fr}.client-toolbar{flex-direction:column;align-items:stretch}}
+
+/* V74 client tree/live design */
+/* CSS-Regel: .client-page-actions – gestaltet das zugehörige Element oder Layout. */
+.client-page-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.client-action-btn{min-height:38px}.client-action-btn.active{border-color:#3d78ad;background:#12243b;color:#fff}
+/* CSS-Regel: .client-layout – gestaltet das zugehörige Element oder Layout. */
+.client-layout{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(520px,1.8fr);gap:14px;align-items:start}.client-tree-actions{display:flex;gap:8px;margin-bottom:12px}.client-tree-btn{flex:1}.client-tree{display:flex;flex-direction:column;gap:2px}.client-tree-row{min-height:40px;display:flex;align-items:center;gap:7px;padding:5px 8px;border:1px solid transparent;border-radius:8px;cursor:pointer}.client-tree-row:hover{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.07)}.client-tree-row.selected{background:rgba(61,120,173,.18);border-color:rgba(61,120,173,.45)}.client-tree-toggle{width:23px;height:27px;border:0;background:transparent;color:#9aaabd;padding:0;cursor:pointer}.client-tree-toggle.empty{visibility:hidden}.client-folder-icon{width:20px;display:inline-flex;justify-content:center;font-size:15px}.client-tree-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.client-tree-count{min-width:24px;text-align:center;padding:2px 6px;border-radius:999px;background:rgba(255,255,255,.055);color:var(--muted);font-size:11px}.client-tree-edit{width:28px;height:28px;border:0;background:transparent;color:#aebed0;cursor:pointer;border-radius:6px}.client-tree-edit:hover{background:rgba(255,255,255,.08);color:#fff}.client-tree-children{margin-left:20px;padding-left:8px;border-left:1px solid rgba(255,255,255,.07)}
+/* CSS-Regel: .client-live-card .head – gestaltet das zugehörige Element oder Layout. */
+.client-live-card .head{align-items:center}.client-status-btn{min-height:38px}.client-live-summary{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 12px}.client-summary-chip{font-size:11px;padding:5px 8px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.035);color:var(--muted)}.client-summary-chip b{color:#fff;margin-left:4px}.client-summary-chip.online{color:#75e49c}.client-summary-chip.offline{color:#ff8b94}.client-summary-chip.unknown{color:#e9ca6e}.client-live-row{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.025)}.client-live-main{min-width:0;flex:1}.client-live-actions{display:flex;gap:5px}.client-os{padding:3px 7px;border-radius:999px;background:rgba(255,255,255,.055);font-size:11px}.client-os.windows{color:#80b8ff}.client-os.linux{color:#f0c879}.client-os.unknown{color:var(--muted)}
+/* CSS-Regel: @media(max-width:1000px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:1000px){.client-layout{grid-template-columns:1fr}.client-page-actions{margin-top:8px}}@media(max-width:680px){.client-page-actions{width:100%}.client-action-btn{flex:1}}
+
+/* V75 - Client action buttons */
+/* CSS-Regel: .client-add-top-btn – gestaltet das zugehörige Element oder Layout. */
+.client-add-top-btn{
+  box-shadow:0 4px 14px rgba(42,105,160,.16);
+}
+/* CSS-Regel: .client-save-btn – gestaltet das zugehörige Element oder Layout. */
+.client-save-btn{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.12);
+  color:#c8d3df;
+}
+/* CSS-Regel: .client-save-btn:hover – gestaltet das zugehörige Element oder Layout. */
+.client-save-btn:hover{
+  background:rgba(255,255,255,.075);
+  border-color:rgba(255,255,255,.20);
+  color:#fff;
+}
+
+/* V76 - Client management */
+/* CSS-Regel: .client-add-top-btn – gestaltet das zugehörige Element oder Layout. */
+.client-add-top-btn{background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.12)!important;color:#c8d3df!important;box-shadow:none!important}
+/* CSS-Regel: .client-add-top-btn:hover – gestaltet das zugehörige Element oder Layout. */
+.client-add-top-btn:hover{background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.20)!important;color:#fff!important}
+/* CSS-Regel: .client-save-btn – gestaltet das zugehörige Element oder Layout. */
+.client-save-btn{background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.12)!important;color:#c8d3df!important}
+/* CSS-Regel: .client-tree-actions .client-delete-selected-btn,.client-select-toolbar .client-delete-selected-btn – gestaltet das zugehörige Element oder Layout. */
+.client-tree-actions .client-delete-selected-btn,.client-select-toolbar .client-delete-selected-btn{color:#ff9da4;border-color:rgba(226,77,91,.25)}
+/* CSS-Regel: .client-select-toolbar – gestaltet das zugehörige Element oder Layout. */
+.client-select-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;margin:0 0 9px;border:1px solid rgba(255,255,255,.07);border-radius:8px;background:rgba(255,255,255,.025)}
+/* CSS-Regel: .client-select-all – gestaltet das zugehörige Element oder Layout. */
+.client-select-all{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;cursor:pointer}
+/* CSS-Regel: .client-select-all input,.client-tree-check,.client-row-check – gestaltet das zugehörige Element oder Layout. */
+.client-select-all input,.client-tree-check,.client-row-check{accent-color:#5f94c6;cursor:pointer}
+/* CSS-Regel: .client-tree-check,.client-row-check – gestaltet das zugehörige Element oder Layout. */
+.client-tree-check,.client-row-check{width:15px;height:15px;flex:none}
+/* CSS-Regel: .client-modal-overlay – gestaltet das zugehörige Element oder Layout. */
+.client-modal-overlay{position:fixed!important;inset:0!important;z-index:10000!important;display:flex!important;align-items:flex-start!important;justify-content:flex-end!important;padding:74px 7vw 24px 24px!important;background:rgba(0,0,0,.42)!important;backdrop-filter:blur(2px)}
+/* CSS-Regel: .client-modal – gestaltet das zugehörige Element oder Layout. */
+.client-modal{position:relative!important;display:block!important;width:min(620px,calc(100vw - 110px))!important;max-height:calc(100vh - 100px)!important;overflow:auto!important;margin:0!important;padding:0!important;background:#171d25!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:12px!important;box-shadow:0 22px 65px rgba(0,0,0,.52),0 4px 18px rgba(0,0,0,.28)!important}
+/* CSS-Regel: .client-modal .modal-head – gestaltet das zugehörige Element oder Layout. */
+.client-modal .modal-head{position:sticky;top:0;z-index:2;padding:17px 18px 14px;background:#171d25;border-bottom:1px solid rgba(255,255,255,.08)}
+/* CSS-Regel: .client-modal .form-grid – gestaltet das zugehörige Element oder Layout. */
+.client-modal .form-grid{padding:18px}.client-modal .modal-actions{position:sticky;bottom:0;z-index:2;padding:13px 18px;background:#171d25;border-top:1px solid rgba(255,255,255,.08)}
+/* CSS-Regel: .client-modal .form-grid .wide – gestaltet das zugehörige Element oder Layout. */
+.client-modal .form-grid .wide{grid-column:1/-1}
+/* CSS-Regel: @media(max-width:900px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:900px){.client-modal-overlay{padding:60px 20px 20px!important}.client-modal{width:min(620px,calc(100vw - 40px))!important}}
+
+/* V77 - Client hinzufügen: eigenes Side-Dialog-Fenster */
+/* CSS-Regel: .client-modal-overlay – gestaltet das zugehörige Element oder Layout. */
+.client-modal-overlay{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:20000 !important;
+  display:block !important;
+  pointer-events:auto !important;
+  background:rgba(0,0,0,.24) !important;
+  backdrop-filter:blur(1px) !important;
+}
+/* CSS-Regel: .client-modal-overlay > .client-modal – gestaltet das zugehörige Element oder Layout. */
+.client-modal-overlay > .client-modal{
+  position:fixed !important;
+  top:78px !important;
+  right:clamp(24px, 22vw, 380px) !important;
+  left:auto !important;
+  bottom:24px !important;
+  width:clamp(470px, 31vw, 560px) !important;
+  max-width:calc(100vw - 80px) !important;
+  height:auto !important;
+  max-height:none !important;
+  min-height:430px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+  margin:0 !important;
+  padding:0 !important;
+  background:#0a1c34 !important;
+  color:#fff !important;
+  border:1px solid #2677b8 !important;
+  border-radius:14px !important;
+  box-shadow:0 25px 70px rgba(0,0,0,.70),0 6px 24px rgba(0,0,0,.35) !important;
+  isolation:isolate !important;
+}
+/* CSS-Regel: .client-modal > .modal-head – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-head{
+  flex:none !important;
+  display:flex !important;
+  align-items:flex-start !important;
+  justify-content:space-between !important;
+  gap:15px !important;
+  margin:0 !important;
+  padding:18px 20px 14px !important;
+  background:#0a1c34 !important;
+  border-bottom:1px solid #194d7e !important;
+}
+/* CSS-Regel: .client-modal > .modal-head h3 – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-head h3{
+  margin:0 0 5px !important;
+  font-size:19px !important;
+  line-height:1.25 !important;
+  color:#fff !important;
+}
+/* CSS-Regel: .client-modal > .modal-head small – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-head small{
+  display:block !important;
+  margin:0 !important;
+  color:#86d8ff !important;
+  font-size:11px !important;
+  font-weight:800 !important;
+  letter-spacing:.6px !important;
+}
+/* CSS-Regel: .client-modal > .modal-head .modal-close – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-head .modal-close{
+  flex:none !important;
+  width:32px !important;
+  height:32px !important;
+  margin:0 !important;
+  padding:0 !important;
+  background:transparent !important;
+  color:#b9d7f3 !important;
+  border:0 !important;
+  border-radius:7px !important;
+  font-size:25px !important;
+  line-height:32px !important;
+}
+/* CSS-Regel: .client-modal > .form-grid – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .form-grid{
+  flex:1 1 auto !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  align-content:start !important;
+  gap:14px !important;
+  overflow:auto !important;
+  margin:0 !important;
+  padding:20px !important;
+  background:#0a1c34 !important;
+}
+/* CSS-Regel: .client-modal > .form-grid label – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .form-grid label{
+  display:block !important;
+  color:#d9e9f7 !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+}
+.client-modal > .form-grid input,
+/* CSS-Regel: .client-modal > .form-grid select – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .form-grid select{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-height:42px !important;
+  margin-top:6px !important;
+  background:#07182d !important;
+  color:#fff !important;
+  border:1px solid #245e93 !important;
+  border-radius:7px !important;
+  padding:8px 10px !important;
+}
+/* CSS-Regel: .client-modal > .form-grid .wide – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .form-grid .wide{
+  grid-column:1 / -1 !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions{
+  flex:none !important;
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+  gap:9px !important;
+  margin:0 !important;
+  padding:14px 20px !important;
+  background:#0a1c34 !important;
+  border-top:1px solid #194d7e !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions button – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions button{
+  min-height:42px !important;
+  padding:8px 15px !important;
+  border-radius:7px !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions #cfSave – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions #cfSave{
+  background:#0c2340 !important;
+  border:1px solid #2b6fa5 !important;
+  color:#cfe9ff !important;
+  box-shadow:none !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions #cfSave:hover – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions #cfSave:hover{
+  background:#123252 !important;
+  border-color:#3b82bd !important;
+  color:#fff !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions .secondary – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions .secondary{
+  background:#0c2340 !important;
+  border:1px solid #2b6fa5 !important;
+  color:#cfe9ff !important;
+}
+/* CSS-Regel: .client-modal > .modal-actions .secondary:hover – gestaltet das zugehörige Element oder Layout. */
+.client-modal > .modal-actions .secondary:hover{
+  border-color:#3b82bd !important;
+  color:#fff !important;
+}
+/* CSS-Regel: @media(max-width:1100px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:1100px){
+/* CSS-Regel: .client-modal-overlay > .client-modal – gestaltet das zugehörige Element oder Layout. */
+  .client-modal-overlay > .client-modal{
+    right:24px !important;
+    width:min(560px,calc(100vw - 48px)) !important;
+  }
+}
+/* CSS-Regel: @media(max-width:720px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:720px){
+/* CSS-Regel: .client-modal-overlay > .client-modal – gestaltet das zugehörige Element oder Layout. */
+  .client-modal-overlay > .client-modal{
+    top:60px !important;
+    right:12px !important;
+    bottom:12px !important;
+    width:calc(100vw - 24px) !important;
+    max-width:none !important;
+  }
+/* CSS-Regel: .client-modal > .form-grid – gestaltet das zugehörige Element oder Layout. */
+  .client-modal > .form-grid{
+    grid-template-columns:1fr !important;
+  }
+/* CSS-Regel: .client-modal > .form-grid .wide – gestaltet das zugehörige Element oder Layout. */
+  .client-modal > .form-grid .wide{
+    grid-column:auto !important;
+  }
+}
+
+/* V78 - Client connectivity */
+/* CSS-Regel: .client-connection-check – gestaltet das zugehörige Element oder Layout. */
+.client-connection-check{
+  grid-column:1 / -1;
+  padding:12px 13px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:9px;
+  background:rgba(255,255,255,.025);
+}
+/* CSS-Regel: .client-check-line – gestaltet das zugehörige Element oder Layout. */
+.client-check-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+/* CSS-Regel: .client-ping-status – gestaltet das zugehörige Element oder Layout. */
+.client-ping-status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:30px;
+  padding:4px 9px;
+  border-radius:7px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  color:#b9c8d6;
+  font-size:12px;
+}
+/* CSS-Regel: .client-ping-status.online – gestaltet das zugehörige Element oder Layout. */
+.client-ping-status.online{color:#9ee8ba;border-color:rgba(54,190,105,.24);background:rgba(54,190,105,.06)}
+/* CSS-Regel: .client-ping-status.offline – gestaltet das zugehörige Element oder Layout. */
+.client-ping-status.offline{color:#ffb0b7;border-color:rgba(226,77,91,.24);background:rgba(226,77,91,.06)}
+/* CSS-Regel: .client-ping-status.unknown – gestaltet das zugehörige Element oder Layout. */
+.client-ping-status.unknown{color:#d3c78d;border-color:rgba(205,174,65,.20);background:rgba(205,174,65,.05)}
+/* CSS-Regel: .client-connection-check > small – gestaltet das zugehörige Element oder Layout. */
+.client-connection-check > small{
+  display:block;
+  margin-top:8px;
+  color:var(--muted);
+  line-height:1.45;
+}
+/* CSS-Regel: .client-modal #cfPing – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfPing{
+  min-height:38px;
+  white-space:nowrap;
+}
+/* CSS-Regel: .client-modal #cfSave – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfSave{
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  color:#c8d3df!important;
+  box-shadow:none!important;
+}
+/* CSS-Regel: .client-modal #cfSave:hover – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfSave:hover{
+  background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.20)!important;
+  color:#fff!important;
+}
+/* CSS-Regel: #refreshClientStatusBtn.loading – gestaltet das zugehörige Element oder Layout. */
+#refreshClientStatusBtn.loading{
+  opacity:.72;
+  cursor:wait;
+}
+/* CSS-Regel: @media(max-width:680px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:680px){
+/* CSS-Regel: .client-check-line – gestaltet das zugehörige Element oder Layout. */
+  .client-check-line{align-items:flex-start;flex-direction:column}
+}
+
+/* V80 - Zentraler Client-Selector */
+/* ===== TheMaNi: Gemeinsame Clientauswahl ===== */
+/* CSS-Regel: .shared-client-selector – gestaltet das zugehörige Element oder Layout. */
+.shared-client-selector{margin:12px 0 15px;padding:12px 13px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}
+/* CSS-Regel: .shared-client-selector-head – gestaltet das zugehörige Element oder Layout. */
+.shared-client-selector-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+/* CSS-Regel: .shared-client-selector-head h4 – gestaltet das zugehörige Element oder Layout. */
+.shared-client-selector-head h4{margin:0 0 3px;font-size:13px;color:#e5edf5}.shared-client-selector-head small{color:var(--muted);font-size:11px}
+/* CSS-Regel: .shared-client-change – gestaltet das zugehörige Element oder Layout. */
+.shared-client-change{min-height:32px;padding:5px 10px;white-space:nowrap}.shared-client-picker{display:flex;width:100%}.shared-client-select{width:100%;min-height:40px}
+/* CSS-Regel: .shared-client-info – gestaltet das zugehörige Element oder Layout. */
+.shared-client-info{min-height:34px;margin-top:8px;padding:7px 9px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-radius:7px;background:rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.05);font-size:11px;color:#b9c8d6}
+/* CSS-Regel: .shared-client-info b – gestaltet das zugehörige Element oder Layout. */
+.shared-client-info b{color:#e7edf3}.shared-client-info small{color:var(--muted);margin-left:auto}.shared-client-placeholder{color:var(--muted)}
+/* CSS-Regel: .shared-client-status – gestaltet das zugehörige Element oder Layout. */
+.shared-client-status{padding:3px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.07)}
+/* CSS-Regel: .shared-client-status.online – gestaltet das zugehörige Element oder Layout. */
+.shared-client-status.online{color:#8fe1a9;background:rgba(54,190,105,.06);border-color:rgba(54,190,105,.2)}
+/* CSS-Regel: .shared-client-status.offline – gestaltet das zugehörige Element oder Layout. */
+.shared-client-status.offline{color:#ff9da5;background:rgba(226,77,91,.06);border-color:rgba(226,77,91,.2)}
+/* CSS-Regel: .shared-client-status.unknown – gestaltet das zugehörige Element oder Layout. */
+.shared-client-status.unknown{color:#decf8b;background:rgba(205,174,65,.05);border-color:rgba(205,174,65,.16)}
+/* CSS-Regel: @media(max-width:650px) – gestaltet das zugehörige Element oder Layout. */
+@media(max-width:650px){.shared-client-selector-head{align-items:flex-start;flex-direction:column}.shared-client-change{width:100%}.shared-client-info small{width:100%;margin-left:0}}
+
+/* V81 - Client-Liste Auswahlfeld */
+/* CSS-Regel: .shared-client-select – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select{
+  appearance:auto;
+  background:rgba(255,255,255,.045);
+  color:#e5edf5;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:8px;
+  padding:9px 11px;
+  font-size:12px;
+  outline:none;
+  cursor:pointer;
+  transition:border-color .15s ease,background .15s ease,box-shadow .15s ease;
+}
+/* CSS-Regel: .shared-client-select:hover – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select:hover{
+  background:rgba(255,255,255,.065);
+  border-color:rgba(255,255,255,.17);
+}
+/* CSS-Regel: .shared-client-select:focus – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select:focus{
+  border-color:rgba(255,255,255,.24);
+  box-shadow:0 0 0 2px rgba(255,255,255,.045);
+}
+/* CSS-Regel: .shared-client-select option – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select option{
+  background:#1a2027;
+  color:#e5edf5;
+}
+/* CSS-Regel: .shared-client-select option:disabled – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select option:disabled{
+  color:#7f8b96;
+}
+/* CSS-Regel: .shared-client-select optgroup – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select optgroup{
+  background:#171d23;
+  color:#aebdca;
+  font-weight:600;
+}
+
+/* V82 - Dunkle native Client-Liste
+   V81-Selektor bleibt funktional erhalten. color-scheme sorgt dafür,
+   dass Firefox/Windows das geöffnete Auswahlmenü nicht weiß rendert. */
+/* CSS-Regel: .shared-client-select – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select{
+  color-scheme:dark;
+  background:rgba(255,255,255,.045);
+  color:#e5edf5;
+}
+/* CSS-Regel: .shared-client-select option – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select option{
+  color:#e5edf5;
+  background:#101d2d;
+}
+/* CSS-Regel: .shared-client-select optgroup – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select optgroup{
+  color:#63c9ff;
+  background:#101d2d;
+  font-weight:600;
+}
+/* CSS-Regel: .shared-client-select option:checked – gestaltet das zugehörige Element oder Layout. */
+.shared-client-select option:checked{
+  color:#fff;
+  background:#164b70;
+}
+
+/* V83 - TheMaNi Client-Liste: nur das geöffnete Popup wird ersetzt.
+   Der geschlossene Bereich behält die V82-Optik. */
+/* CSS-Regel: .shared-client-dropdown – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown{position:relative;width:100%;z-index:30}
+/* CSS-Regel: .shared-client-dropdown-toggle – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-toggle{
+ width:100%;min-height:40px;padding:9px 11px;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;text-align:left;background:rgba(255,255,255,.045);color:#e5edf5;border:1px solid rgba(255,255,255,.10);
+ border-radius:8px;font-size:12px;cursor:pointer;transition:border-color .15s ease,background .15s ease,box-shadow .15s ease;
+}
+/* CSS-Regel: .shared-client-dropdown-toggle:hover,.shared-client-dropdown.open .shared-client-dropdown-toggle – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-toggle:hover,.shared-client-dropdown.open .shared-client-dropdown-toggle{
+ background:rgba(255,255,255,.065);border-color:rgba(0,185,255,.32);box-shadow:0 0 0 2px rgba(0,185,255,.035);
+}
+/* CSS-Regel: .shared-client-dropdown-arrow – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-arrow{font-size:16px;line-height:1;color:#9eb1c1;transition:transform .15s ease}
+/* CSS-Regel: .shared-client-dropdown.open .shared-client-dropdown-arrow – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown.open .shared-client-dropdown-arrow{transform:rotate(180deg)}
+/* CSS-Regel: .shared-client-dropdown-menu – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-menu{
+ display:none;position:absolute;left:0;right:0;top:calc(100% + 5px);max-height:280px;overflow-y:auto;
+ padding:6px;background:#101d2d;border:1px solid #28527a;border-radius:9px;
+ box-shadow:0 12px 28px rgba(0,0,0,.45);z-index:1000;
+}
+/* CSS-Regel: .shared-client-dropdown.open .shared-client-dropdown-menu – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown.open .shared-client-dropdown-menu{display:block}
+/* CSS-Regel: .shared-client-dropdown-option – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-option{
+ width:100%;min-height:34px;padding:7px 9px;border:0;border-radius:6px;background:transparent;color:#d8e4ee;
+ display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font-size:12px;cursor:pointer;
+}
+/* CSS-Regel: .shared-client-dropdown-option:hover,.shared-client-dropdown-option.selected – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-option:hover,.shared-client-dropdown-option.selected{background:rgba(0,157,230,.14);color:#fff}
+/* CSS-Regel: .shared-client-dropdown-option small – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-option small{color:#8399aa;font-size:10px;white-space:nowrap}
+/* CSS-Regel: .shared-client-dropdown-option:hover small – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-option:hover small{color:#a9bfce}
+/* CSS-Regel: .shared-client-dropdown-option.root-option – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-option.root-option{font-weight:600;color:#e8f2fa;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:4px}
+/* CSS-Regel: .shared-client-dropdown-group – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-group{padding:7px 8px 4px;color:#63c9ff;font-size:11px;font-weight:700;letter-spacing:.15px}
+/* CSS-Regel: .shared-client-dropdown-group span – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-group span{color:#718697;font-weight:500}
+/* CSS-Regel: .shared-client-dropdown-menu::-webkit-scrollbar – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-menu::-webkit-scrollbar{width:7px}
+/* CSS-Regel: .shared-client-dropdown-menu::-webkit-scrollbar-track – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-menu::-webkit-scrollbar-track{background:#0c1724;border-radius:8px}
+/* CSS-Regel: .shared-client-dropdown-menu::-webkit-scrollbar-thumb – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-menu::-webkit-scrollbar-thumb{background:#2a4c68;border-radius:8px}
+/* CSS-Regel: .shared-client-dropdown-menu::-webkit-scrollbar-thumb:hover – gestaltet das zugehörige Element oder Layout. */
+.shared-client-dropdown-menu::-webkit-scrollbar-thumb:hover{background:#376783}
+
+/* V84 - Haptik für die Client-Verwaltung */
+.client-page-actions .client-action-btn,
+.client-tree-actions .client-tree-btn,
+.client-live-card .client-status-btn,
+.client-select-toolbar button,
+/* CSS-Regel: .client-live-actions button – gestaltet das zugehörige Element oder Layout. */
+.client-live-actions button{
+  transition:transform .14s ease,background .14s ease,border-color .14s ease,
+             box-shadow .14s ease,color .14s ease;
+}
+.client-page-actions .client-action-btn:hover:not(:disabled),
+.client-tree-actions .client-tree-btn:hover:not(:disabled),
+.client-live-card .client-status-btn:hover:not(:disabled),
+.client-select-toolbar button:hover:not(:disabled),
+/* CSS-Regel: .client-live-actions button:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.client-live-actions button:hover:not(:disabled){
+  transform:translateY(-1px);
+  box-shadow:0 5px 14px rgba(0,0,0,.20);
+}
+.client-page-actions .client-action-btn:active:not(:disabled),
+.client-tree-actions .client-tree-btn:active:not(:disabled),
+.client-live-card .client-status-btn:active:not(:disabled),
+.client-select-toolbar button:active:not(:disabled),
+/* CSS-Regel: .client-live-actions button:active:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.client-live-actions button:active:not(:disabled){
+  transform:translateY(0);
+  box-shadow:0 2px 6px rgba(0,0,0,.16);
+}
+.client-page-actions .client-action-btn:focus-visible,
+.client-tree-actions .client-tree-btn:focus-visible,
+.client-live-card .client-status-btn:focus-visible,
+.client-select-toolbar button:focus-visible,
+/* CSS-Regel: .client-live-actions button:focus-visible – gestaltet das zugehörige Element oder Layout. */
+.client-live-actions button:focus-visible{
+  outline:2px solid rgba(55,180,255,.55);
+  outline-offset:2px;
+}
+
+/* V85 - Hover/Haptik für ALLE interaktiven Buttons der Client-Verwaltung */
+.client-tree-toggle.has-children,
+.client-tree-edit,
+.client-live-actions .icon-btn,
+.client-modal .modal-close,
+.client-modal .secondary,
+.client-modal #cfPing,
+/* CSS-Regel: .client-modal #cfSave – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfSave{
+  transition:transform .14s ease,background .14s ease,border-color .14s ease,
+             box-shadow .14s ease,color .14s ease,opacity .14s ease;
+}
+
+/* Kleine Hervorhebung beim Überfahren */
+.client-tree-toggle.has-children:hover,
+.client-tree-edit:hover,
+.client-live-actions .icon-btn:hover,
+.client-modal .modal-close:hover,
+.client-modal .secondary:hover:not(:disabled),
+.client-modal #cfPing:hover:not(:disabled),
+/* CSS-Regel: .client-modal #cfSave:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfSave:hover:not(:disabled){
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.075);
+  border-color:rgba(55,180,255,.35);
+  box-shadow:0 4px 12px rgba(0,0,0,.22);
+  color:#fff;
+}
+
+/* Löschen bleibt optisch als gefährliche Aktion erkennbar */
+/* CSS-Regel: .client-live-actions .icon-btn.danger:hover – gestaltet das zugehörige Element oder Layout. */
+.client-live-actions .icon-btn.danger:hover{
+  background:rgba(226,77,91,.16);
+  border-color:rgba(226,77,91,.48);
+  color:#ffb0b6;
+}
+
+/* Schließen des Client-Fensters */
+/* CSS-Regel: .client-modal .modal-close:hover – gestaltet das zugehörige Element oder Layout. */
+.client-modal .modal-close:hover{
+  background:rgba(226,77,91,.14);
+  border-color:rgba(226,77,91,.40);
+  color:#ffb0b6;
+}
+
+/* Klick-Effekt */
+.client-tree-toggle.has-children:active,
+.client-tree-edit:active,
+.client-live-actions .icon-btn:active,
+.client-modal .modal-close:active,
+.client-modal .secondary:active:not(:disabled),
+.client-modal #cfPing:active:not(:disabled),
+/* CSS-Regel: .client-modal #cfSave:active:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.client-modal #cfSave:active:not(:disabled){
+  transform:translateY(0);
+  box-shadow:0 2px 6px rgba(0,0,0,.16);
+}
+
+/* Tastaturfokus */
+.client-tree-toggle.has-children:focus-visible,
+.client-tree-edit:focus-visible,
+.client-live-actions .icon-btn:focus-visible,
+.client-modal .modal-close:focus-visible,
+/* CSS-Regel: .client-modal button:focus-visible – gestaltet das zugehörige Element oder Layout. */
+.client-modal button:focus-visible{
+  outline:2px solid rgba(55,180,255,.55);
+  outline-offset:2px;
+}
+
+/* V86 - Sichtbares Hover-Feedback für die übrigen Hauptaktionen.
+   Der + Client hinzufügen Button dient als optische Referenz. */
+#clientEditModeBtn,
+#saveClientConfigBtn,
+#loadClientConfigBtn,
+#refreshClientStatusBtn,
+/* CSS-Regel: #deleteSelectedClientsBtn – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn{
+  transition:transform .14s ease,background .14s ease,border-color .14s ease,
+             box-shadow .14s ease,color .14s ease;
+}
+
+/* Gleicher "Aufleucht"-Effekt wie bei + Client hinzufügen */
+#clientEditModeBtn:hover:not(:disabled),
+#saveClientConfigBtn:hover:not(:disabled),
+#loadClientConfigBtn:hover:not(:disabled),
+/* CSS-Regel: #refreshClientStatusBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#refreshClientStatusBtn:hover:not(:disabled){
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.075) !important;
+  border-color:rgba(255,255,255,.20) !important;
+  color:#fff !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20);
+}
+
+/* Auswahl löschen bleibt als Löschaktion rot, bekommt aber ebenfalls
+   deutlich sichtbare Reaktion auf den Mauszeiger. */
+/* CSS-Regel: #deleteSelectedClientsBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn:hover:not(:disabled){
+  transform:translateY(-1px);
+  background:rgba(226,77,91,.16) !important;
+  border-color:rgba(226,77,91,.48) !important;
+  color:#ffb0b6 !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20);
+}
+
+#clientEditModeBtn:active:not(:disabled),
+#saveClientConfigBtn:active:not(:disabled),
+#loadClientConfigBtn:active:not(:disabled),
+#refreshClientStatusBtn:active:not(:disabled),
+/* CSS-Regel: #deleteSelectedClientsBtn:active:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn:active:not(:disabled){
+  transform:translateY(0);
+  box-shadow:0 2px 6px rgba(0,0,0,.16);
+}
+
+/* V87 - Explizites Hover-Feedback für die markierten Client-Verwaltungsbuttons.
+   !important stellt sicher, dass die allgemeinen .secondary-Regeln nicht
+   den sichtbaren Hover-Effekt überschreiben. */
+#clientEditModeBtn,
+#saveClientConfigBtn,
+#loadClientConfigBtn,
+#refreshClientStatusBtn,
+/* CSS-Regel: #deleteSelectedClientsBtn – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn{
+  transition:transform .14s ease,background-color .14s ease,
+             border-color .14s ease,box-shadow .14s ease,color .14s ease !important;
+  cursor:pointer !important;
+}
+
+#clientEditModeBtn:hover:not(:disabled),
+#saveClientConfigBtn:hover:not(:disabled),
+#loadClientConfigBtn:hover:not(:disabled),
+/* CSS-Regel: #refreshClientStatusBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#refreshClientStatusBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  background-color:rgba(255,255,255,.075) !important;
+  border-color:rgba(255,255,255,.20) !important;
+  color:#fff !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20) !important;
+}
+
+/* CSS-Regel: #deleteSelectedClientsBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  background-color:rgba(226,77,91,.16) !important;
+  border-color:rgba(226,77,91,.48) !important;
+  color:#ffb0b6 !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20) !important;
+}
+
+#clientEditModeBtn:active:not(:disabled),
+#saveClientConfigBtn:active:not(:disabled),
+#loadClientConfigBtn:active:not(:disabled),
+#refreshClientStatusBtn:active:not(:disabled),
+/* CSS-Regel: #deleteSelectedClientsBtn:active:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedClientsBtn:active:not(:disabled){
+  transform:translateY(0) !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.16) !important;
+}
+
+/* Die beiden Gruppenbuttons und der Löschbutton links bekommen denselben
+   Effekt, falls sie im Bearbeitungsmodus sichtbar sind. */
+#addClientRootGroupBtn,
+#addClientSubGroupBtn,
+/* CSS-Regel: #deleteSelectedTreeBtn – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedTreeBtn{
+  transition:transform .14s ease,background-color .14s ease,
+             border-color .14s ease,box-shadow .14s ease,color .14s ease !important;
+  cursor:pointer !important;
+}
+#addClientRootGroupBtn:hover:not(:disabled),
+/* CSS-Regel: #addClientSubGroupBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#addClientSubGroupBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  background-color:rgba(255,255,255,.075) !important;
+  border-color:rgba(255,255,255,.20) !important;
+  color:#fff !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20) !important;
+}
+/* CSS-Regel: #deleteSelectedTreeBtn:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#deleteSelectedTreeBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  background-color:rgba(226,77,91,.16) !important;
+  border-color:rgba(226,77,91,.48) !important;
+  color:#ffb0b6 !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20) !important;
+}
+
+/* V88 - Einheitliches Hover-/Klick-Feedback für die übrigen Seiten
+   der Anwendung. Die Client-Verwaltung besitzt weiterhin ihre spezielleren
+   Regeln aus V87. */
+button,
+[role="button"],
+/* CSS-Regel: a.button – gestaltet das zugehörige Element oder Layout. */
+a.button{
+  transition:transform .14s ease,background-color .14s ease,
+             border-color .14s ease,box-shadow .14s ease,color .14s ease,
+             opacity .14s ease !important;
+}
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+/* CSS-Regel: a.button – gestaltet das zugehörige Element oder Layout. */
+a.button{
+  cursor:pointer;
+}
+button:not(:disabled):hover,
+[role="button"]:not([aria-disabled="true"]):hover,
+/* CSS-Regel: a.button:hover – gestaltet das zugehörige Element oder Layout. */
+a.button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active,
+/* CSS-Regel: a.button:active – gestaltet das zugehörige Element oder Layout. */
+a.button:active{
+  transform:translateY(0);
+  filter:brightness(1.02);
+  box-shadow:0 2px 6px rgba(0,0,0,.14);
+}
+button:focus-visible,
+[role="button"]:focus-visible,
+/* CSS-Regel: a.button:focus-visible – gestaltet das zugehörige Element oder Layout. */
+a.button:focus-visible{
+  outline:2px solid rgba(55,180,255,.55);
+  outline-offset:2px;
+}
+
+/* Eingabefelder/Selects sollen nicht wie Aktionsbuttons springen. */
+input[type="text"]:hover,
+input[type="search"]:hover,
+input[type="number"]:hover,
+input[type="password"]:hover,
+textarea:hover,
+/* CSS-Regel: select:hover – gestaltet das zugehörige Element oder Layout. */
+select:hover{
+  transform:none;
+  filter:none;
+  box-shadow:none;
+}
+
+/* V89 - Einheitliches Hover-Feedback für die übrigen Seiten.
+   Die tatsächlichen Aktionsbuttons werden explizit angesprochen, damit ältere
+   seitenbezogene CSS-Regeln den Effekt nicht mehr verschlucken. */
+#testInstall,#localSourceBtn,#onlineSourceBtn,
+#startInstall,#testUninstall,#refresh,
+#startUninstall,#runQuery,#addPackage,
+#scanSource,#testSource,#saveSource,#resetSettings,#saveSettings,
+#confirmDeletePackage,#savePackage,
+.shared-client-change,
+.deployment-tab,
+/* CSS-Regel: .uninstall-package-tab – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tab{
+  transition:transform .14s ease,background-color .14s ease,
+             border-color .14s ease,box-shadow .14s ease,
+             color .14s ease,filter .14s ease !important;
+  cursor:pointer !important;
+}
+#testInstall:hover:not(:disabled),
+#localSourceBtn:hover:not(:disabled),
+#onlineSourceBtn:hover:not(:disabled),
+#startInstall:hover:not(:disabled),
+#testUninstall:hover:not(:disabled),
+#refresh:hover:not(:disabled),
+#runQuery:hover:not(:disabled),
+#addPackage:hover:not(:disabled),
+#scanSource:hover:not(:disabled),
+#testSource:hover:not(:disabled),
+#saveSource:hover:not(:disabled),
+#resetSettings:hover:not(:disabled),
+#saveSettings:hover:not(:disabled),
+#confirmDeletePackage:hover:not(:disabled),
+#savePackage:hover:not(:disabled),
+.shared-client-change:hover:not(:disabled),
+.deployment-tab:hover:not(:disabled),
+/* CSS-Regel: .uninstall-package-tab:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tab:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  filter:brightness(1.10) !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.22) !important;
+}
+#testInstall:hover:not(:disabled),
+#startInstall:hover:not(:disabled),
+#testUninstall:hover:not(:disabled),
+#refresh:hover:not(:disabled),
+#runQuery:hover:not(:disabled),
+#scanSource:hover:not(:disabled),
+#testSource:hover:not(:disabled),
+#saveSource:hover:not(:disabled),
+#resetSettings:hover:not(:disabled),
+#saveSettings:hover:not(:disabled),
+#addPackage:hover:not(:disabled),
+#savePackage:hover:not(:disabled),
+/* CSS-Regel: .shared-client-change:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.shared-client-change:hover:not(:disabled){
+  border-color:rgba(55,180,255,.60) !important;
+}
+/* CSS-Regel: #startInstall:hover:not(:disabled),#runQuery:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#startInstall:hover:not(:disabled),#runQuery:hover:not(:disabled){
+  background-color:rgba(22,140,255,.16) !important;
+}
+/* CSS-Regel: #startUninstall:hover:not(:disabled),#confirmDeletePackage:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#startUninstall:hover:not(:disabled),#confirmDeletePackage:hover:not(:disabled){
+  filter:brightness(1.12) !important;
+  box-shadow:0 5px 14px rgba(160,40,55,.25) !important;
+}
+/* CSS-Regel: #clear:hover:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+#clear:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  filter:brightness(1.12) !important;
+  text-decoration:underline;
+}
+#testInstall:active:not(:disabled),#localSourceBtn:active:not(:disabled),
+#onlineSourceBtn:active:not(:disabled),#startInstall:active:not(:disabled),
+#testUninstall:active:not(:disabled),#refresh:active:not(:disabled),
+#startUninstall:active:not(:disabled),#runQuery:active:not(:disabled),
+#addPackage:active:not(:disabled),#scanSource:active:not(:disabled),
+#testSource:active:not(:disabled),#saveSource:active:not(:disabled),
+#resetSettings:active:not(:disabled),#saveSettings:active:not(:disabled),
+#confirmDeletePackage:active:not(:disabled),#savePackage:active:not(:disabled),
+.shared-client-change:active:not(:disabled),
+.deployment-tab:active:not(:disabled),
+/* CSS-Regel: .uninstall-package-tab:active:not(:disabled) – gestaltet das zugehörige Element oder Layout. */
+.uninstall-package-tab:active:not(:disabled){
+  transform:translateY(0) !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.16) !important;
 }

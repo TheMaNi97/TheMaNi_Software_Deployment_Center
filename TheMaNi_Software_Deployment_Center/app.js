@@ -16,14 +16,17 @@ let importedPackages=[];
 try{importedPackages=JSON.parse(localStorage.getItem(importedPackagesKey)||"[]");}catch{importedPackages=[];}
 if(!Array.isArray(importedPackages))importedPackages=[];
 
+// Funktion: persistImportedPackages – führt den zugehörigen Anwendungsschritt aus.
 function persistImportedPackages(){
   localStorage.setItem(importedPackagesKey,JSON.stringify(importedPackages));
 }
 
+// Funktion: packageImportKey – führt den zugehörigen Anwendungsschritt aus.
 function packageImportKey(p){
   return `${normalizeSoftwareIdentity(p.name)}|${String(p.version||"").trim().toLowerCase()}`;
 }
 
+// Funktion: normalizeSoftwareIdentity – führt den zugehörigen Anwendungsschritt aus.
 function normalizeSoftwareIdentity(name){
   let n=String(name||"").trim().toLowerCase();
   n=n.replace(/[®™]/g,"").replace(/\s+/g," ");
@@ -42,6 +45,7 @@ function normalizeSoftwareIdentity(name){
   return aliases[n]||n;
 }
 
+// Funktion: mergePackageIntoCatalog – führt den zugehörigen Anwendungsschritt aus.
 function mergePackageIntoCatalog(incoming){
   const identity=normalizeSoftwareIdentity(incoming.name);
   const matches=[];
@@ -62,6 +66,7 @@ function mergePackageIntoCatalog(incoming){
   return {index:packages.length-1,replaced:false,removedDuplicates:0};
 }
 
+// Funktion: syncImportedPackageStore – führt den zugehörigen Anwendungsschritt aus.
 function syncImportedPackageStore(){
   const byIdentity=new Map();
   for(const p of importedPackages){
@@ -72,6 +77,7 @@ function syncImportedPackageStore(){
   persistImportedPackages();
 }
 
+// Funktion: friendlyPackageName – führt den zugehörigen Anwendungsschritt aus.
 function friendlyPackageName(p){
   const file=String(p.file||p.name||"");
   if(/^7z\d{4}-/i.test(file))return "7-Zip";
@@ -81,6 +87,7 @@ function friendlyPackageName(p){
   return p.name||Path;
 }
 
+// Funktion: packageCategory – führt den zugehörigen Anwendungsschritt aus.
 function packageCategory(name){
   const n=String(name||"").toLowerCase();
   if(n.includes("firefox")||n.includes("chrome")||n.includes("edge")||n.includes("opera"))return "Browser";
@@ -117,9 +124,13 @@ let packageInventory=[];
 })();
 
 const installedSoftware=[];let selected=new Set(),unselected=new Set(),queryData=[];const $=x=>document.getElementById(x);
+// Funktion: toast – führt den zugehörigen Anwendungsschritt aus.
 function toast(t){const e=$("toast");e.textContent=t;e.classList.remove("hidden");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.add("hidden"),2500)}
+// Funktion: show – führt den zugehörigen Anwendungsschritt aus.
 function show(p){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===p));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p))}
 document.querySelectorAll(".nav button").forEach(x=>x.onclick=()=>show(x.dataset.page));document.querySelectorAll("[data-go]").forEach(x=>x.onclick=()=>show(x.dataset.go));
+// ===== TheMaNi: UI-Rendering und Seitenaktualisierung =====
+// Funktion: renderInstall – führt den zugehörigen Anwendungsschritt aus.
 function renderInstall(){
  const q=$("search").value.toLowerCase();
  const sourcePackages=currentSource==="local"?packages.filter(p=>!p.disabled):onlinePackages;
@@ -139,6 +150,7 @@ $("search").oninput=renderInstall;
 $("localSourceBtn").onclick=()=>{currentSource="local";selected.clear();renderInstall()};
 $("onlineSourceBtn").onclick=()=>{currentSource="online";selected.clear();renderInstall();toast("Online Depot ausgewählt.")};
 $("available").onclick=e=>{let x=e.target.closest(".software");if(!x)return;selected.has(x.dataset.name)?selected.delete(x.dataset.name):selected.add(x.dataset.name);renderInstall()};$("selected").onclick=e=>{let x=e.target.closest("[data-remove]");if(x){selected.delete(x.dataset.remove);renderInstall()}};$("clear").onclick=()=>{selected.clear();renderInstall()};
+// Funktion: test – führt den zugehörigen Anwendungsschritt aus.
 async function test(target,status){
   const t=$(target).value.trim(), el=$(status);
   if(!t){el.textContent="Bitte Zielcomputer eingeben";return;}
@@ -156,10 +168,13 @@ async function test(target,status){
 }
 $("testInstall").onclick=()=>test("installTarget","installStatus");$("testUninstall").onclick=()=>test("uninstallTarget","uninstallStatus");
 $("startInstall").onclick=()=>{if(!selected.size)return toast("Bitte Software auswählen.");if(!$("installTarget").value.trim())return toast("Bitte Zielcomputer eingeben.");toast((currentSource==="online"?"Online-":"") +"Installationsauftrag vorbereitet – Keine Backend-Verbindung.")};
+// Funktion: renderUninstall – führt den zugehörigen Anwendungsschritt aus.
 function renderUninstall(){$("installed").innerHTML=installedSoftware.map(n=>{let p=packages.find(x=>x.name===n);return `<label><input type="checkbox" data-u="${n}" ${unselected.has(n)?"checked":""}><span><b>${n}</b><small>Version ${p?.version||"unbekannt"}</small></span></label>`}).join("");$("uninstallSummary").textContent=unselected.size+" Programme ausgewählt"}
 $("installed").onchange=e=>{let n=e.target.dataset.u;if(!n)return;e.target.checked?unselected.add(n):unselected.delete(n);renderUninstall()};$("refresh").onclick=()=>{toast("Softwareabfrage ist noch nicht mit dem Zielcomputer verbunden.");renderUninstall()};$("startUninstall").onclick=()=>{if(!unselected.size)return toast("Bitte Programme auswählen.");if(!$("uninstallTarget").value.trim())return toast("Bitte Zielcomputer eingeben.");toast("Deinstallationsauftrag vorbereitet – noch kein Backend verbunden.")};
+// Funktion: renderQuery – führt den zugehörigen Anwendungsschritt aus.
 function renderQuery(){let q=$("querySearch").value.toLowerCase(),rows=queryData.filter(x=>x.name.toLowerCase().includes(q));$("results").innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.version||"–"}</td><td><span class="pill ${x.installed?"yes":"no"}">${x.installed?"✓ Installiert":"✕ Nicht installiert"}</span></td></tr>`).join("");$("queryEmpty").classList.toggle("hidden",rows.length>0);$("queryInfo").textContent=rows.length+" Pakete"}
 $("runQuery").onclick=()=>{let t=$("queryTarget").value.trim();if(!t)return toast("Bitte Zielcomputer eingeben.");queryData=packages.map(p=>({name:p.name,version:p.version,installed:installedSoftware.includes(p.name)?p.version:""}));renderQuery();$("queryStatus").textContent="Abfrage für "+t+" abgeschlossen (Demo)";$("queryStatus").className="status ok"};$("querySearch").oninput=renderQuery;
+// Funktion: renderPackages – führt den zugehörigen Anwendungsschritt aus.
 function renderPackages(){
  let q=$("packageSearch").value.toLowerCase();
  let list=packages.map((p,i)=>({...p,_i:i})).filter(p=>`${p.name} ${p.category} ${p.version}`.toLowerCase().includes(q));
@@ -174,37 +189,216 @@ function renderPackages(){
      data-info-status="${p.disabled?"Deaktiviert":"Verfügbar"}">?</span>
  </span>
  <span class="package-actions">
+ // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
  <button data-edit="${p._i}">Bearbeiten</button>
+ // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
  <button data-toggle="${p._i}" class="disabled">${p.disabled?"Aktivieren":"Deaktivieren"}</button>
+ // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
  <button data-delete="${p._i}" class="delete">Löschen</button>
  </span></div>`).join("");
 }
+
+const deploymentParamState = {
+  exe:new Set(), msi:new Set(), msix:new Set()
+};
+// Funktion: getDeployTabType – führt den zugehörigen Anwendungsschritt aus.
+function getDeployTabType(){
+  return document.querySelector(".deployment-tab.active")?.dataset.deployTab||"exe";
+}
+// Funktion: resetDeploymentParameters – führt den zugehörigen Anwendungsschritt aus.
+function resetDeploymentParameters(){
+  deploymentParamState.exe.clear();
+  deploymentParamState.msi.clear();
+  deploymentParamState.msix.clear();
+  document.querySelectorAll("[data-inst-param]").forEach(e=>e.checked=false);
+  $("deployRebootMode").value="installer";
+  $("deployRebootDelay").value=5;
+  updateDeploymentRebootFields();
+}
+// Funktion: updateDeploymentRebootFields – führt den zugehörigen Anwendungsschritt aus.
+function updateDeploymentRebootFields(){
+  const mode=$("deployRebootMode")?.value||"installer";
+  const forced=mode==="force";
+  const delay=$("deployRebootDelay");
+  const wrap=$("deployRebootDelayWrap");
+  if(delay){
+    delay.disabled=!forced;
+    let value=Math.floor(Number(delay.value));
+    if(!Number.isFinite(value)||value<1)value=5;
+    if(value>1440)value=1440;
+    delay.value=value;
+  }
+  if(wrap)wrap.classList.toggle("deployment-disabled",!forced);
+  const hint=$("deployRebootHint");
+  if(hint){
+    hint.textContent=mode==="installer"
+      ?"Der Installer entscheidet anhand seines Ergebnisses, ob ein Neustart erforderlich ist."
+      :mode==="none"
+        ?"TheMaNi löst nach dem Deployment keinen automatischen Neustart aus."
+        :mode==="recommend"
+          ?"Nach erfolgreicher Installation wird dem Benutzer ein Neustart empfohlen. Es erfolgt kein automatischer Countdown."
+          :"Der Countdown startet erst nach Abschluss aller ausgewählten Installationen und der Auswertung ihrer Ergebnisse. Mindestzeit: 1 Minute.";
+  }
+}
+// Funktion: getDeploymentOptions – führt den zugehörigen Anwendungsschritt aus.
+function getDeploymentOptions(){
+  const params={exe:[...deploymentParamState.exe],msi:[...deploymentParamState.msi],msix:[...deploymentParamState.msix]};
+  let rebootMode=$("deployRebootMode")?.value||"installer";
+  let rebootDelay=Math.max(1,Math.min(1440,Math.floor(Number($("deployRebootDelay")?.value)||5)));
+  return {params,rebootMode,rebootDelay};
+}
+document.querySelectorAll("[data-deploy-tab]").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll("[data-deploy-tab]").forEach(t=>t.classList.toggle("active",t===tab));
+    document.querySelectorAll("[data-deploy-panel]").forEach(p=>p.classList.toggle("active",p.dataset.deployPanel===tab.dataset.deployTab));
+  });
+});
+document.querySelectorAll("[data-inst-param]").forEach(box=>{
+  box.addEventListener("change",()=>{
+    const type=getDeployTabType();
+    if(type==="reboot")return;
+    const key=box.dataset.instParam;
+    if(box.checked)deploymentParamState[type].add(key);
+    else deploymentParamState[type].delete(key);
+  });
+});
+$("deployRebootMode")?.addEventListener("change",updateDeploymentRebootFields);
+$("deployRebootDelay")?.addEventListener("change",updateDeploymentRebootFields);
+updateDeploymentRebootFields();
+
+
+const packageUninstallParamState={exe:new Set(),msi:new Set(),msix:new Set()};
+// Funktion: updatePackageCustomUninstallFields – führt den zugehörigen Anwendungsschritt aus.
+function updatePackageCustomUninstallFields(){
+  const enabled=!!$("pkgCustomUninstall")?.checked;
+  const input=$("pkgCustomUninstallCommand");
+  const wrap=$("pkgCustomUninstallCommandWrap");
+  if(input)input.disabled=!enabled;
+  if(wrap)wrap.classList.toggle("deployment-disabled",!enabled);
+}
+// Funktion: resetPackageUninstallOptions – führt den zugehörigen Anwendungsschritt aus.
+function resetPackageUninstallOptions(){
+  packageUninstallParamState.exe.clear(); packageUninstallParamState.msi.clear(); packageUninstallParamState.msix.clear();
+  document.querySelectorAll("[data-package-uninstall-param]").forEach(e=>e.checked=false);
+  if($("pkgCustomUninstall"))$("pkgCustomUninstall").checked=false;
+  if($("pkgCustomUninstallCommand"))$("pkgCustomUninstallCommand").value="";
+  updatePackageCustomUninstallFields();
+}
+// Funktion: getPackageUninstallOptions – führt den zugehörigen Anwendungsschritt aus.
+function getPackageUninstallOptions(){
+  return {
+    customUninstall:!!$("pkgCustomUninstall")?.checked,
+    customUninstallCommand:$("pkgCustomUninstallCommand")?.value.trim()||"",
+    uninstallParams:{exe:[...packageUninstallParamState.exe],msi:[...packageUninstallParamState.msi],msix:[...packageUninstallParamState.msix]}
+  };
+}
+document.querySelectorAll("[data-package-uninstall-tab]").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll("[data-package-uninstall-tab]").forEach(t=>t.classList.toggle("active",t===tab));
+    document.querySelectorAll("[data-package-uninstall-panel]").forEach(p=>p.classList.toggle("active",p.dataset.packageUninstallPanel===tab.dataset.packageUninstallTab));
+  });
+});
+document.querySelectorAll("[data-package-uninstall-param]").forEach(box=>{
+  box.addEventListener("change",()=>{
+    const type=document.querySelector("[data-package-uninstall-tab].active")?.dataset.packageUninstallTab||"exe";
+    const key=box.dataset.packageUninstallParam;
+    if(box.checked)packageUninstallParamState[type].add(key); else packageUninstallParamState[type].delete(key);
+  });
+});
+$("pkgCustomUninstall")?.addEventListener("change",updatePackageCustomUninstallFields);
+updatePackageCustomUninstallFields();
+
+const uninstallParamState={exe:new Set(),msi:new Set(),msix:new Set()};
+let activeUninstallPackage=null;
+// Funktion: setUninstallPackageContext – führt den zugehörigen Anwendungsschritt aus.
+function setUninstallPackageContext(pkg){
+  activeUninstallPackage=pkg||null;
+  const cb=$("uninstallUsePackageCommand"), info=$("uninstallPackageCommandInfo");
+  const available=!!(pkg?.customUninstall&&pkg?.customUninstallCommand);
+  if(cb){cb.disabled=!available;if(!available)cb.checked=false;}
+  if(info)info.textContent=available?`Hinterlegter Befehl: ${pkg.customUninstallCommand}`:"Kein benutzerdefinierter Deinstallationsbefehl ausgewählt.";
+}
+// Funktion: updateUninstallRebootFields – führt den zugehörigen Anwendungsschritt aus.
+function updateUninstallRebootFields(){
+  const mode=$("uninstallRebootMode")?.value||"installer", forced=mode==="force";
+  const delay=$("uninstallRebootDelay"), wrap=$("uninstallRebootDelayWrap");
+  if(delay){
+    delay.disabled=!forced;
+    let value=Math.floor(Number(delay.value)); if(!Number.isFinite(value)||value<1)value=5; if(value>1440)value=1440; delay.value=value;
+  }
+  if(wrap)wrap.classList.toggle("deployment-disabled",!forced);
+  const hint=$("uninstallRebootHint");
+  if(hint)hint.textContent=mode==="installer"
+    ?"Der Installer entscheidet anhand seines Ergebnisses, ob ein Neustart erforderlich ist."
+    :mode==="none"
+      ?"TheMaNi löst nach der Deinstallation keinen automatischen Neustart aus."
+      :mode==="recommend"
+        ?"Nach erfolgreicher Deinstallation wird ein Neustart empfohlen. Es erfolgt kein automatischer Countdown."
+        :"Der Countdown startet erst nach Abschluss aller ausgewählten Deinstallationen und der Auswertung ihrer Ergebnisse. Mindestzeit: 1 Minute.";
+}
+document.querySelectorAll("[data-uninstall-tab]").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll("[data-uninstall-tab]").forEach(t=>t.classList.toggle("active",t===tab));
+    document.querySelectorAll("[data-uninstall-panel]").forEach(p=>p.classList.toggle("active",p.dataset.uninstallPanel===tab.dataset.uninstallTab));
+  });
+});
+document.querySelectorAll("[data-uninstall-param]").forEach(box=>{
+  box.addEventListener("change",()=>{
+    const type=document.querySelector("[data-uninstall-tab].active")?.dataset.uninstallTab||"exe", key=box.dataset.uninstallParam;
+    if(box.checked)uninstallParamState[type].add(key); else uninstallParamState[type].delete(key);
+  });
+});
+$("uninstallRebootMode")?.addEventListener("change",updateUninstallRebootFields);
+$("uninstallRebootDelay")?.addEventListener("change",updateUninstallRebootFields);
+$("uninstallUsePackageCommand")?.addEventListener("change",()=>{
+  const info=$("uninstallPackageCommandInfo");
+  if(info&&activeUninstallPackage?.customUninstallCommand)
+    info.textContent=$("uninstallUsePackageCommand").checked
+      ?`Der hinterlegte Paketbefehl wird verwendet: ${activeUninstallPackage.customUninstallCommand}`
+      :"Kein benutzerdefinierter Deinstallationsbefehl ausgewählt.";
+});
+updateUninstallRebootFields();
+
+// Funktion: openPackageModal – führt den zugehörigen Anwendungsschritt aus.
 function openPackageModal(index=null){
  $("packageModal").classList.remove("hidden");
  $("editPackageIndex").value=index===null?"":index;
  $("modalTitle").textContent=index===null?"Neues Softwarepaket":"Softwarepaket bearbeiten";
  if(index===null){
   $("packageForm").reset();$("editPackageIndex").value="";
+ resetPackageUninstallOptions();
+ $("pkgSilentInstall").checked=false;
   return;
  }
  const p=packages[index];
  $("pkgName").value=p.name;$("pkgVersion").value=p.version;$("pkgCategory").value=p.category;
- $("pkgPath").value=p.path;$("pkgInstallArgs").value=p.installArgs||"";
- $("pkgUninstallMethod").value=p.uninstallMethod||"Automatisch über Windows";
- $("pkgUninstallArgs").value=p.uninstallArgs||"";
+ $("pkgPath").value=p.path;
+ $("pkgCustomUninstall").checked=!!p.customUninstall;
+ $("pkgCustomUninstallCommand").value=p.customUninstallCommand||"";
+ packageUninstallParamState.exe=new Set(p.uninstallParams?.exe||[]);
+ packageUninstallParamState.msi=new Set(p.uninstallParams?.msi||[]);
+ packageUninstallParamState.msix=new Set(p.uninstallParams?.msix||[]);
+ document.querySelectorAll("[data-package-uninstall-param]").forEach(e=>{
+   const type=document.querySelector("[data-package-uninstall-tab].active")?.dataset.packageUninstallTab||"exe";
+   e.checked=packageUninstallParamState[type].has(e.dataset.packageUninstallParam);
+ });
+ updatePackageCustomUninstallFields();
  $("pkgDetectName").value=p.detectName||p.name;$("pkgDetectMethod").value=p.detectMethod||"Installierte Anwendung";
 }
+// Funktion: closePackageModal – führt den zugehörigen Anwendungsschritt aus.
 function closePackageModal(){$("packageModal").classList.add("hidden")}
 document.querySelectorAll("[data-close-modal]").forEach(e=>e.onclick=closePackageModal);
 let pendingDeletePackageIndex=null;
 let activeInfoPoint=null;
 let activeInfoOverlay=null;
 
+// Funktion: hideInfoTooltip – führt den zugehörigen Anwendungsschritt aus.
 function hideInfoTooltip(){
   if(activeInfoOverlay){activeInfoOverlay.remove();activeInfoOverlay=null;}
   activeInfoPoint=null;
 }
 
+// Funktion: showInfoTooltip – führt den zugehörigen Anwendungsschritt aus.
 function showInfoTooltip(point){
   if(!point)return;
   hideInfoTooltip();
@@ -264,26 +458,33 @@ function showInfoTooltip(point){
   });
 }
 
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 document.addEventListener("mouseover",e=>{
   const point=e.target.closest?.(".info-point");
   if(point && point!==activeInfoPoint) showInfoTooltip(point);
 });
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 document.addEventListener("mouseout",e=>{
   const point=e.target.closest?.(".info-point");
   if(point && !point.contains(e.relatedTarget)) hideInfoTooltip();
 });
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 document.addEventListener("focusin",e=>{
   const point=e.target.closest?.(".info-point");
   if(point) showInfoTooltip(point);
 });
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 document.addEventListener("focusout",e=>{
   if(e.target.closest?.(".info-point")) hideInfoTooltip();
 });
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 window.addEventListener("scroll",hideInfoTooltip,true);
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 window.addEventListener("resize",()=>{
   if(activeInfoPoint) showInfoTooltip(activeInfoPoint);
 });
 
+// Funktion: openDeletePackageModal – führt den zugehörigen Anwendungsschritt aus.
 function openDeletePackageModal(index){
   const p=packages[index];
   if(!p)return;
@@ -292,10 +493,12 @@ function openDeletePackageModal(index){
   $("deletePackageName").textContent=`${p.name} · Version ${p.version||"unbekannt"}`;
   $("deletePackageModal").classList.remove("hidden");
 }
+// Funktion: closeDeletePackageModal – führt den zugehörigen Anwendungsschritt aus.
 function closeDeletePackageModal(){
   pendingDeletePackageIndex=null;
   $("deletePackageModal").classList.add("hidden");
 }
+// Funktion: confirmDeletePackage – führt den zugehörigen Anwendungsschritt aus.
 function confirmDeletePackage(){
   if(pendingDeletePackageIndex===null)return;
   const i=pendingDeletePackageIndex;
@@ -304,7 +507,7 @@ function confirmDeletePackage(){
   packages.splice(i,1);
   importedPackages=importedPackages.filter(p=>p.importKey!==deleted.importKey);
   persistImportedPackages();
-  renderPackages();renderInstall();renderPackageInventory();
+  renderPackages();renderInstall();renderPackageInventory();resetDeploymentParameters();
   $("homeCount").textContent=packages.length;
   closeDeletePackageModal();
   toast("Paket gelöscht.");
@@ -326,7 +529,7 @@ $("packageList").onclick=e=>{
 };
 $("packageForm").onsubmit=e=>{
  e.preventDefault();
- const data={name:$("pkgName").value.trim(),version:$("pkgVersion").value.trim(),category:$("pkgCategory").value,path:$("pkgPath").value.trim(),installArgs:$("pkgInstallArgs").value.trim(),uninstallMethod:$("pkgUninstallMethod").value,uninstallArgs:$("pkgUninstallArgs").value.trim(),detectName:$("pkgDetectName").value.trim(),detectMethod:$("pkgDetectMethod").value};
+const data={name:$("pkgName").value.trim(),version:$("pkgVersion").value.trim(),category:$("pkgCategory").value,path:$("pkgPath").value.trim(),customUninstall:!!$("pkgCustomUninstall").checked,customUninstallCommand:$("pkgCustomUninstallCommand").value.trim(),uninstallParams:getPackageUninstallOptions().uninstallParams,detectName:$("pkgDetectName").value.trim(),detectMethod:$("pkgDetectMethod").value};
  const idx=$("editPackageIndex").value;
  if(idx===""){
    packages.push(data);
@@ -413,8 +616,10 @@ azureblob:{"Microsoft Entra ID / OAuth":"Für produktive Azure-Blob-Zugriffe ist
 };
 
 
+// Funktion: openSettingsPanel – führt den zugehörigen Anwendungsschritt aus.
 function openSettingsPanel(id){const p=document.getElementById(id);if(p&&p.tagName==="DETAILS")p.open=true;}
 
+// Funktion: renderSavedSources – führt den zugehörigen Anwendungsschritt aus.
 function renderSavedSources(){
   $("sourceSaved").innerHTML=savedSources.length
     ? "<b>Gespeicherte Quellen</b>"+savedSources.map((x,i)=>`
@@ -423,6 +628,7 @@ function renderSavedSources(){
           <b>${escapeHtml(x.name)}</b>
           <small>${escapeHtml(sourceDefinitions[x.type]?.title||x.type)} · ${escapeHtml(x.access||"Standardzugriff")}</small>
         </div>
+        // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
         <button type="button" data-remove-source="${i}" title="Quelle entfernen">Entfernen</button>
       </div>`).join("")
     : "";
@@ -482,12 +688,16 @@ $("sourceSaved").onclick=e=>{
   openSettingsPanel("source-settings");
   toast(`${source.name} geladen – Verbindung testen oder Quelle einlesen.`);
 };
+// Funktion: loadSettings – führt den zugehörigen Anwendungsschritt aus.
 function loadSettings(){const c={...defaultConfig,...JSON.parse(localStorage.getItem("themaniDeploymentConfig")||"{}")};$("cfgOnlineEnabled").checked=!!c.onlineEnabled;$("cfgOnlineUrl").value=c.onlineUrl||"";$("cfgVerifiedOnly").checked=c.verifiedOnly!==false;$("cfgBackend").value=c.backend||"";$("cfgProtocol").value=c.protocol;$("cfgPort").value=c.port;$("cfgDomain").value=c.domain||"";$("cfgUser").value=c.user||"";$("cfgWorkgroup").checked=!!c.workgroup;$("cfgSourceType").value=c.sourceType||"smb";renderSourceFields();renderSavedSources();const sourcePanel=$("source-settings");if(sourcePanel)sourcePanel.open=false}
+// Funktion: saveSettings – führt den zugehörigen Anwendungsschritt aus.
 function saveSettings(){const c={sourceType:$("cfgSourceType").value,onlineEnabled:$("cfgOnlineEnabled").checked,onlineUrl:$("cfgOnlineUrl").value.trim(),verifiedOnly:$("cfgVerifiedOnly").checked,backend:$("cfgBackend").value.trim(),protocol:$("cfgProtocol").value,port:$("cfgPort").value,domain:$("cfgDomain").value.trim(),user:$("cfgUser").value.trim(),workgroup:$("cfgWorkgroup").checked};localStorage.setItem("themaniDeploymentConfig",JSON.stringify(c));toast("Konfiguration gespeichert.")}
+// Funktion: resetSettings – führt den zugehörigen Anwendungsschritt aus.
 function resetSettings(){localStorage.removeItem("themaniDeploymentConfig");localStorage.removeItem("themaniSoftwareSources");loadSettings();toast("Standardeinstellungen wiederhergestellt.")}
 $("saveSettings").onclick=saveSettings;$("resetSettings").onclick=resetSettings;loadSettings();
 
 if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+// Funktion: setupWorkgroup – führt den zugehörigen Anwendungsschritt aus.
 function setupWorkgroup(domainId, wrapId, checkId){
   const domain=$(domainId), wrap=$(wrapId), check=$(checkId);
   if(!domain||!check)return;
@@ -508,6 +718,7 @@ const packageInventoryKey="themaniPackageInventory_v42";
 
 packageInventory=JSON.parse(localStorage.getItem(packageInventoryKey)||"[]");
 
+// Funktion: normalizePackage – führt den zugehörigen Anwendungsschritt aus.
 function normalizePackage(p,source){
   const displayName=friendlyPackageName(p);
   return {
@@ -520,6 +731,7 @@ function normalizePackage(p,source){
   };
 }
 
+// Funktion: renderPackageInventory – führt den zugehörigen Anwendungsschritt aus.
 function renderPackageInventory(){
   const target=$("sourcePackageInventory");
   if(!target)return;
@@ -537,6 +749,7 @@ function renderPackageInventory(){
             <small>${escapeHtml(p.version||"Version unbekannt")} · ${escapeHtml(p.file||"")} · ${escapeHtml(p.source||"Quelle unbekannt")}</small>
           </div>
           ${p.new?'<span class="new-badge">NEU</span>':"<span></span>"}
+          // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
           <button type="button" data-add-inventory="${i}" ${imported?'disabled class="secondary"':""}>
             ${imported?"✓ Übernommen":"Hinzufügen"}
           </button>
@@ -544,6 +757,7 @@ function renderPackageInventory(){
       }).join("")
     : '<div class="source-empty">Noch keine Pakete eingelesen.</div>';
 }
+// Funktion: getCurrentSourcePayload – führt den zugehörigen Anwendungsschritt aus.
 async function getCurrentSourcePayload(){
   const type=$("cfgSourceType")?.value||"local";
   const methods=accessDefinitions[type]?.methods||{};
@@ -553,6 +767,7 @@ async function getCurrentSourcePayload(){
   fields.forEach(([id])=>{const el=$("src_"+id);if(el)data[id]=el.value.trim();});
   return {type,access,data};
 }
+// Funktion: getBackendBaseUrl – führt den zugehörigen Anwendungsschritt aus.
 function getBackendBaseUrl(){
   const configured=(localStorage.getItem("themaniBackendUrl")||"").trim();
   if(configured)return configured.replace(/\/+$/,"");
@@ -567,6 +782,7 @@ function getBackendBaseUrl(){
 }
 
 
+// Funktion: callBackend – führt den zugehörigen Anwendungsschritt aus.
 async function callBackend(path,payload,timeoutMs=15000){
   const controller=new AbortController();
   const timer=setTimeout(()=>controller.abort(),timeoutMs);
@@ -590,6 +806,7 @@ async function callBackend(path,payload,timeoutMs=15000){
   }finally{clearTimeout(timer);}
 }
 
+// Funktion: syncInventoryFromSource – führt den zugehörigen Anwendungsschritt aus.
 async function syncInventoryFromSource(){
   const status=$("scanStatus");
   const button=$("scanSource");
@@ -636,6 +853,7 @@ async function syncInventoryFromSource(){
                 <b>${escapeHtml(p.name)}</b>
                 <small>${escapeHtml(p.file||"")} · Version ${escapeHtml(p.version||"unbekannt")} · ${escapeHtml(p.type||"DATEI")}</small>
               </div>
+              // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
               <button type="button" data-source-add="${i}">Übernehmen</button>
             </div>`
           ).join("")
@@ -661,6 +879,7 @@ async function syncInventoryFromSource(){
     }
   }
 }
+// Funktion: testSourceConnection – führt den zugehörigen Anwendungsschritt aus.
 async function testSourceConnection(){
   const status=$("scanStatus");
   const button=$("testSource");
@@ -701,6 +920,7 @@ async function testSourceConnection(){
 
 if($("refreshSourceInventory"))$("refreshSourceInventory").onclick=syncInventoryFromSource;
 
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
 document.addEventListener("click",e=>{
   const add=e.target.closest("[data-add-inventory],[data-source-add]");
   if(!add)return;
@@ -815,11 +1035,13 @@ renderPackageInventory();function renderSourceFields(){
 }
 
 
+// Funktion: escapeHtml – führt den zugehörigen Anwendungsschritt aus.
 function escapeHtml(value){
   return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 }
 
 
+// Funktion: initSourceSettings – führt den zugehörigen Anwendungsschritt aus.
 function initSourceSettings(){
   const source=$("cfgSourceType");
   if(!source)return;
@@ -839,11 +1061,443 @@ function initSourceSettings(){
 
 }
 if(document.readyState==="loading"){
+  // Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
   document.addEventListener("DOMContentLoaded",initSourceSettings,{once:true});
 }else{
   initSourceSettings();
 }
 
 // TheMaNi V27 diagnostic marker
-window.THEMANI_VERSION = "V63";
-console.info("[TheMaNi] Frontend V63 geladen – Demo-Quellenbestand deaktiviert.");
+
+/* V74 - Client Verwaltung: Ordnerstruktur + Live-Ansicht */
+
+/* V80 - Gemeinsame Clientauswahl */
+// Statusdaten: sharedClientSelections – speichert zentrale Anwendungsdaten.
+const sharedClientSelections={install:null,uninstall:null,query:null};
+// Funktion: sharedClientGroups – führt den zugehörigen Anwendungsschritt aus.
+function sharedClientGroups(){
+ const groups=[...clientManagerState.groups],result=[];
+ // Funktion: walk – führt den zugehörigen Anwendungsschritt aus.
+ function walk(parent,depth){
+  groups.filter(g=>(g.parentId||null)===(parent||null)).forEach(g=>{
+   result.push({group:g,depth,clients:clientManagerState.clients.filter(c=>c.groupId===g.id)});
+   walk(g.id,depth+1);
+  });
+ }
+ walk(null,0);return result;
+}
+// ===== TheMaNi: Gemeinsame Clientauswahl für Installation, Deinstallation und Abfrage =====
+// Funktion: renderSharedClientSelector – führt den zugehörigen Anwendungsschritt aus.
+function renderSharedClientSelector(prefix){
+ const box=$(`${prefix}ClientSelect`),info=$(`${prefix}ClientInfo`);
+ if(!box||!info)return;
+ const label=box.querySelector(".shared-client-dropdown-label");
+ const menu=box.querySelector(".shared-client-dropdown-menu");
+ const current=sharedClientSelections[prefix]||"";
+ // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+ let content=`<button type="button" class="shared-client-dropdown-option root-option" data-client-id="" role="option">Client Liste</button>`;
+ sharedClientGroups().forEach(({group,depth,clients})=>{
+   const indent="　".repeat(depth);
+   content+=`<div class="shared-client-dropdown-group">${esc(indent)}📁 ${esc(group.name)}${clients.length?"":" <span>· keine Clients</span>"}</div>`;
+   clients.forEach(c=>{
+     const icon=c.status==="online"?"🟢":c.status==="offline"?"🔴":"🟡";
+     const selected=c.id===current?" selected":"";
+     // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+     content+=`<button type="button" class="shared-client-dropdown-option${selected}" data-client-id="${esc(c.id)}" role="option"><span>${esc(indent)}${icon} ${esc(c.name)}</span><small>${esc(c.host)}</small></button>`;
+   });
+ });
+ menu.innerHTML=content;
+ const selected=current&&clientManagerState.clients.find(c=>c.id===current);
+ if(selected){
+   const icon=selected.status==="online"?"🟢":selected.status==="offline"?"🔴":"🟡";
+   label.textContent=`${icon} ${selected.name} · ${selected.host}`;
+ }else{
+   label.textContent="Client Liste";
+ }
+ menu.querySelectorAll("[data-client-id]").forEach(option=>{
+   option.addEventListener("click",()=>{
+     applySharedClientSelection(prefix,option.dataset.clientId||"");
+     closeSharedClientDropdown(prefix);
+   });
+ });
+ if(current&&!clientManagerState.clients.some(c=>c.id===current)){
+   sharedClientSelections[prefix]=null;
+   label.textContent="Client Liste";
+ }
+ renderSharedClientInfo(prefix);
+}
+// Funktion: closeSharedClientDropdown – führt den zugehörigen Anwendungsschritt aus.
+function closeSharedClientDropdown(prefix){
+ const box=$(`${prefix}ClientSelect`);
+ if(!box)return;
+ box.classList.remove("open");
+ box.querySelector(".shared-client-dropdown-toggle")?.setAttribute("aria-expanded","false");
+}
+// Funktion: openSharedClientDropdown – führt den zugehörigen Anwendungsschritt aus.
+function openSharedClientDropdown(prefix){
+ const box=$(`${prefix}ClientSelect`);
+ if(!box)return;
+ document.querySelectorAll(".shared-client-dropdown.open").forEach(other=>{
+   if(other!==box){
+     other.classList.remove("open");
+     other.querySelector(".shared-client-dropdown-toggle")?.setAttribute("aria-expanded","false");
+   }
+ });
+ box.classList.add("open");
+ box.querySelector(".shared-client-dropdown-toggle")?.setAttribute("aria-expanded","true");
+}
+// Funktion: renderSharedClientInfo – führt den zugehörigen Anwendungsschritt aus.
+function renderSharedClientInfo(prefix){
+ const info=$(`${prefix}ClientInfo`),id=sharedClientSelections[prefix],c=id&&clientManagerState.clients.find(x=>x.id===id);
+ if(!info)return;
+ if(!c){info.innerHTML='<span class="shared-client-placeholder">Kein Client ausgewählt.</span>';return}
+ const status=c.status||"unknown",icon=status==="online"?"🟢":status==="offline"?"🔴":"🟡",label=status==="online"?"Online":status==="offline"?"Offline":"Unbekannt";
+ const checked=c.lastChecked?`Zuletzt geprüft: ${esc(c.lastChecked)}`:"Noch nicht geprüft";
+ const latency=typeof c.latencyMs==="number"?` · ${c.latencyMs<1?"<1":Math.round(c.latencyMs)} ms`:"";
+ info.innerHTML=`<span class="shared-client-status ${status}">${icon} ${label}</span><b>${esc(c.name)}</b><span>${esc(c.host)}</span><span>${esc(c.os||"Unbekannt")}</span><small>${checked}${status==="online"?latency:""}</small>`;
+}
+// Funktion: applySharedClientSelection – führt den zugehörigen Anwendungsschritt aus.
+function applySharedClientSelection(prefix,id){
+ sharedClientSelections[prefix]=id||null;
+ const c=id&&clientManagerState.clients.find(x=>x.id===id),target=$(`${prefix}Target`);
+ if(c&&target){target.value=c.host||"";target.dataset.clientId=c.id}
+ else if(target){target.value="";delete target.dataset.clientId}
+ renderSharedClientSelector(prefix);
+ renderSharedClientInfo(prefix);
+}
+// Funktion: refreshAllSharedClientSelectors – führt den zugehörigen Anwendungsschritt aus.
+function refreshAllSharedClientSelectors(){
+ ["install","uninstall","query"].forEach(renderSharedClientSelector);
+}
+// Funktion: initSharedClientSelectors – führt den zugehörigen Anwendungsschritt aus.
+function initSharedClientSelectors(){
+ ["install","uninstall","query"].forEach(prefix=>{
+   const box=$(`${prefix}ClientSelect`);
+   if(!box)return;
+   box.querySelector(".shared-client-dropdown-toggle")?.addEventListener("click",()=>{
+     if(box.classList.contains("open"))closeSharedClientDropdown(prefix);else openSharedClientDropdown(prefix);
+   });
+   $(`[data-client-change="${prefix}"]`)?.addEventListener("click",()=>openSharedClientDropdown(prefix));
+   renderSharedClientSelector(prefix);
+ });
+}
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
+document.addEventListener("click",e=>{
+ if(!e.target.closest(".shared-client-dropdown")&&!e.target.closest(".shared-client-change")){
+   document.querySelectorAll(".shared-client-dropdown.open").forEach(box=>{
+     box.classList.remove("open");
+     box.querySelector(".shared-client-dropdown-toggle")?.setAttribute("aria-expanded","false");
+   });
+ }
+});
+
+// ===== TheMaNi: Zentrale Clientverwaltung und Clientstatus =====
+// Statusdaten: clientManagerState – speichert zentrale Anwendungsdaten.
+const clientManagerState={groups:[],clients:[],selectedGroupId:null,editMode:false,selectedGroupIds:new Set(),selectedClientIds:new Set()};
+// Funktion: clientUid – führt den zugehörigen Anwendungsschritt aus.
+function clientUid(p="client"){return `${p}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;}
+// Funktion: esc – führt den zugehörigen Anwendungsschritt aus.
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+// Funktion: group – führt den zugehörigen Anwendungsschritt aus.
+function group(id){return clientManagerState.groups.find(g=>g.id===id)||null;}
+// Funktion: children – führt den zugehörigen Anwendungsschritt aus.
+function children(id){return clientManagerState.groups.filter(g=>(g.parentId||null)===(id||null));}
+// Funktion: pathOf – führt den zugehörigen Anwendungsschritt aus.
+function pathOf(id){let a=[],g=group(id);while(g){a.unshift(g.name);g=group(g.parentId);}return a;}
+// Funktion: updateClientDeleteControls – führt den zugehörigen Anwendungsschritt aus.
+function updateClientDeleteControls(){
+ const tb=$("deleteSelectedTreeBtn"),ct=$("clientSelectToolbar");
+ if(tb){tb.hidden=!clientManagerState.editMode;tb.textContent=clientManagerState.selectedGroupIds.size?`🗑 ${clientManagerState.selectedGroupIds.size} Bereiche löschen`:"🗑 Auswahl löschen";}
+ if(ct){ct.hidden=!clientManagerState.editMode;const a=$("selectAllClients"),v=clientManagerState.clients.filter(c=>c.groupId===clientManagerState.selectedGroupId);if(a){a.checked=v.length>0&&v.every(c=>clientManagerState.selectedClientIds.has(c.id));a.indeterminate=v.some(c=>clientManagerState.selectedClientIds.has(c.id))&&!a.checked;}}
+}
+// Funktion: renderClientTree – führt den zugehörigen Anwendungsschritt aus.
+function renderClientTree(){
+ const tree=$("clientTree"),empty=$("clientTreeEmpty");if(!tree)return;tree.innerHTML="";
+ if(empty)empty.style.display=clientManagerState.groups.length?"none":"block";
+ // Funktion: branch – führt den zugehörigen Anwendungsschritt aus.
+ function branch(parent,holder,level=0){children(parent).forEach(g=>{
+  const kids=children(g.id),count=clientManagerState.clients.filter(c=>c.groupId===g.id).length,item=document.createElement("div");item.className=`client-tree-item level-${Math.min(level,5)}`;
+  const row=document.createElement("div");row.className="client-tree-row"+(clientManagerState.selectedGroupId===g.id?" selected":"");
+  // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+  const t=document.createElement("button");t.type="button";t.className="client-tree-toggle"+(kids.length?" has-children":" empty");t.textContent=g.open?"▾":"▸";t.disabled=!kids.length;t.onclick=e=>{e.stopPropagation();if(kids.length){g.open=!g.open;renderClientTree();}};
+  const f=document.createElement("span");f.className="client-folder-icon";f.textContent=g.open&&kids.length?"📂":"📁";
+  const n=document.createElement("span");n.className="client-tree-name";n.textContent=g.name;
+   const b=document.createElement("span");b.className="client-tree-count";b.textContent=count;
+   if(clientManagerState.editMode){
+    const cb=document.createElement("input");cb.type="checkbox";cb.className="client-tree-check";cb.checked=clientManagerState.selectedGroupIds.has(g.id);cb.title="Bereich zum Löschen auswählen";
+    cb.onclick=e=>{e.stopPropagation();if(cb.checked)clientManagerState.selectedGroupIds.add(g.id);else clientManagerState.selectedGroupIds.delete(g.id);updateClientDeleteControls();};
+    row.append(cb);
+   }
+   row.append(t,f,n,b);
+  // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+  if(clientManagerState.editMode){const x=document.createElement("button");x.type="button";x.className="client-tree-edit";x.textContent="✎";x.onclick=e=>{e.stopPropagation();renameGroup(g.id)};row.append(x);}
+  row.onclick=()=>{clientManagerState.selectedGroupId=g.id;renderClientTree();renderLiveClients()};item.append(row);
+  if(g.open&&kids.length){const sub=document.createElement("div");sub.className="client-tree-children";branch(g.id,sub,level+1);item.append(sub)}holder.append(item);
+ })}const h=document.createElement("div");branch(null,h);tree.append(...h.children);
+ refreshAllSharedClientSelectors();
+}
+// Funktion: renderLiveClients – führt den zugehörigen Anwendungsschritt aus.
+function renderLiveClients(){
+ const list=$("clientsList"),empty=$("clientsEmpty"),title=$("selectedClientGroupTitle"),sub=$("selectedClientGroupSubtitle"),sum=$("clientLiveSummary");if(!list)return;
+ const g=group(clientManagerState.selectedGroupId),rows=clientManagerState.clients.filter(c=>c.groupId===clientManagerState.selectedGroupId);
+ if(title)title.textContent=g?g.name:"Clients";if(sub)sub.textContent=g?`${pathOf(g.id).join(" › ")} · ${rows.length} Client${rows.length===1?"":"s"}`:"Wähle links eine Gruppe oder einen Bereich aus.";
+ if(sum){const on=rows.filter(c=>c.status==="online").length,off=rows.filter(c=>c.status==="offline").length,unk=rows.length-on-off;sum.innerHTML=g?`<span class="client-summary-chip">Clients <b>${rows.length}</b></span><span class="client-summary-chip online">● Online <b>${on}</b></span><span class="client-summary-chip offline">● Offline <b>${off}</b></span><span class="client-summary-chip unknown">● Unbekannt <b>${unk}</b></span>`:"";}
+ list.innerHTML="";empty.style.display=rows.length?"none":"block";
+ rows.forEach(c=>{
+  const st=c.status||"unknown",label=st==="online"?"Online":st==="offline"?"Offline":"Noch nicht geprüft";
+  const os=c.os||"Unbekannt",oc=os.toLowerCase().includes("linux")?"linux":os.toLowerCase().includes("windows")?"windows":"unknown";
+  const latency=typeof c.latencyMs==="number"?` · ${c.latencyMs<1?"<1":Math.round(c.latencyMs)} ms`:"";
+  const checkInfo=c.lastChecked?`Zuletzt geprüft: ${esc(c.lastChecked)}${st==="online"?latency:""}`:(c.lastError?`Prüfung fehlgeschlagen: ${esc(c.lastError)}`:"Noch keine Statusprüfung durchgeführt.");
+  const r=document.createElement("div");r.className="client-live-row";
+  // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+  r.innerHTML=`<span class="client-status-dot ${st}"></span><div class="client-live-main"><div class="client-name-line"><b>${esc(c.name)}</b><span class="client-status-label ${st}">${label}</span></div><div class="client-meta"><span>⌁ ${esc(c.host)}</span><span class="client-os ${oc}">▣ ${esc(os)}</span>${c.description?`<span>${esc(c.description)}</span>`:""}</div><small>${checkInfo}</small></div><div class="client-live-actions"><button class="icon-btn" data-edit="${c.id}">✎</button><button class="icon-btn danger" data-del="${c.id}">×</button></div>`;
+  list.append(r)
+});
+ list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>showClientDialog(clientManagerState.clients.find(c=>c.id===b.dataset.edit)));list.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>deleteClient(b.dataset.del));
+ list.querySelectorAll("[data-client-check]").forEach(cb=>cb.onchange=()=>{if(cb.checked)clientManagerState.selectedClientIds.add(cb.dataset.clientCheck);else clientManagerState.selectedClientIds.delete(cb.dataset.clientCheck);updateClientDeleteControls();});
+ updateClientDeleteControls();
+ refreshAllSharedClientSelectors();
+}
+// Funktion: showClientDialog – führt den zugehörigen Anwendungsschritt aus.
+function showClientDialog(c=null){
+  const m=document.createElement("div");
+  m.className="client-modal-overlay";
+  const opts=clientManagerState.groups.map(g=>`<option value="${g.id}" ${c?.groupId===g.id?"selected":""}>${esc(pathOf(g.id).join(" › "))}</option>`).join("");
+  const initialStatus=c?.status||"unknown";
+  const initialLabel=initialStatus==="online"?"Online":initialStatus==="offline"?"Offline":"Noch nicht geprüft";
+  const initialInfo=c?.lastChecked?`Zuletzt geprüft: ${esc(c.lastChecked)}`:"Noch keine Verbindung geprüft.";
+  m.innerHTML=`<div class="client-modal" role="dialog" aria-modal="true" aria-labelledby="clientModalTitle">
+    <div class="modal-head">
+      <div><h3 id="clientModalTitle">${c?"Client bearbeiten":"Client hinzufügen"}</h3><small>Keine Zugangsdaten werden hier gespeichert.</small></div>
+      // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+      <button class="modal-close" data-close>×</button>
+    </div>
+    <div class="form-grid">
+      <label>Clientname<input id="cfName" value="${esc(c?.name||"")}" placeholder="z. B. PC-PERS-001"></label>
+      <label>Hostname / IP-Adresse<input id="cfHost" value="${esc(c?.host||"")}" placeholder="z. B. PC-PERS-001 oder 192.168.1.20"></label>
+      <div class="client-connection-check wide">
+        <div class="client-check-line">
+          // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+          <button type="button" class="secondary" id="cfPing">↻ Verbindung prüfen</button>
+          <span id="cfPingStatus" class="client-ping-status ${initialStatus}"><span class="client-status-dot ${initialStatus}"></span><b>${initialLabel}</b></span>
+        </div>
+        <small id="cfPingInfo">${initialInfo}</small>
+      </div>
+      <label>Bereich<select id="cfGroup" class="themani-select"><option value="">Kein Bereich</option>${opts}</select></label>
+      <label>Betriebssystem<select id="cfOs" class="themani-select"><option ${!c?.os||c.os==="Unbekannt"?"selected":""}>Unbekannt</option><option ${c?.os==="Windows"?"selected":""}>Windows</option><option ${c?.os==="Linux"?"selected":""}>Linux</option></select></label>
+      <label class="wide">Beschreibung<input id="cfDesc" value="${esc(c?.description||"")}" placeholder="z. B. Arbeitsplatz Vertrieb"></label>
+    </div>
+    // Button: Erzeugt bzw. fügt einen interaktiven Button hinzu.
+    <div class="modal-actions"><button class="secondary" data-close>Abbrechen</button><button class="secondary" id="cfSave">${c?"Speichern":"Client hinzufügen"}</button></div>
+  </div>`;
+  document.body.append(m);
+
+  m.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>m.remove());
+
+  const pingButton=m.querySelector("#cfPing");
+  const pingStatus=m.querySelector("#cfPingStatus");
+  const pingInfo=m.querySelector("#cfPingInfo");
+  // Keep the result inside the dialog so a newly created client can inherit
+  // the optional connection test before it is inserted into the client list.
+  let pendingPing = c ? {
+    status: c.status || "unknown",
+    lastChecked: c.lastChecked || null,
+    latencyMs: typeof c.latencyMs==="number" ? c.latencyMs : null,
+    lastError: c.lastError || ""
+  } : {
+    status: "unknown",
+    lastChecked: null,
+    latencyMs: null,
+    lastError: ""
+  };
+
+  // Handler/Funktion: setPingUi – verarbeitet die zugehörige Aktion.
+  const setPingUi=(status,info,loading=false)=>{
+    const label=status==="online"?"Online":status==="offline"?"Offline":"Noch nicht geprüft";
+    pingStatus.className=`client-ping-status ${status}`;
+    pingStatus.innerHTML=`<span class="client-status-dot ${status}"></span><b>${label}</b>`;
+    pingInfo.textContent=info;
+    pingButton.disabled=loading;
+    pingButton.textContent=loading?"↻ Prüfe Verbindung …":"↻ Verbindung prüfen";
+  };
+
+  pingButton.onclick=async()=>{
+    const host=m.querySelector("#cfHost").value.trim();
+    if(!host){setPingUi("unknown","Bitte zuerst einen Hostnamen oder eine IP-Adresse eingeben.");m.querySelector("#cfHost").focus();return}
+    setPingUi("unknown","Verbindung wird geprüft …",true);
+    try{
+      const result=await callBackend("/api/client/ping",{host},6000);
+      const now=new Date().toLocaleString("de-DE");
+      pendingPing={
+        status: result.status==="online" ? "online" : "offline",
+        lastChecked: now,
+        latencyMs: typeof result.latencyMs==="number" ? result.latencyMs : null,
+        lastError: ""
+      };
+      if(c){
+        c.status=pendingPing.status;
+        c.lastChecked=pendingPing.lastChecked;
+        c.latencyMs=pendingPing.latencyMs;
+        c.lastError="";
+      }
+      const latency=typeof result.latencyMs==="number"?` · ${result.latencyMs<1?"<1":Math.round(result.latencyMs)} ms`:"";
+      setPingUi(pendingPing.status,`${result.message}${pendingPing.status==="online"?latency:""} · ${now}`);
+    }catch(err){
+      pendingPing={
+        status:"unknown",
+        lastChecked:new Date().toLocaleString("de-DE"),
+        latencyMs:null,
+        lastError:err.message||"Verbindung konnte nicht geprüft werden."
+      };
+      if(c){
+        c.status="unknown";
+        c.lastChecked=pendingPing.lastChecked;
+        c.latencyMs=null;
+        c.lastError=pendingPing.lastError;
+      }
+      setPingUi("unknown",pendingPing.lastError);
+    }
+  };
+
+  m.querySelector("#cfSave").onclick=()=>{
+    const name=m.querySelector("#cfName").value.trim(),host=m.querySelector("#cfHost").value.trim();
+    if(!name||!host){alert("Bitte Clientname und Hostname/IP-Adresse eingeben.");return}
+    const v={
+      name,
+      host,
+      groupId:m.querySelector("#cfGroup").value||clientManagerState.selectedGroupId||"",
+      os:m.querySelector("#cfOs").value,
+      description:m.querySelector("#cfDesc").value.trim()
+    };
+    if(c){
+      Object.assign(c,v);
+      c.status=pendingPing.status;
+      c.lastChecked=pendingPing.lastChecked;
+      c.latencyMs=pendingPing.latencyMs;
+      c.lastError=pendingPing.lastError||"";
+    }else{
+      clientManagerState.clients.push({
+        id:clientUid(),
+        ...v,
+        status:pendingPing.status,
+        lastChecked:pendingPing.lastChecked,
+        latencyMs:pendingPing.latencyMs,
+        lastError:pendingPing.lastError||""
+      });
+    }
+    renderClientTree();renderLiveClients();m.remove()
+  };
+}
+// Funktion: addRoot – führt den zugehörigen Anwendungsschritt aus.
+function addRoot(){const n=prompt("Name der Hauptgruppe:");if(!n?.trim())return;const g={id:clientUid("group"),name:n.trim(),parentId:null,open:true};clientManagerState.groups.push(g);clientManagerState.selectedGroupId=g.id;renderClientTree();renderLiveClients();}
+// Funktion: addSub – führt den zugehörigen Anwendungsschritt aus.
+function addSub(){const p=group(clientManagerState.selectedGroupId);if(!p){alert("Bitte zuerst links einen übergeordneten Bereich auswählen.");return}const n=prompt(`Neuer Bereich unter „${p.name}“:`);if(!n?.trim())return;const g={id:clientUid("group"),name:n.trim(),parentId:p.id,open:true};p.open=true;clientManagerState.groups.push(g);clientManagerState.selectedGroupId=g.id;renderClientTree();renderLiveClients();}
+// Funktion: renameGroup – führt den zugehörigen Anwendungsschritt aus.
+function renameGroup(id){const g=group(id);if(!g)return;const n=prompt("Bereich umbenennen:",g.name);if(n?.trim()){g.name=n.trim();renderClientTree();renderLiveClients()}}
+// Funktion: deleteGroup – führt den zugehörigen Anwendungsschritt aus.
+function deleteGroup(id){const g=group(id);if(!g)return;const ids=new Set([id]);let again=true;while(again){again=false;clientManagerState.groups.forEach(x=>{if(x.parentId&&ids.has(x.parentId)&&!ids.has(x.id)){ids.add(x.id);again=true}})}if(!confirm(`„${g.name}“ und Unterbereiche löschen?`))return;clientManagerState.groups=clientManagerState.groups.filter(x=>!ids.has(x.id));clientManagerState.clients.forEach(c=>{if(ids.has(c.groupId))c.groupId=""});if(ids.has(clientManagerState.selectedGroupId))clientManagerState.selectedGroupId=null;renderClientTree();renderLiveClients();}
+// Funktion: deleteSelectedClients – führt den zugehörigen Anwendungsschritt aus.
+function deleteSelectedClients(){
+ const ids=[...clientManagerState.selectedClientIds];
+ if(!ids.length)return;
+ if(!confirm(`${ids.length} Client${ids.length===1?"":"s"} wirklich löschen?`))return;
+ clientManagerState.clients=clientManagerState.clients.filter(c=>!ids.includes(c.id));
+ clientManagerState.selectedClientIds.clear();renderClientTree();renderLiveClients();
+}
+// Funktion: deleteSelectedGroups – führt den zugehörigen Anwendungsschritt aus.
+function deleteSelectedGroups(){
+ const selected=[...clientManagerState.selectedGroupIds];
+ if(!selected.length)return;
+ const ids=new Set(selected);let changed=true;
+ while(changed){changed=false;clientManagerState.groups.forEach(g=>{if(g.parentId&&ids.has(g.parentId)&&!ids.has(g.id)){ids.add(g.id);changed=true;}});}
+ const count=clientManagerState.clients.filter(c=>ids.has(c.groupId)).length;
+ if(!confirm(`${selected.length} Bereich${selected.length===1?"":"e"} ausgewählt. ${ids.size-selected.length} Unterbereich(e) und ${count} zugeordnete Client(s) werden entfernt. Fortfahren?`))return;
+ clientManagerState.groups=clientManagerState.groups.filter(g=>!ids.has(g.id));
+ clientManagerState.clients.forEach(c=>{if(ids.has(c.groupId))c.groupId=""});
+ clientManagerState.selectedGroupIds.clear();if(ids.has(clientManagerState.selectedGroupId))clientManagerState.selectedGroupId=null;
+ renderClientTree();renderLiveClients();
+}
+// Funktion: deleteClient – führt den zugehörigen Anwendungsschritt aus.
+function deleteClient(id){const c=clientManagerState.clients.find(x=>x.id===id);if(c&&confirm(`Client „${c.name}“ wirklich löschen?`)){clientManagerState.clients=clientManagerState.clients.filter(x=>x.id!==id);clientManagerState.selectedClientIds.delete(id);renderClientTree();renderLiveClients()}}
+// Funktion: refreshClientStatuses – führt den zugehörigen Anwendungsschritt aus.
+async function refreshClientStatuses(){
+  const button=$("refreshClientStatusBtn");
+  if(button){button.disabled=true;button.classList.add("loading");button.textContent="↻ Prüfe Clients …";}
+  renderLiveClients();
+  try{
+    const clients=[...clientManagerState.clients];
+    const now=new Date().toLocaleString("de-DE");
+    const batchSize=8;
+    for(let i=0;i<clients.length;i+=batchSize){
+      const batch=clients.slice(i,i+batchSize);
+      await Promise.all(batch.map(async c=>{
+        try{
+          const result=await callBackend("/api/client/ping",{host:c.host},6000);
+          c.status=result.status==="online"?"online":"offline";
+          c.lastChecked=now;
+          c.latencyMs=typeof result.latencyMs==="number"?result.latencyMs:null;
+        }catch(err){
+          c.status="unknown";
+          c.lastChecked=now;
+          c.lastError=err.message||"Statusprüfung fehlgeschlagen.";
+          c.latencyMs=null;
+        }
+      }));
+      renderLiveClients();
+    }
+  }finally{
+    if(button){
+      button.disabled=false;
+      button.classList.remove("loading");
+      button.textContent="↻ Status prüfen";
+    }
+  }
+}
+// Funktion: toggleEdit – führt den zugehörigen Anwendungsschritt aus.
+function toggleEdit(){
+ clientManagerState.editMode=!clientManagerState.editMode;
+ if(!clientManagerState.editMode){clientManagerState.selectedGroupIds.clear();clientManagerState.selectedClientIds.clear();}
+ const b=$("clientEditModeBtn");b.classList.toggle("active",clientManagerState.editMode);b.textContent=clientManagerState.editMode?"✓ Bearbeitungsmodus aktiv":"✎ Bearbeitungsmodus";
+ renderClientTree();renderLiveClients();updateClientDeleteControls();
+}
+// ===== TheMaNi: Clientkonfiguration als lokale JSON-Datei speichern =====
+// Funktion: saveClientConfiguration – führt den zugehörigen Anwendungsschritt aus.
+function saveClientConfiguration(){
+ const p={
+  format:"TheMaNi Client Configuration",
+  version:2,
+  savedAt:new Date().toISOString(),
+  groups:clientManagerState.groups.map(g=>({id:g.id,name:g.name,parentId:g.parentId||null,open:!!g.open})),
+  clients:clientManagerState.clients.map(c=>({id:c.id,name:c.name,host:c.host,groupId:c.groupId||"",os:c.os||"Unbekannt",description:c.description||""}))
+ };
+ let filename=window.prompt("Dateiname für die Client-Konfiguration:", "TheMaNi_ClientConfig");
+ if(filename===null)return;
+ filename=filename.trim().replace(/[\\/:*?"<>|]/g,"_");
+ if(!filename)filename="TheMaNi_ClientConfig";
+ if(!/\.json$/i.test(filename))filename+=".json";
+ const blob=new Blob([JSON.stringify(p,null,2)],{type:"application/json"});
+ const u=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(u),1000);
+}
+// Funktion: loadClientConfiguration – führt den zugehörigen Anwendungsschritt aus.
+function loadClientConfiguration(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d?.format!=="TheMaNi Client Configuration"||!Array.isArray(d.groups)||!Array.isArray(d.clients))throw 0;clientManagerState.groups=d.groups.map(g=>({id:String(g.id),name:String(g.name||"Unbenannt"),parentId:g.parentId?String(g.parentId):null,open:g.open!==false}));clientManagerState.clients=d.clients.map(c=>({id:String(c.id),name:String(c.name||""),host:String(c.host||""),groupId:String(c.groupId||""),os:String(c.os||"Unbekannt"),description:String(c.description||""),status:"unknown",lastChecked:null}));clientManagerState.selectedGroupId=clientManagerState.groups[0]?.id||null;renderClientTree();renderLiveClients();alert("Client-Konfiguration wurde lokal geladen.")}catch(e){alert("Ungültige TheMaNi Client-Konfiguration.")}};r.readAsText(file);}
+// Funktion: initClientManagement – führt den zugehörigen Anwendungsschritt aus.
+function initClientManagement(){
+ if(!clientManagerState.groups.length){const s={id:clientUid("group"),name:"Server",parentId:null,open:true};clientManagerState.groups=[s,...["Empfang","Vertrieb","Support Desk"].map(n=>({id:clientUid("group"),name:n,parentId:s.id,open:true}))];clientManagerState.selectedGroupId=s.id}
+ $("deleteSelectedTreeBtn")?.addEventListener("click",deleteSelectedGroups);
+ $("deleteSelectedClientsBtn")?.addEventListener("click",deleteSelectedClients);
+ $("selectAllClients")?.addEventListener("change",e=>{const v=clientManagerState.clients.filter(c=>c.groupId===clientManagerState.selectedGroupId);v.forEach(c=>e.target.checked?clientManagerState.selectedClientIds.add(c.id):clientManagerState.selectedClientIds.delete(c.id));renderLiveClients();});
+$("addClientBtn")?.addEventListener("click",()=>{
+  if(!clientManagerState.selectedGroupId){
+    alert("Bitte zuerst links einen Bereich auswählen, dem der Client zugeordnet werden soll.");
+    return;
+  }
+  showClientDialog();
+});$("addClientRootGroupBtn")?.addEventListener("click",addRoot);$("addClientSubGroupBtn")?.addEventListener("click",addSub);$("clientEditModeBtn")?.addEventListener("click",toggleEdit);$("refreshClientStatusBtn")?.addEventListener("click",refreshClientStatuses);$("saveClientConfigBtn")?.addEventListener("click",saveClientConfiguration);$("loadClientConfigBtn")?.addEventListener("click",()=>$("clientConfigFileInput")?.click());$("clientConfigFileInput")?.addEventListener("change",e=>{if(e.target.files?.[0])loadClientConfiguration(e.target.files[0]);e.target.value=""});renderClientTree();renderLiveClients();initSharedClientSelectors()
+}
+// Ereignisbehandlung: Reagiert auf ein Benutzer- oder Systemereignis.
+document.addEventListener("DOMContentLoaded",initClientManagement);
+
+window.THEMANI_VERSION = "V90";
+console.info("[TheMaNi] Frontend V72 geladen – Demo-Quellenbestand deaktiviert.");

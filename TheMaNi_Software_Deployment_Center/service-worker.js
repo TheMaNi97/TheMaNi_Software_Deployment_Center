@@ -1,4 +1,7 @@
-const CACHE_NAME = "themani-deployment-v63";
+// ===== TheMaNi: PWA-Cache verwalten und veraltete Anwendungsversionen entfernen =====
+// Cache-Konfiguration: Legt den Anwendungscache fest.
+const CACHE_NAME = "themani-deployment-v90";
+// Cache-Inhalte: Definiert die offline verfügbaren Dateien.
 const ASSETS = [
   "./",
   "./index.html",
@@ -8,6 +11,7 @@ const ASSETS = [
   "./icons/icon.svg"
 ];
 
+// Service-Worker-Ereignis: Verarbeitet install.
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -16,6 +20,7 @@ self.addEventListener("install", event => {
   );
 });
 
+// Service-Worker-Ereignis: Verarbeitet activate.
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
@@ -28,6 +33,7 @@ self.addEventListener("activate", event => {
   );
 });
 
+// Service-Worker-Ereignis: Verarbeitet fetch.
 self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
 
