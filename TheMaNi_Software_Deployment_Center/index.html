@@ -1,0 +1,493 @@
+<!doctype html>
+<!-- ===== TheMaNi: Dokumenttyp und Hauptstruktur ===== --><html lang="de"><head>
+<!-- ===== TheMaNi: Metadaten, Manifest und Styles ===== --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#E1001A"><link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v90"><title>TheMaNi’s Software Deployment Center</title></head><body>
+<!-- ===== TheMaNi: Sichtbare Anwendungsoberfläche ===== -->
+<!-- Kopfbereich: topbar -->
+<header class="topbar"><div class="brand"><div class="themani-logo"><span class="tm-badge">TM</span><div><b>TheMaNi’s</b><small>SOFTWARE DEPLOYMENT CENTER</small></div></div><div class="divider"></div><div><h1>Software Deployment Center</h1><p>Interne Softwareverteilung & Rechnerverwaltung</p></div></div><div class="ready">● Bereit</div></header>
+<!-- Navigation: nav -->
+<nav class="nav"><button class="nav active" data-page="home">⌂ Startseite</button><button class="nav" data-page="install">▣ Installation</button><button class="nav" data-page="uninstall">▱ Deinstallation</button><button class="nav" data-page="query">⌕ Abfrage</button><button class="nav" data-page="packages">⚙ Softwareverwaltung</button><button class="nav" data-page="clients">▤ Client Verwaltung</button><button class="nav" data-page="settings">⚙ Einstellungen</button></nav>
+<!-- Hauptbereich: main -->
+<main>
+<!-- Bereich: home -->
+<section id="home" class="page active"><div class="hero"><small>TheMaNi’s · INTERNAL TOOL</small><h2>Software Deployment Center</h2><p>Software zentral auswählen, Rechner prüfen und Pakete kontrolliert verteilen.</p></div><div class="home-status-panel">
+  <div class="info">
+    <div><b>Backend</b><span>Noch nicht verbunden</span></div>
+    <div><b>Pakete</b><span id="homeCount">0</span></div>
+    <div><b>Status</b><span>Lokale Webanwendung</span></div>
+  </div>
+  <p class="home-hint">Nutze die Navigation oben, um Software zu installieren, zu deinstallieren, Zielrechner abzufragen oder die Softwareverwaltung zu konfigurieren.</p>
+</div></section>
+
+<!-- Bereich: install -->
+<section id="install" class="page"><div class="title"><div><small>DEPLOYMENT</small><h2>Software installieren</h2><p>Software auswählen und auf Zielrechnern verteilen.</p></div><button id="testInstall" class="secondary">Verbindung testen</button></div>
+
+<div class="card source-card">
+  <div class="source-head"><div><h3>Softwarequelle</h3><p>Wähle, woher die Installationspakete bezogen werden.</p></div><span id="sourceModeLabel" class="source-label">Lokales Depot</span></div>
+  <div class="source-switch">
+    <!-- Button: localSourceBtn -->
+    <button id="localSourceBtn" class="source-option active" type="button"><span>📁</span><div><b>Lokales Depot</b><small>Interner Fileserver / Software-Share</small></div></button>
+    <!-- Button: onlineSourceBtn -->
+    <button id="onlineSourceBtn" class="source-option" type="button"><span>🌐</span><div><b>Online Depot</b><small>Geprüfte Pakete aus dem Internet</small></div></button>
+  </div>
+</div>
+<div class="card"><h3>Zielcomputer</h3><div class="shared-client-selector" data-client-selector="install">
+  <div class="shared-client-selector-head">
+    <div><h4>🖥 Zielclient</h4><small>Client aus der zentralen Client Verwaltung auswählen.</small></div>
+    <!-- Button: secondary shared-client-change -->
+    <button type="button" class="secondary shared-client-change" data-client-change="install">Client wechseln</button>
+  </div>
+  <div class="shared-client-picker">
+  <div id="installClientSelect" class="shared-client-dropdown" data-client-dropdown="install">
+    <!-- Button: shared-client-dropdown-toggle -->
+    <button type="button" class="shared-client-dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+      <span class="shared-client-dropdown-label">Client Liste</span>
+      <span class="shared-client-dropdown-arrow">⌄</span>
+    </button>
+    <div class="shared-client-dropdown-menu" role="listbox"></div>
+  </div>
+</div>
+  <div id="installClientInfo" class="shared-client-info"><span class="shared-client-placeholder">Kein Client ausgewählt.</span></div>
+</div><div class="fields"><label class="grow">Computername / IP<input id="installTarget" placeholder="z. B. PC-023 oder 10.0.0.23"></label><label id="installDomainWrap">Domäne<input id="installDomain" placeholder="z. B. FIRMA"></label><label>Benutzer<input placeholder="z. B. Administrator"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label></div><label class="workgroup-option"><input type="checkbox" id="installWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="installStatus" class="status">Noch nicht geprüft</span></div>
+
+<div class="card deployment-options-card">
+  <div class="head">
+    <div>
+      <!-- Überschrift: h3 -->
+      <h3>Installationsparameter</h3>
+      <small>Parameter werden nur für dieses Deployment verwendet.</small>
+    </div>
+  </div>
+
+  <div class="deployment-tabs" role="tablist" aria-label="Installationsparameter">
+    <!-- Button: deployment-tab active -->
+    <button type="button" class="deployment-tab active" data-deploy-tab="exe">.EXE</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-deploy-tab="msi">.MSI</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-deploy-tab="msix">.MSIX</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-deploy-tab="reboot">↻ Neustart</button>
+  </div>
+
+  <div class="deployment-tab-panel active" data-deploy-panel="exe">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-s"><span><b>/S</b><small>Silent / unbeaufsichtigte Installation (häufig verwendet)</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-silent"><span><b>/silent</b><small>Silent-Installation (installerabhängig)</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-verysilent"><span><b>/verysilent</b><small>Sehr stille Installation (z. B. Inno Setup)</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-quiet"><span><b>/quiet</b><small>Stille Installation (installerabhängig)</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-passive"><span><b>/passive</b><small>Minimale Benutzerinteraktion (installerabhängig)</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="exe-norestart"><span><b>/norestart</b><small>Automatischen Neustart unterdrücken</small></span></label>
+    </div>
+    <div class="deployment-setting-note">EXE-Parameter sind nicht standardisiert. TheMaNi zeigt deshalb nur häufig verwendete Optionen; die tatsächlich unterstützten Parameter hängen vom jeweiligen Installer ab.</div>
+  </div>
+
+  <div class="deployment-tab-panel" data-deploy-panel="msi">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-qn"><span><b>/qn</b><small>Keine Benutzeroberfläche</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-qb"><span><b>/qb</b><small>Grundlegende Benutzeroberfläche</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-passive"><span><b>/passive</b><small>Unbeaufsichtigte Installation mit Fortschrittsanzeige</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-norestart"><span><b>/norestart</b><small>Neustart unterdrücken</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-promptrestart"><span><b>/promptrestart</b><small>Bei notwendigem Neustart nachfragen</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-forcerestart"><span><b>/forcerestart</b><small>Nach der Installation neu starten</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msi-log"><span><b>/L*v</b><small>Ausführliches Windows-Installer-Log</small></span></label>
+    </div>
+  </div>
+
+  <div class="deployment-tab-panel" data-deploy-panel="msix">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msix-force-shutdown"><span><b>-ForceApplicationShutdown</b><small>Laufende Apps des Pakets beenden</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msix-force-update"><span><b>-ForceUpdateFromAnyVersion</b><small>Update unabhängig von der Versionsrichtung zulassen</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msix-install-resources"><span><b>-InstallAllResources</b><small>Alle verfügbaren Ressourcen installieren</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-inst-param="msix-defer-registration"><span><b>-DeferRegistrationWhenPackagesAreInUse</b><small>Registrierung zurückstellen, wenn das Paket verwendet wird</small></span></label>
+    </div>
+    <div class="deployment-setting-note">MSIX wird über PowerShell/AppX-Deployment verarbeitet. Die angezeigten Optionen entsprechen deshalb PowerShell-Parametern und nicht klassischen EXE/MSI-Schaltern.</div>
+  </div>
+
+  <div class="deployment-tab-panel" data-deploy-panel="reboot">
+    <div class="reboot-grid">
+      <label>Neustartverhalten
+        <!-- Auswahlfeld: deployRebootMode -->
+        <select id="deployRebootMode">
+          <option value="installer">Installer entscheidet</option>
+          <option value="none">Kein Neustart</option>
+          <option value="recommend">Neustart empfehlen</option>
+          <option value="force">Neustart erzwingen</option>
+        </select>
+      </label>
+      <label id="deployRebootDelayWrap">Neustart nach
+        <span class="input-with-suffix">
+          <!-- Eingabefeld: deployRebootDelay -->
+          <input id="deployRebootDelay" type="number" min="1" max="1440" step="1" value="5" inputmode="numeric" disabled>
+          <span>Minuten</span>
+        </span>
+      </label>
+    </div>
+    <div class="deployment-setting-note" id="deployRebootHint">Der Installer entscheidet anhand seines Ergebnisses, ob ein Neustart erforderlich ist.</div>
+  </div>
+</div>
+
+<div class="split"><div class="card panel"><div id="onlineInfo" class="online-info hidden">🌐 <b>Online Depot</b><span>Diese Pakete werden später über das abgesicherte Backend aus dem Internet bezogen.</span></div><div class="head"><div><h3>Verfügbare Software</h3><small id="availableCount"></small></div><input id="search" placeholder="Software suchen …"></div><div id="available"></div></div>
+<div class="card panel"><div class="head"><div><h3>Ausgewählt</h3><small id="selectedCount"></small></div><button id="clear" class="link">Auswahl leeren</button></div><div id="selected"></div><div id="selectedEmpty" class="empty">Noch keine Software ausgewählt.</div></div></div>
+<div class="action"><div><b id="installSummary">0 Pakete ausgewählt</b><small>PowerShell-Ausführung wird später angebunden.</small></div><button id="startInstall">Installation starten</button></div></section>
+
+<!-- Bereich: uninstall -->
+<section id="uninstall" class="page"><div class="title"><div><small>REMOVE</small><h2>Software deinstallieren</h2><p>Installierte Software prüfen und gezielt entfernen.</p></div><button id="testUninstall" class="secondary">Verbindung testen</button></div>
+<div class="card"><h3>Zielcomputer</h3><div class="shared-client-selector" data-client-selector="uninstall">
+  <div class="shared-client-selector-head">
+    <div><h4>🖥 Zielclient</h4><small>Client aus der zentralen Client Verwaltung auswählen.</small></div>
+    <!-- Button: secondary shared-client-change -->
+    <button type="button" class="secondary shared-client-change" data-client-change="uninstall">Client wechseln</button>
+  </div>
+  <div class="shared-client-picker">
+  <div id="uninstallClientSelect" class="shared-client-dropdown" data-client-dropdown="uninstall">
+    <!-- Button: shared-client-dropdown-toggle -->
+    <button type="button" class="shared-client-dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+      <span class="shared-client-dropdown-label">Client Liste</span>
+      <span class="shared-client-dropdown-arrow">⌄</span>
+    </button>
+    <div class="shared-client-dropdown-menu" role="listbox"></div>
+  </div>
+</div>
+  <div id="uninstallClientInfo" class="shared-client-info"><span class="shared-client-placeholder">Kein Client ausgewählt.</span></div>
+</div><div class="fields"><label class="grow">Computername / IP<input id="uninstallTarget" placeholder="z. B. PC-023"></label><label id="uninstallDomainWrap">Domäne<input id="uninstallDomain" placeholder="z. B. FIRMA"></label><label>Benutzer<input placeholder="z. B. Administrator"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label></div><label class="workgroup-option"><input type="checkbox" id="uninstallWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="uninstallStatus" class="status">Noch nicht geprüft</span></div>
+<div class="card"><div class="head"><div><h3>Installierte Software</h3><small>Noch keine Abfrage durchgeführt</small></div><button id="refresh" class="secondary">↻ Abfrage aktualisieren</button></div><div id="installed" class="installed"></div></div>
+
+<div class="card uninstall-source-card" id="uninstallSourceCard">
+  <div class="head"><div>
+    <!-- Überschrift: h3 -->
+    <h3>Deinstallationsquelle</h3>
+    <small>TheMaNi verwendet standardmäßig die in Windows hinterlegte Deinstallation.</small>
+  </div></div>
+  <label class="settings-check package-setting-check">
+    <!-- Eingabefeld: uninstallUsePackageCommand -->
+    <input id="uninstallUsePackageCommand" type="checkbox" disabled>
+    <span>
+      <b>Benutzerdefinierten Deinstallationsbefehl aus dem Softwarepaket verwenden</b>
+      <small>Wird nur aktiv, wenn beim ausgewählten Softwarepaket ein eigener Deinstallationsbefehl hinterlegt wurde.</small>
+    </span>
+  </label>
+  <div class="deployment-setting-note" id="uninstallPackageCommandInfo">Kein benutzerdefinierter Deinstallationsbefehl ausgewählt.</div>
+</div>
+
+<div class="card deployment-options-card uninstall-options-card" id="uninstallOptionsCard">
+  <div class="head"><div>
+    <!-- Überschrift: h3 -->
+    <h3>Deinstallationsparameter</h3>
+    <small>Die Parameter gelten nur für diese Deinstallation.</small>
+  </div></div>
+  <div class="deployment-tabs" role="tablist" aria-label="Deinstallationsparameter">
+    <!-- Button: deployment-tab active -->
+    <button type="button" class="deployment-tab active" data-uninstall-tab="exe">.EXE</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-uninstall-tab="msi">.MSI</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-uninstall-tab="msix">.MSIX</button>
+    <!-- Button: deployment-tab -->
+    <button type="button" class="deployment-tab" data-uninstall-tab="reboot">↻ Neustart</button>
+  </div>
+  <div class="deployment-tab-panel active" data-uninstall-panel="exe">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="exe-s"><span><b>/S</b><small>Stille Deinstallation</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="exe-silent"><span><b>/silent</b><small>Stille Deinstallation</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="exe-quiet"><span><b>/quiet</b><small>Keine Benutzeroberfläche</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="exe-norestart"><span><b>/norestart</b><small>Automatischen Neustart unterdrücken</small></span></label>
+    </div>
+    <div class="deployment-setting-note">EXE-Parameter sind installerabhängig. Deshalb werden nur die wichtigsten Optionen angeboten.</div>
+  </div>
+  <div class="deployment-tab-panel" data-uninstall-panel="msi">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="msi-qn"><span><b>/qn</b><small>Keine Benutzeroberfläche</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="msi-qb"><span><b>/qb</b><small>Grundlegende Benutzeroberfläche</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="msi-norestart"><span><b>/norestart</b><small>Neustart unterdrücken</small></span></label>
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="msi-forcerestart"><span><b>/forcerestart</b><small>Nach der Deinstallation neu starten</small></span></label>
+    </div>
+  </div>
+  <div class="deployment-tab-panel" data-uninstall-panel="msix">
+    <div class="parameter-grid">
+      <label class="parameter-option"><input type="checkbox" data-uninstall-param="msix-force-shutdown"><span><b>-ForceApplicationShutdown</b><small>Laufende Apps des Pakets beenden</small></span></label>
+    </div>
+  </div>
+  <div class="deployment-tab-panel" data-uninstall-panel="reboot">
+    <div class="reboot-grid">
+      <label>Neustartverhalten
+        <!-- Auswahlfeld: uninstallRebootMode -->
+        <select id="uninstallRebootMode" class="themani-select">
+          <option value="installer">Installer entscheidet</option>
+          <option value="none">Kein Neustart</option>
+          <option value="recommend">Neustart empfehlen</option>
+          <option value="force">Neustart erzwingen</option>
+        </select>
+      </label>
+      <label id="uninstallRebootDelayWrap">Neustart nach
+        <span class="input-with-suffix">
+          <!-- Eingabefeld: uninstallRebootDelay -->
+          <input id="uninstallRebootDelay" type="number" min="1" max="1440" step="1" value="5" inputmode="numeric" disabled>
+          <span>Minuten</span>
+        </span>
+      </label>
+    </div>
+    <div class="deployment-setting-note" id="uninstallRebootHint">Der Installer entscheidet anhand seines Ergebnisses, ob ein Neustart erforderlich ist.</div>
+  </div>
+</div>
+
+<div class="action"><div><b id="uninstallSummary">0 Programme ausgewählt</b><small>Nur ausgewählte Programme werden entfernt.</small></div><button id="startUninstall" class="danger">Deinstallation starten</button></div></section>
+
+<!-- Bereich: query -->
+<section id="query" class="page"><div class="title"><div><small>INVENTORY</small><h2>Softwarebestand abfragen</h2><p>Software, Version und Installationsstatus eines Zielrechners anzeigen.</p></div></div>
+<div class="card"><h3>Zielcomputer</h3><div class="shared-client-selector" data-client-selector="query">
+  <div class="shared-client-selector-head">
+    <div><h4>🖥 Zielclient</h4><small>Client aus der zentralen Client Verwaltung auswählen.</small></div>
+    <!-- Button: secondary shared-client-change -->
+    <button type="button" class="secondary shared-client-change" data-client-change="query">Client wechseln</button>
+  </div>
+  <div class="shared-client-picker">
+  <div id="queryClientSelect" class="shared-client-dropdown" data-client-dropdown="query">
+    <!-- Button: shared-client-dropdown-toggle -->
+    <button type="button" class="shared-client-dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+      <span class="shared-client-dropdown-label">Client Liste</span>
+      <span class="shared-client-dropdown-arrow">⌄</span>
+    </button>
+    <div class="shared-client-dropdown-menu" role="listbox"></div>
+  </div>
+</div>
+  <div id="queryClientInfo" class="shared-client-info"><span class="shared-client-placeholder">Kein Client ausgewählt.</span></div>
+</div><div class="fields"><label class="grow">Computername / IP<input id="queryTarget" placeholder="z. B. PC-023"></label><label id="queryDomainWrap">Domäne<input id="queryDomain" placeholder="z. B. FIRMA"></label><label>Passwort<input type="password" placeholder="Passwort eingeben" autocomplete="off"></label><button id="runQuery">Abfrage starten</button></div><label class="workgroup-option"><input type="checkbox" id="queryWorkgroup"> Rechner ist Mitglied einer Arbeitsgruppe</label><div class="credentials-note">Die Zugangsdaten werden später nur für die jeweilige Verbindung verwendet und nicht in der Web-App gespeichert.</div><span id="queryStatus" class="status">Noch keine Abfrage durchgeführt</span></div>
+<div class="card"><div class="head"><div><h3>Softwarestatus</h3><small id="queryInfo">Keine Daten</small></div><input id="querySearch" placeholder="Ergebnis filtern …"></div><table><thead><tr><th>Software</th><th>Version</th><th>Status</th></tr></thead><tbody id="results"></tbody></table><div id="queryEmpty" class="empty">Noch keine Abfrage durchgeführt.</div></div></section>
+
+<!-- Bereich: packages -->
+<section id="packages" class="page"><div class="title"><div><small>ADMINISTRATION</small><h2>Softwareverwaltung</h2><p>Pakete und Installationsinformationen verwalten.</p></div><button id="addPackage">＋ Neues Paket hinzufügen</button></div>
+<div class="card"><div class="head"><div><h3>Softwarepakete</h3><small id="packageCount"></small></div><input id="packageSearch" placeholder="Pakete suchen …"></div><div class="package-table">
+<div class="package-row package-header"><span>Software</span><span>Version</span><span>Kategorie</span><span>Installer-Pfad</span><span>Aktionen</span></div>
+<div id="packageList"></div>
+</div></div></section>
+
+
+<!-- Bereich: clients -->
+<section id="clients" class="page">
+  <div class="page-head">
+    <div><small>CLIENT MANAGEMENT</small><h2>Client Verwaltung</h2><p>Clients und Gruppen verwalten, Status prüfen und die Konfiguration lokal speichern.</p></div>
+    <div class="client-page-actions">
+      <!-- Button: clientEditModeBtn -->
+      <button type="button" class="secondary client-action-btn" id="clientEditModeBtn">✎ Bearbeitungsmodus</button>
+      <!-- Button: addClientBtn -->
+      <button type="button" class="secondary client-action-btn client-add-top-btn" id="addClientBtn">＋ Client hinzufügen</button>
+      <!-- Button: saveClientConfigBtn -->
+      <button type="button" class="secondary client-action-btn client-save-btn" id="saveClientConfigBtn">💾 Lokal speichern</button>
+      <!-- Button: loadClientConfigBtn -->
+      <button type="button" class="secondary client-action-btn" id="loadClientConfigBtn">📂 Lokal laden</button>
+      <!-- Eingabefeld: clientConfigFileInput -->
+      <input type="file" id="clientConfigFileInput" accept=".json,application/json" hidden>
+    </div>
+  </div>
+  <div class="client-layout">
+    <div class="card client-tree-card">
+      <div class="head"><div><h3>Clientstruktur</h3><small>Wähle einen Bereich aus, um dessen Clients rechts live anzuzeigen.</small></div></div>
+      <div class="client-tree-actions">
+        <!-- Button: addClientRootGroupBtn -->
+        <button type="button" class="secondary client-tree-btn" id="addClientRootGroupBtn">＋ Hauptgruppe</button>
+        <!-- Button: addClientSubGroupBtn -->
+        <button type="button" class="secondary client-tree-btn" id="addClientSubGroupBtn">＋ Bereich</button>
+        <!-- Button: deleteSelectedTreeBtn -->
+        <button type="button" class="secondary client-tree-btn client-delete-selected-btn" id="deleteSelectedTreeBtn" hidden>🗑 Auswahl löschen</button>
+      </div>
+      <div id="clientTree" class="client-tree"></div><div id="clientTreeEmpty" class="empty-state">Noch keine Clientstruktur vorhanden.</div>
+    </div>
+    <div class="card client-live-card">
+      <div class="head"><div><h3 id="selectedClientGroupTitle">Clients</h3><small id="selectedClientGroupSubtitle">Wähle links eine Gruppe oder einen Bereich aus.</small></div><button type="button" class="secondary client-status-btn" id="refreshClientStatusBtn">↻ Status prüfen</button></div>
+      <div class="client-live-summary" id="clientLiveSummary"></div>
+      <div class="client-select-toolbar" id="clientSelectToolbar" hidden>
+        <label class="client-select-all"><input type="checkbox" id="selectAllClients"> Alle Clients auswählen</label>
+        <!-- Button: deleteSelectedClientsBtn -->
+        <button type="button" class="secondary client-delete-selected-btn" id="deleteSelectedClientsBtn">🗑 Auswahl löschen</button>
+      </div>
+      <div id="clientsList" class="clients-list"></div><div id="clientsEmpty" class="empty-state">Keine Clients in diesem Bereich.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Bereich: settings -->
+<section id="settings" class="page">
+  <div class="title">
+    <div><small>SYSTEMKONFIGURATION</small><h2>Einstellungen</h2><p>Zentrale Konfiguration für Softwarequellen, Backend und Standardwerte.</p></div>
+    <span class="status">Lokale Konfiguration</span>
+  </div>
+  <!-- Bereich: card settings-card -->
+  <section class="card settings-card">
+    <details class="settings-section settings-accordion" id="source-settings">
+      <summary><span class="settings-summary-icon">📦</span><span><b>Softwarequellen</b><small>Verbindungstyp auswählen – die passenden Eingabefelder erscheinen automatisch.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+      <div class="form-grid"><label class="wide">Quelle<select id="cfgSourceType">
+        <option value="smb">SMB / Windows-Freigabe</option><option value="local">Lokaler Ordner</option><option value="webdav">WebDAV / Nextcloud</option><option value="https">HTTP / HTTPS</option><option value="sftp">SFTP</option><option value="ftp">FTP / FTPS</option><option value="onedrive">Microsoft OneDrive</option><option value="sharepoint">Microsoft SharePoint</option><option value="googledrive">Google Drive</option><option value="dropbox">Dropbox</option><option value="s3">Amazon S3 / S3-kompatibel</option><option value="azureblob">Azure Blob Storage</option><option value="azurefiles">Azure Files</option><option value="nfs">NFS</option>
+      </select></label></div>
+      <div id="sourceFields" class="source-fields">
+        <h4>Google Drive</h4>
+        <div class="form-grid">
+          <label class="wide">Zugriffsart<select id="src_accessMethod"><option>Freigabelink – öffentlich</option><option>Google OAuth</option></select></label>
+          <label>Freigabelink<input id="src_shareUrl" type="url" placeholder="https://drive.google.com/drive/folders/xxxxxxxxxxxxxxxx" autocomplete="off"></label>
+        </div>
+        <div class="source-note">Nur den öffentlichen Google-Drive-Freigabelink einfügen. Kein Google-API-Key erforderlich.</div>
+      </div>
+      <div id="sourceScanControls" class="source-scan-controls">
+        <!-- Button: scanSource -->
+        <button id="scanSource" type="button">🔎 Quelle einlesen</button>
+        <span id="scanStatus">Noch keine Verbindung hergestellt</span>
+      </div>
+      <div id="sourceInventory" class="source-inventory hidden">
+        <div class="inventory-head"><b>Verfügbare Software</b><span id="inventoryCount">0 Dateien</span></div>
+        <div id="inventoryList"></div>
+      </div>
+      <div class="settings-source-actions"><button id="testSource" class="secondary">Verbindung testen</button><button id="saveSource" class="secondary">Quelle speichern</button></div>
+      <div id="sourceSaved" class="saved-source-list"></div>
+      </div>
+    </details>
+
+    <details class="settings-section settings-accordion" id="online-settings">
+      <summary><span class="settings-summary-icon">🌐</span><span><b>Online Software-Depot</b><small>Optionaler Paketkatalog für einfache Installationen und Paketkataloge.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+      <div class="form-grid"><label class="wide">Depot-Katalog / API<input id="cfgOnlineUrl" placeholder="https://dein-depot.example/api"></label>
+      <label class="settings-check"><input id="cfgOnlineEnabled" type="checkbox"> Online Depot aktivieren</label>
+      <label class="settings-check"><input id="cfgVerifiedOnly" type="checkbox" checked> Nur verifizierte Pakete verwenden</label></div>
+      </div>
+    </details>
+
+    <details class="settings-section settings-accordion" id="backend-settings">
+      <summary><span class="settings-summary-icon">🖥️</span><span><b>Backend / PowerShell</b><small>Adresse und Verbindungsart des späteren internen Backends für Remote-PowerShell und Softwareverteilung.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+      <div class="form-grid">
+        <label class="wide">Backend-Adresse<input id="cfgBackend" placeholder="https://server.example.local/api"></label>
+        <label>Verbindungsart<select id="cfgProtocol"><option>WinRM / PowerShell Remoting</option><option>PowerShell Direct / Agent</option><option>Interner Deployment-Agent</option></select></label>
+        <label>Standard-Port<input id="cfgPort" type="number" placeholder="5985"></label>
+      </div>
+      </div>
+    </details>
+    <details class="settings-section settings-accordion" id="target-settings">
+      <summary><span class="settings-summary-icon">👤</span><span><b>Standardwerte für Zielrechner</b><small>Diese Werte werden später automatisch in Installation, Deinstallation und Abfrage vorgeschlagen.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+      <div class="form-grid">
+        <label>Standard-Domäne<input id="cfgDomain" placeholder="z. B. FIRMA"></label>
+        <label>Standardbenutzer<input id="cfgUser" placeholder="z. B. Administrator"></label>
+      </div>
+      <label class="settings-check"><input id="cfgWorkgroup" type="checkbox"> Rechner standardmäßig als Arbeitsgruppe behandeln</label>
+      </div>
+    </details>
+    <details class="settings-section settings-accordion security" id="security-settings">
+      <summary><span class="settings-summary-icon">🔐</span><span><b>Sicherheit</b><small>Hinweise zum Umgang mit Zugangsdaten und Passwörtern.</small></span><span class="settings-chevron">⌄</span></summary>
+      <div class="settings-panel-content">
+        <p class="settings-help">Passwörter werden nicht in den Einstellungen gespeichert. Zugangsdaten sollen später nur für den jeweiligen Auftrag an das abgesicherte Backend übergeben und anschließend verworfen werden.</p>
+      </div>
+    </details>
+    <div class="settings-actions"><button id="resetSettings" class="secondary">Standardeinstellungen</button><button id="saveSettings">Konfiguration speichern</button></div>
+  </section>
+</section>
+</main>
+<div id="deletePackageModal" class="modal hidden">
+  <div class="modal-backdrop" data-close-delete-modal></div>
+  <div class="modal-card delete-confirm-card">
+    <div class="modal-head">
+      <div><small>SOFTWAREVERWALTUNG</small><h2>Softwarepaket löschen</h2></div>
+      <!-- Button: modal-close -->
+      <button class="modal-close" data-close-delete-modal aria-label="Abbrechen">×</button>
+    </div>
+    <div class="delete-confirm-content">
+      <p><b>Sie sind dabei, das Softwarepaket zu löschen.</b></p>
+      <p class="settings-help">Das Paket wird aus der Softwareverwaltung entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. Wenn Sie das Paket später wieder benötigen, muss es vollständig neu erstellt bzw. erneut aus einer Quelle übernommen werden.</p>
+      <div class="delete-package-name" id="deletePackageName"></div>
+    </div>
+    <div class="modal-actions">
+      <!-- Button: secondary -->
+      <button type="button" class="secondary" data-close-delete-modal>Abbrechen</button>
+      <!-- Button: confirmDeletePackage -->
+      <button type="button" id="confirmDeletePackage" class="delete-confirm-button">Bestätigen</button>
+    </div>
+  </div>
+</div>
+<div id="packageModal" class="modal hidden">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><small>PAKETVERWALTUNG</small><h2 id="modalTitle">Neues Softwarepaket</h2></div>
+      <!-- Button: modal-close -->
+      <button class="modal-close" data-close-modal>×</button>
+    </div>
+    <!-- Formular: packageForm -->
+    <form id="packageForm">
+      <!-- Eingabefeld: editPackageIndex -->
+      <input type="hidden" id="editPackageIndex">
+      <div class="form-section">
+        <!-- Überschrift: h3 -->
+        <h3>Allgemeine Angaben</h3>
+        <div class="form-grid">
+          <label>Softwarename<input id="pkgName" required placeholder="z. B. Mozilla Firefox"></label>
+          <label>Version<input id="pkgVersion" required placeholder="z. B. 128.0"></label>
+          <label>Kategorie<select id="pkgCategory"><option>Browser</option><option>Office</option><option>Werkzeuge</option><option>Multimedia</option><option>Kommunikation</option><option>Sonstige</option></select></label>
+          <label class="wide">Installationsdatei<input id="pkgPath" required placeholder="\\SERVER\Software$\Firefox\128.0\FirefoxSetup.exe"></label>
+        </div>
+      </div>
+      <div class="form-section">
+        <!-- Überschrift: h3 -->
+        <h3>Installation &amp; Deployment</h3>
+        <div class="deployment-setting-note">
+          Die Installationsparameter werden beim späteren Deployment anhand des Installer-Typs ausgewählt.
+        </div>
+      </div>
+      <div class="form-section">
+        <!-- Überschrift: h3 -->
+        <h3>Deinstallation</h3>
+        <div class="form-grid">
+          <label class="wide settings-check package-setting-check">
+            <!-- Eingabefeld: pkgCustomUninstall -->
+            <input id="pkgCustomUninstall" type="checkbox">
+            <span>
+              <b>Benutzerdefinierten Deinstallationsbefehl verwenden</b>
+              <small>Wenn aktiviert, wird der unten hinterlegte Befehl für dieses Softwarepaket verwendet.</small>
+            </span>
+          </label>
+          <label class="wide" id="pkgCustomUninstallCommandWrap">
+            Deinstallationsbefehl
+            <!-- Eingabefeld: pkgCustomUninstallCommand -->
+            <input id="pkgCustomUninstallCommand" placeholder="z. B. C:\Program Files\Beispiel\uninstall.exe /S" disabled>
+          </label>
+        </div>
+        <div class="uninstall-package-tabs" role="tablist" aria-label="Deinstallationsparameter des Softwarepakets">
+          <!-- Button: uninstall-package-tab active -->
+          <button type="button" class="uninstall-package-tab active" data-package-uninstall-tab="exe">.EXE</button>
+          <!-- Button: uninstall-package-tab -->
+          <button type="button" class="uninstall-package-tab" data-package-uninstall-tab="msi">.MSI</button>
+          <!-- Button: uninstall-package-tab -->
+          <button type="button" class="uninstall-package-tab" data-package-uninstall-tab="msix">.MSIX</button>
+        </div>
+        <div class="uninstall-package-panel active" data-package-uninstall-panel="exe">
+          <div class="parameter-grid">
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="exe-s"><span><b>/S</b><small>Stille Deinstallation</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="exe-silent"><span><b>/silent</b><small>Stille Deinstallation</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="exe-quiet"><span><b>/quiet</b><small>Keine Benutzeroberfläche</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="exe-norestart"><span><b>/norestart</b><small>Automatischen Neustart unterdrücken</small></span></label>
+          </div>
+        </div>
+        <div class="uninstall-package-panel" data-package-uninstall-panel="msi">
+          <div class="parameter-grid">
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="msi-qn"><span><b>/qn</b><small>Keine Benutzeroberfläche</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="msi-qb"><span><b>/qb</b><small>Grundlegende Benutzeroberfläche</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="msi-norestart"><span><b>/norestart</b><small>Neustart unterdrücken</small></span></label>
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="msi-forcerestart"><span><b>/forcerestart</b><small>Nach der Deinstallation neu starten</small></span></label>
+          </div>
+        </div>
+        <div class="uninstall-package-panel" data-package-uninstall-panel="msix">
+          <div class="parameter-grid">
+            <label class="parameter-option"><input type="checkbox" data-package-uninstall-param="msix-force-shutdown"><span><b>-ForceApplicationShutdown</b><small>Laufende Apps des Pakets beenden</small></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <!-- Überschrift: h3 -->
+        <h3>Erkennung</h3>
+        <div class="form-grid">
+          <label>Erkennungsname<input id="pkgDetectName" required placeholder="z. B. Mozilla Firefox"></label>
+          <label>Erkennungsmethode<select id="pkgDetectMethod"><option>Installierte Anwendung</option><option>Registry</option><option>Datei vorhanden</option><option>Eigene PowerShell-Prüfung</option></select></label>
+        </div>
+      </div>
+      <div class="modal-actions"><button type="button" class="secondary" data-close-modal>Abbrechen</button><button type="submit" id="savePackage">Paket speichern</button></div>
+    </form>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div><script src="app.js?v90"></script></body></html>
