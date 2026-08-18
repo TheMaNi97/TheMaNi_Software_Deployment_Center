@@ -78,6 +78,14 @@ TheMaNi befindet sich noch in einer frühen Entwicklungsphase. Funktionen könne
 
 ![TheMaNi Dashboard](screenshots/paketverwaltung.png)
 
+ ### Client Management
+
+![Client Management Preview](https://raw.githubusercontent.com/TheMaNi97/TheMaNi_Software_Deployment_Center/main/screenshots/Client_Verwaltung.png)
+
 ### Softwarequellen
 
 ![TheMaNi Dashboard](screenshots/Settings.png)
+
+### Optionale Sprache
+
+![Client Management Preview](https://raw.githubusercontent.com/TheMaNi97/TheMaNi_Software_Deployment_Center/main/screenshots/Language_option.png)
