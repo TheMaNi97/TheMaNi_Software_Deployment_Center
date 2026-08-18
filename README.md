@@ -1,5 +1,11 @@
 # TheMaNi Software Deployment Center
 
+> 🚀 **Latest Release: v1.2.1**
+>
+> v1.2.1 introduces **Client Management** for organizing, monitoring and
+> selecting target computers throughout the application, as well as
+> **English language support** alongside the existing German interface.
+
 A web-based Windows Software Deployment and Software Management Center
 for managing, detecting and updating Windows software packages.
 
@@ -55,12 +61,6 @@ Ein Teil der Entwicklung erfolgt mit Unterstützung generativer KI. Anforderunge
 Hinweis
 
 TheMaNi befindet sich noch in einer frühen Entwicklungsphase. Funktionen können sich ändern und sind möglicherweise noch nicht für den produktiven Einsatz geeignet.
-
-> 🚀 **Latest Release: v1.2.1**
->
-> v1.2.1 introduces **Client Management** for organizing, monitoring and
-> selecting target computers throughout the application, as well as
-> **English language support** alongside the existing German interface.
 
 ## Screenshots
 
